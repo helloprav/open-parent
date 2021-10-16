@@ -1,0 +1,35 @@
+masterdata:
+  appInstallQueryList:
+    - name: adminStatus
+      condition: true
+      read: Select count(*) from Admin_Status
+      sqls:
+        - INSERT INTO admin_status (name, status, description, created_date) VALUES ('DB_CREATED', 'completed', 'DB Instance is Created', now());
+        - INSERT INTO admin_status (name, status, description, created_date) VALUES ('TABLES_CREATED', 'completed', 'DB Tables are Created', now());
+        - INSERT INTO admin_status (name, status, description, created_date) VALUES ('TRIGGER_CREATED', 'pending', 'DB Triggers are Created', now());
+        - INSERT INTO admin_status (name, status, description, created_date) VALUES ('MASTER_DATA_CREATED', 'pending', 'Master Data is Created', now());
+  appStartQueryList:
+    - name: functions
+      condition: true
+      read: Select count(*) from Functions
+      sqls:
+        - INSERT INTO functions (created_date, is_valid, function_name, created_by) VALUES (now(), 1, 'FIND USERS', 1)
+        - INSERT INTO functions (created_date, is_valid, function_name, created_by) VALUES (now(), 1, 'CREATE USERS', 1)
+    - name: groups
+      condition: true
+      read: SELECT count(*) FROM groupe
+      sqls:
+        - INSERT INTO groupe (created_date, is_valid, description, group_name, created_by) VALUES (now(), 1, 'This is user admin group', 'User Admin Group', 1)
+      insert:
+      update:
+    - name: users
+      condition: true
+      read: Select count(*) from User
+      sqls:
+        - INSERT INTO user (USERNAME, PASSWORD, FIRST_NAME, IS_VALID, EMAIL, GENDER, STATUS, CREATED_BY, CREATED_DATE, IS_SUPER_ADMIN) VALUES ('admin', '5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8', 'Admin', 1, 'praveenatwork2018@gmail.com', 'male', 'active', '1', now(), 1)
+    - name: adminStatusUpdate
+      condition: true
+      read: Select count(*) from admin_status where name = 'MASTER_DATA_CREATED' and status = 'completed'
+      sqls:
+        - UPDATE admin_status set status = 'completed', created_date = now() WHERE name = 'MASTER_DATA_CREATED'
+        

@@ -1,0 +1,21 @@
+===============================TODO LIST================================================================
+1. Create another pom project (open-ds) with ofds and ofds-gui as child projects
+2. Update jdbc.properties to reflect the ofds database and not school/shop db
+3. ofds project should be dependent on open-commons jar and not on open-commons eclipse project
+4. remove any user-security-web and gui project from open-commons
+
+
+
+===============================COMPLETED LIST===========================================================
+===============================TODO LIST================================================================
+5. HealthCheck Status of all micro services: to be displayed on the GUI
+7. Centralized location for all services -> log files
+8. MicroService Caching
+========================================================================================================
+========================================================================================================
+9. Service Discovery - Eureka
+10.Load Balancing
+11.API Gateway
+========================================================================================================
+Use cases for the MicroServices
+Domain Driven Design - Talk to Arun

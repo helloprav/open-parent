@@ -1,0 +1,23 @@
+spring:
+  datasource:
+    driverClassName: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/neerdev?createDatabaseIfNotExist=true&autoreconnect=true&useSSL=false&allowPublicKeyRetrieval=true
+    username: root
+    password: root
+    testOnBorrow: "true"
+    testWhileIdle: "true"
+    timeBetweenEvictionRunsMillis: "60000"
+    minEvictableIdleTimeMillis: "30000"
+    validationQuery: SELECT 1
+    max-active: "15"
+    max-idle: "10"
+    max-wait: "8000"
+  jpa:
+    database: MYSQL
+    show-sql: true
+    hibernate:
+      ddl-auto: validate
+      dialect: org.hibernate.dialect.MySQL5Dialect
+  flyway:
+    baselineOnMigrate: true
+    validateOnMigrate: false

@@ -1,0 +1,14 @@
+commons:
+  caching:
+    config:
+      simpleCacheManager:
+        cacheNames:
+          - group1
+          - group2
+      caffeineCacheManager:
+        initialCapacity: 10
+        maximumSize: 50
+        expireAfterAccess: 30
+        cacheNames:
+          - email-cache
+          - group-cache

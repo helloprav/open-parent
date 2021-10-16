@@ -1,0 +1,17 @@
+================================TODO LIST================================================================================
+1. gui project - create nested template framework for PAGE => (header, left menu and content - (header+body+footer))
+	PAGE 			=> Header (global header) + LeftMenu (Global Dynamic Menu on Left Side) + Body Content
+	Body Content 	=> Header (current page header) + Page Content + Current Page Footer (Pagination)
+	try this first for group entities.
+	---- L10N, I18N
+	---- Pagination & Sorting
+
+2. Dynamic forward in Security Servlet corresponding to the Spring Dispatcher Servlet URL pattern/mapping.
+3. Split open-commons-rest into multiple small projects
+4. Move printing of all servlet into utility method in appropriate project.
+
+================================COMPLETED LIST============================================================================
+Remove context hard-coding from project open-commons-config.
+Remove un wanted files from open-gui
+gui project - users list - role drop down
+clean

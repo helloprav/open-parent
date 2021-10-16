@@ -1,0 +1,56 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Application Administration Page</title>
+<style>
+table {
+	font-family: arial, sans-serif;
+	border-collapse: collapse;
+	width: 50%;
+}
+
+td, th {
+	border: 1px solid #dddddd;
+	text-align: left;
+	padding: 8px;
+}
+
+tr:nth-child(even) {
+	background-color: #dddddd;
+}
+</style>
+</head>
+<body>
+	<h1>Application Initialization and Administration</h1>
+	<br>
+
+	<div>
+		<h2>Admin Status Table</h2>
+		<h4 align="center" th:if="${message != null}" th:text="${message}"></h4>
+		<table width="50%" align="center">
+			<thead>
+				<tr>
+					<th>#</th>
+					<th>Name</th>
+					<th>Date</th>
+					<th>Status</th>
+					<th>Action</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="item : ${itemList}">
+					<td th:text="${item.id}">1</td>
+					<td><a href="#" th:text="${item.name}">Title ...</a></td>
+					<td th:text="${item.createdDate}">Text ...</td>
+					<td th:text="${item.status}">Text ...</td>
+					<td><a th:href="@{/admin/create-master-data}" th:if="${item.name == 'MASTER_DATA_CREATED' and item.status == 'pending'}">Execute</a></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+
+	<div>
+	</div>
+</body>
+</html>

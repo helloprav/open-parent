@@ -1,0 +1,64 @@
+<div class="card">
+<form ng-submit="createGroup()" class="form-horizontal">
+	<div class="card-header" style="background-color: #eae5ea">
+		<div class="d-flex justify-content-between">
+			<div>
+				<h3>ADD GROUP</h3>
+			</div>
+			<div class="ml-auto">
+				<button type="submit" class="btn btn-success">SAVE</button>
+				<a href="#/group-mgmt/groups/list/"><button type="button"
+						class="btn btn-primary">BACK</button></a>
+			</div>
+		</div>
+	</div>
+	<div class="card-body p-0 m-0 mb-0">
+
+		<div class="table-responsive mb-0">
+			<table class="table table-hover table-striped table-bordered m-0 p-0">
+				<tbody>
+					<tr>
+						<td>
+							<div ng-include="'templates/user-mgmt/groups/form-elements.html'"></div>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<div class="card-footer" style="background-color: #eae5ea">
+		<div class="d-flex justify-content-between">
+			<div class="ml-auto">
+				<button type="submit" class="btn btn-success">SAVE</button>
+				<a href="#/group-mgmt/groups/list/"><button type="button"
+						class="btn btn-primary">BACK</button></a>
+			</div>
+		</div>
+	</div>
+</form>
+</div>
+
+<!-- 
+<div class="col col-xs-12">
+	<table class="table table-hover table-striped table-bordered">
+		<tbody>
+			<tr>
+				<td>
+					<form ng-submit="createGroup()" class="form-horizontal">
+						<div ng-include="'templates/user-mgmt/groups/form-elements.html'">
+						</div>
+						<div class="form-group">
+							<div class="col-sm-offset-2 col-sm-10">
+								<button type="submit" class="btn btn-success">CREATE</button>
+								<a href="#/group-mgmt/groups/list/view"><button
+										type="button" class="btn btn-primary">BACK</button></a>
+							</div>
+						</div>
+					</form>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+
+ -->

@@ -1,0 +1,13 @@
+server:
+  port: "80"
+  servlet:
+    context-path: /neer
+spring:
+  datasource:
+    initialization-mode:  always
+  profiles:
+    include: master-data
+  cache:
+    
+    cache-names:
+    - 

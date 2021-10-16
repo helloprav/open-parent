@@ -1,0 +1,45 @@
+<div class="card">
+	<div class="card-header" style="background-color: #eae5ea">
+		<div class="d-flex justify-content-between">
+			<div>
+				<h3>VIEW USER DETAILS:</h3>
+			</div>
+			<div class="ml-auto">
+				<a href="#/user-mgmt/users/{{entity.id}}/edit"><button
+						type="button" class="btn btn-primary"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> EDIT</button></a> <a
+					ui-sref="user-mgmt.users.list({role: '{{entity.role}}'})" ><button type="button"
+						class="btn btn-primary">BACK</button></a>
+			</div>
+		</div>
+	</div>
+	<div class="card-body p-0 m-0 mb-0">
+		<div class="table-responsive mb-0">
+			<div class="card table table-hover table-striped table-bordered m-0 p-0">
+				<div class="card-header" checker></div>
+				<div class="card-body" >
+					<div>First Name: {{entity.firstName}}</div>
+					<div>Last Name: {{entity.lastName}}</div>
+					<div>Username: {{entity.username}}</div>
+					<div>Gender: {{entity.gender}}</div>
+					<div>Email: {{entity.email}}</div>
+					<div>Mobile: {{entity.mobile}}</div>
+					<div>Phone: {{entity.phone}}</div>
+					<div>Status: {{entity.status}}</div>
+					<div>Is Superadmin: {{entity.isSuperAdmin}}</div>
+					<div>Group List: <lied ng-repeat="group in entity.otherData.groupList">{{group.groupName}} </lied><br></div>
+					<div>Description: {{entity.description}}</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="card-footer" style="background-color: #eae5ea">
+		<div class="d-flex justify-content-between">
+			<div class="ml-auto">
+				<a href="#/user-mgmt/users/{{entity.id}}/edit"><button
+						type="button" class="btn btn-primary"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> EDIT</button></a> <a
+					ui-sref="user-mgmt.users.list({role: '{{entity.role}}'})" ><button type="button"
+						class="btn btn-primary">BACK</button></a>
+			</div>
+		</div>
+	</div>
+</div>

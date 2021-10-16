@@ -1,0 +1,84 @@
+<!-- https://stackoverflow.com/questions/18672452/left-align-and-right-align-within-div-in-bootstrap -->
+<div class="col-md-10 col-md-offset-1">
+
+	<div class="card m-0 p-0" class="col-xs-12 my-controller">
+		<div class="card-header">
+			<div class="row">
+				<div class="row col col-lg-3 col-xs-6">
+					<h3 class="panel-title">GROUPS</h3>
+				</div>
+				<div class="row col col-lg-9 col-xs-6 text-right">
+					<div class="row col-lg-3 col-xs-4">
+					  <input ng-model="q" id="search" class="form-control" placeholder="Search....">
+					</div>
+					<div class="row btn-group col-lg-3">
+						<!-- Status &nbsp; -->
+						<button type="button" class="btn btn-primary dropdown-toggle"
+							data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ selectedStatus.value }}</button>
+						<ul class="dropdown-menu">
+							<li class="dropdown active"><a class="dropdown-item open"
+								href="#/group-mgmt/groups/list/all"> All</a></li>
+							<li ng-repeat="status in entityStatus" class="dropdown"><a
+								class="dropdown-item" href="#/group-mgmt/groups/list/{{status}}">{{status}}</a>
+							</li>
+						</ul>
+					</div>
+					<div align="right" class="row btn-group-vertical float-right">
+						<a href="#/group-mgmt/groups/new"><button type="button"
+								class="btn btn-md btn-primary btn-create">ADD</button></a>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- end of card-header -->
+		<div class="card-body m-0 p-0 pr-0">
+			<div class="row">
+				<div class="col col-xs-12">
+					<table class="table table-striped table-bordered table-list">
+						<thead>
+							<tr>
+								<th class="hidden-xs"><button ng-click="sortBy('id')">ID<i ng-class="{'fas fa-sort' : columnName != 'id', 'fas fa-sort-up' : columnName == 'id' && !reverse , 'fas fa-sort-down' : columnName == 'id' && reverse }"></i></th>
+								<th class="hidden-xs"><button ng-click="sortBy('groupName')">Group Name<i ng-class="{'fas fa-sort' : columnName != 'groupName', 'fas fa-sort-up' : columnName == 'groupName' && !reverse , 'fas fa-sort-down' : columnName == 'groupName' && reverse }"></i></th>
+								<th class="hidden-xs"><button ng-click="sortBy('modifiedDate')">Modified Date<i ng-class="{'fas fa-sort' : columnName != 'modifiedDate', 'fas fa-sort-up' : columnName == 'modifiedDate' && !reverse , 'fas fa-sort-down' : columnName == 'modifiedDate' && reverse }"></i></th>
+								<th><em class="fa fa-cog"></em></th>
+							</tr>
+						</thead>
+						<tbody>
+							<!-- <tr ng-repeat="entity in entityList | filter:searchText"> -->
+							<tr dir-paginate="entity in entityList | filter:q | orderBy:columnName:reverse | itemsPerPage: pageSize" current-page="currentPage" pagination-id="groupList">
+								<!-- Pagination: 
+									https://github.com/michaelbromley/angularUtils/tree/master/src/directives/pagination
+									http://plnkr.co/edit/xmjmIId0c9Glh5QH97xz?p=preview -->
+								<td><a href="#/group-mgmt/groups/{{ entity.id }}/view">{{
+										entity.id }}</a></td>
+								<td>{{entity.groupName}}</td>
+								<td>{{ entity.modifiedDate }}</td>
+								<td align="center"><a class="btn btn-primary btn-xs"
+									href="#/group-mgmt/groups/{{ entity.id }}/edit" title="Edit"><i
+										class="fas fa-pencil-alt"></i></a> <a
+									class="btn btn-danger btn-xs"><i class="fas fa-trash-alt"></i></a>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+		<!-- end of card-body -->
+		<div class="card-footer" align="center">
+			<div class="row">
+
+				<div ng-controller="PaginationController" class="col-xs-12 text-center"><!-- http://embed.plnkr.co/4rNlz7hx36noSmLDWVx7/ -->
+				    <dir-pagination-controls boundary-links="true" pagination-id="groupList" on-page-change="pageChangeHandler(newPageNumber)" template-url="js/utils/pagination/dirPagination.tpl.html"></dir-pagination-controls>
+				</div>
+				<div class="row align-right" align="right"><!-- https://embed.plnkr.co/plunk/iP2NcF -->
+					<label for="search">items per page:</label> <select
+						ng-model="pageSize" ng-options="num for num in pageSizeOptions"></select>
+				</div>
+			</div>
+		</div>
+		<!-- end of card-footer -->
+	</div>
+	<!-- end of card -->
+
+</div>

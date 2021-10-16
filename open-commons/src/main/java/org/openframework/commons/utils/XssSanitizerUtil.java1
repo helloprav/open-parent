@@ -1,0 +1,121 @@
+package org.openframework.commons.utils;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.regex.Pattern;
+
+import org.apache.commons.collections.MapUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.openframework.commons.constants.CommonConstants;
+import org.owasp.esapi.ESAPI;
+
+/**
+ * @author bnaga1
+ *
+ */
+public final class XssSanitizerUtil {
+    private static final Logger LOG = LogManager.getLogger(XssSanitizerUtil.class);
+    /**
+     * Creating pattern to remove unsecured data from parameters.
+     */
+    private static Pattern[] xssPatterns = new Pattern[] {
+            // Script fragments
+            Pattern.compile(CommonConstants.CASE_INSENSITIVE, Pattern.CASE_INSENSITIVE),
+            // src='...'
+            Pattern.compile(CommonConstants.CASE_INSENSITIVE_MULTILINE_DOTALL_WITH_SINGLE_QUOTE,
+                    Pattern.CASE_INSENSITIVE | Pattern.MULTILINE | Pattern.DOTALL),
+            Pattern.compile(CommonConstants.CASE_INSENSITIVE_MULTILINE_DOTALL_WITH_DOUBLE_QUOTE,
+                    Pattern.CASE_INSENSITIVE | Pattern.MULTILINE | Pattern.DOTALL),
+            // lonely script tags
+            Pattern.compile(CommonConstants.SCRIPT_CASE_INSENSITIVE, Pattern.CASE_INSENSITIVE),
+            Pattern.compile(CommonConstants.SCRIPT_CASE_INSENSITIVE_MULTILINE_DOTALL,
+                    Pattern.CASE_INSENSITIVE | Pattern.MULTILINE | Pattern.DOTALL),
+            // eval(...)
+            Pattern.compile(CommonConstants.EVAL_CASE_INSENSITIVE_MULTILINE_DOTALL,
+                    Pattern.CASE_INSENSITIVE | Pattern.MULTILINE | Pattern.DOTALL),
+            // expression(...)
+            Pattern.compile(CommonConstants.EXPRESSION_CASE_INSENSITIVE_MULTILINE_DOTALL,
+                    Pattern.CASE_INSENSITIVE | Pattern.MULTILINE | Pattern.DOTALL),
+            // javascript:...
+            Pattern.compile(CommonConstants.JAVA_SCRIPT_CASE_INSENSITIVE, Pattern.CASE_INSENSITIVE),
+            // vbscript:...
+            Pattern.compile(CommonConstants.VB_SCRIPT_CASE_INSENSITIVE, Pattern.CASE_INSENSITIVE),
+            // onload(...)=...
+            Pattern.compile(CommonConstants.ONLOAD_CASE_INSENSITIVE_MULTILINE,
+                    Pattern.CASE_INSENSITIVE | Pattern.MULTILINE | Pattern.DOTALL) };
+
+    private XssSanitizerUtil() {
+        super();
+    }
+
+    /**
+     * Removing unsecured data from passed parameters
+     * 
+     * @param value
+     *            URL on which you want to apply security. Example -
+     *            "/v_images/marlboro-ugc/ctu/gallery/".
+     * @return value Filtered URL.
+     */
+    public static String stripXSS(String value) {
+        String stripedString;
+        if (StringUtils.isBlank(value) || value.contains(CommonConstants.HTTP) || value.contains(CommonConstants.HTTPS)
+                || value.contains(CommonConstants.AMPERSAND)) {
+            stripedString = value;
+        } else {
+            // NOTE: It's highly recommended to use the ESAPI library and
+            // uncomment the following line to
+            // avoid encoded attacks.
+            stripedString = ESAPI.encoder().canonicalize(value);
+
+            // Avoid null characters
+            stripedString = stripedString.replaceAll(CommonConstants.NULL_STRING, StringUtils.EMPTY);
+
+            // Remove all sections that match a pattern
+            for (Pattern scriptPattern : xssPatterns) {
+                stripedString = scriptPattern.matcher(stripedString).replaceAll(StringUtils.EMPTY);
+            }
+
+        }
+
+        return stripedString;
+    }
+
+    /**
+     * Removing unsecured data from passed map
+     * 
+     * @param map
+     *            all map values are sanitizing
+     * 
+     * @return resultMap.
+     */
+    public static Map<String, String> stripXSSMap(Map<String, String> map) {
+        Map<String, String> resultMap = new HashMap<>();
+        if (MapUtils.isEmpty(map)) {
+            return map;
+        } else {
+            map.forEach((k, v) -> resultMap.put(k, XssSanitizerUtil.stripXSS(v)));
+        }
+        return resultMap;
+    }
+
+    /**
+     * This method encodes only alcs application cookies
+     * 
+     * @param name
+     *            Cookie name
+     * @param value
+     *            Cookie value
+     * @return encoded cookie value
+     */
+    public static String stripAlcsCookies(String name, String value) {
+        LoggerUtil.debug(LOG, "Cookie name & value :: " + name + "-" + value);
+        String stripedString = null;
+        if (!CommonUtil.isNullTrimmedString(value)) {
+            stripedString = HttpUtil.getCookieList().contains(name.trim()) ? stripXSS(value) : value;
+        }
+        LoggerUtil.debug(LOG, "Resultant Cookie name & value :: " + stripedString);
+        return stripedString;
+    }
+}

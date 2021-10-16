@@ -1,0 +1,14 @@
+commons:
+  caching:
+    config:
+      simpleCacheManager:
+        cacheNames:
+          - group1-internal
+          - group2-internal
+      caffeineCacheManager:
+        initialCapacity: 1012
+        maximumSize: 5012
+        expireAfterAccess: 3012
+        cacheNames:
+          - group1-internal
+          - group4-internal

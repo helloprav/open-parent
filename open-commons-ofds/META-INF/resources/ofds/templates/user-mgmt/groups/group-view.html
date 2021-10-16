@@ -1,0 +1,49 @@
+<div class="card">
+	<div class="card-header" style="background-color: #eae5ea">
+		<div class="d-flex justify-content-between">
+			<div>
+				<h3>VIEW GROUP DETAILS:</h3>
+			</div>
+			<div class="ml-auto">
+				<a href="#/group-mgmt/groups/{{group.id}}/edit"><button
+						type="button" class="btn btn-primary"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> EDIT</button></a> <a
+					ui-sref="group-mgmt.groups.list({role: '{{group.isValid}}'})" ><button type="button"
+						class="btn btn-primary">BACK</button></a>
+			</div>
+		</div>
+	</div>
+	<div class="card-body p-0 m-0 mb-0">
+		<div class="table-responsive mb-0">
+			<table class="table table-striped table-bordered table-list m-0 p-0">
+				<tbody>
+					<tr>
+						<td>Group Id</td>
+						<td>{{group.id}}</td>
+					</tr>
+					<tr>
+						<td>Group Name</td>
+						<td>{{group.groupName}}</td>
+					</tr>
+					<tr>
+						<td>Group Description</td>
+						<td>{{group.description}}</td>
+					</tr>
+					<tr>
+						<td>Function List</td>
+						<td><lied ng-repeat="func in group.functionList">{{func.name}}<br></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<div class="card-footer" style="background-color: #eae5ea">
+		<div class="d-flex justify-content-between">
+			<div class="ml-auto">
+				<a href="#/group-mgmt/groups/{{group.id}}/edit"><button
+						type="button" class="btn btn-primary"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> EDIT</button></a> <a
+					ui-sref="group-mgmt.groups.list({role: '{{group.isValid}}'})" ><button type="button"
+						class="btn btn-primary">BACK</button></a>
+			</div>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,3 @@
+logs:
+    lines:
+        maxCount: 100

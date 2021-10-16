@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mail-template>
+	<fromAddress>noreply-admin@email.com</fromAddress>
+	<isEnabled>true</isEnabled>
+	<!-- <to>to-mail-address</to> -->
+	<to>praveenatwork2018@gmail.com</to>
+	<to>praveenatwork2017@gmail.com</to>
+	<subject>Test Email</subject>
+	<body><![CDATA[Dear <b>Receiver</b>,
+
+This is a sample email sent to your inbox.
+
+Please do not reply to this system generated email.]]>
+	</body>
+</mail-template>

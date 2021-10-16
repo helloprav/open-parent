@@ -1,0 +1,25 @@
+commons:
+    location: NeerApp.jar
+    email:
+        template:
+            folder: 'cmnTemplate/emails/'
+        thread-pool-executor:
+            size: 2
+spring:
+    mail:
+        host: smtp.gmail.com
+        password: work@praveen
+        port: 587
+        properties:
+            mail:
+                debug: true
+                smtp:
+                    auth: true
+                    connectiontimeout: 5000
+                    starttls:
+                        enable: true
+                    timeout: 5000
+                    writetimeout: 5000
+                transport:
+                    protocol: smtp
+        username: praveenatwork2017@gmail.com

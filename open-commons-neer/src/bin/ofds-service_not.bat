@@ -1,0 +1,7 @@
+echo "registering ofds service"
+set "crt_dir=%~dp0"
+set "sharedPath=%crt_dir%startApp.bat"
+echo + sharedPath      -- "%sharedPath%"
+rem sc create "ofds-app" start= demand displayname= "ofds-service" binpath= "%sharedPath%"
+rem sc start "ofds-app"
+rem sc delete "ofds-app"

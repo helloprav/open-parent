@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true" scanPeriod="2 seconds" packagingData="true">
+
+	<contextName>ofds</contextName>
+    <property name="LOG_DIR" value="${LOG_DIR}" />
+    <property name="LOG_LEVEL" value="${LOG_LEVEL}" />
+
+	<!-- proxy,common,util,web log appender -->
+	<appender name="OFDS-GENERAL"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${LOG_DIR}/ofds.log</file>
+		<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+			<Pattern>[%d{"HH:mm:ss.SSS"}] [%-5p] [%45logger{45} %3line] %msg%n</Pattern>
+
+			<!-- <Pattern>[%d{"yyyy-MM-dd HH:mm:ss.SSS,ZZZ", IST}] [%-5level] [%-21(%t)] [%45logger{45} %3L] [%18(ip=%15X{a})] [%18(IP=%15X{A})] [%7(uid=%3X{uid})] [%20(url=%16X{url})] %msg%n</Pattern> -->
+
+			<!-- The following Pattern is used to log all the user info...... relook this in future
+			<Pattern>[%d{"yyyy-MM-dd HH:mm:ss.SSS,ZZZ", IST}] [%-5level] [%-21(%t)] [%45logger{45} %3L] [%file %method] [%10.20method] | %X{req.requestURI} -
+				 | %X{request} | %X{organization} | %X{userId} | %X{client} | %X{session} | %X{service} | - %msg%n</Pattern> -->
+		</encoder>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<!-- rollover daily -->
+			<fileNamePattern>${LOG_DIR}/archived/ofds.%d{yyyy-MM-dd}.%i.log
+			</fileNamePattern>
+			<timeBasedFileNamingAndTriggeringPolicy
+				class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+				<maxFileSize>10MB</maxFileSize>
+			</timeBasedFileNamingAndTriggeringPolicy>
+		</rollingPolicy>
+	</appender>
+
+	<!-- asset management log appender -->
+	<appender name="OFDS-OTHERS"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${LOG_DIR}/ofds-others.log</file>
+		<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+			<Pattern>[%d{"HH:mm:ss.SSS"}] [%-5p] [%45logger{45} %3line] %msg%n</Pattern>
+		</encoder>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<!-- rollover daily -->
+			<fileNamePattern>${LOG_DIR}/archived/ofds-others.%d{yyyy-MM-dd}.%i.log
+			</fileNamePattern>
+			<timeBasedFileNamingAndTriggeringPolicy
+				class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+				<maxFileSize>10MB</maxFileSize>
+			</timeBasedFileNamingAndTriggeringPolicy>
+		</rollingPolicy>
+	</appender>
+
+	<logger name="org.openframework" level="${LOG_LEVEL}" additivity="false">
+		<appender-ref ref="OFDS-GENERAL" />
+	</logger>
+ 
+	<logger name="org.springframework" level="${LOG_LEVEL}" additivity="false">
+		<appender-ref ref="OFDS-OTHERS" />
+	</logger>
+
+	<logger name="net.sf.ehcache" level="${LOG_LEVEL}" additivity="false">
+		<appender-ref ref="OFDS-OTHERS" />
+	</logger>
+
+    <logger name="org.hibernate" level="${LOG_LEVEL}" additivity="false">
+        <appender-ref ref="OFDS-OTHERS" />
+    </logger>
+
+    <logger name="com.zaxxer.hikari" level="INFO" additivity="false">
+        <appender-ref ref="OFDS-OTHERS" />
+    </logger>
+
+    <logger name="org.hibernate.SQL" level="${LOG_LEVEL}" additivity="false">
+        <appender-ref ref="OFDS-OTHERS" />
+    </logger>
+
+    <logger name="org.hibernate.type.descriptor.sql " level="${LOG_LEVEL}" additivity="false">
+        <appender-ref ref="OFDS-OTHERS" />
+    </logger>
+
+	<root level="${LOG_LEVEL}">
+		<appender-ref ref="OFDS-OTHERS" />
+	</root>
+
+</configuration>

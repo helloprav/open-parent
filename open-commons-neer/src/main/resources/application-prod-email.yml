@@ -1,0 +1,25 @@
+common:
+    prop1: prop1 inside email jar
+    prop2: prop2 inside email jar
+commons:
+    email:
+        template:
+            folder: 'cmnTemplate/emails/'
+spring:
+    mail:
+        host: smtp.gmail.com
+        password: work@praveen
+        port: 587
+        properties:
+            mail:
+                debug: false
+                smtp:
+                    auth: true
+                    connectiontimeout: 5000
+                    starttls:
+                        enable: true
+                    timeout: 5000
+                    writetimeout: 5000
+                transport:
+                    protocol: smtp
+        username: praveenatwork2017@gmail.com

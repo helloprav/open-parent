@@ -1,0 +1,118 @@
+			<!-- <div class="form-group">
+				<label for="type" class="col-sm-2 control-label">Select User Role as:</label>
+				<div class="col-sm-10">
+					<select class="form-control" name="user.role" id="user.role"
+						ng-model="user.role" ng-init=" user.role = user.role"
+						ng-options="userRole as userRole for userRole in userRoles"></select>
+				</div>
+			</div> -->
+
+			<div class="form-group">
+				<label for="firstName" class="col-sm-2 control-label">First Name</label>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" placeholder="First Name" ng-model="entity.firstName" id="firstName" maxlength="50" required></input>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label for="lastName" class="col-sm-2 control-label">Last Name</label>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" placeholder="Last Name" ng-model="entity.lastName" id="lastName" maxlength="50" ></input>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label for="userName" class="col-sm-2 control-label">User Name</label>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" placeholder="Username" ng-model="entity.username" id="username" maxlength="50" required ></input>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label for="executionNode" class="col-sm-2 control-label">Gender</label>
+				<div class="col-sm-10">
+					<select class="form-control" name="gender" id="gender" ng-model="entity.gender" ng-init=" entity.gender = entity.gender"
+						ng-options="userGender as userGender for userGender in userGenders" required="required">
+						<option value="">Select Gender</option> 
+					</select>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label for="email" class="col-sm-2 control-label">Email</label>
+				<div class="col-sm-10">
+					<input type="email" class="form-control" placeholder="email" ng-model="entity.email" id="email" maxlength="50"></input>
+				</div>
+				<p ng-show="userForm.entity.email.$invalid && !userForm.entity.email.$pristine" class="help-block">Enter a valid email.</p>
+				
+			</div>
+
+			<div class="form-group">
+				<label for="mobile" class="col-sm-2 control-label">Mobile</label>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" placeholder="mobile" ng-model="entity.mobile" id="mobile" maxlength="50"></input>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label for="phone" class="col-sm-2 control-label">Phone</label>
+				<div class="col-sm-10">
+					<input type="text" class="form-control" placeholder="phone" ng-model="entity.phone" id="phone" maxlength="50" ></input>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label for="status" class="col-sm-2 control-label">Status</label>
+				<div class="col-sm-10">
+					<select class="form-control" name="entity.status" id="entity.status"
+						ng-model="entity.status" ng-init=" entity.status = entity.status"
+						ng-options="userStatus as userStatus for userStatus in userStatuses" required="required">
+<!-- 						<option value="">Select User Status</option>  -->
+					</select>
+				</div>
+			</div>
+
+			<div class="form-group" ng-init1="entity.isSuperAdmin={{entity.isSuperAdmin}}">
+				<label for="isSuperAdmin" class="col-md-2 control-label">Is Super Admin</label>
+				<div class="custom-control custom-radio custom-control-inline">
+					<input type="radio" id="entity.isSuperAdmin1" name="entity.isSuperAdmin" ng-value="true"
+						ng-model="entity.isSuperAdmin" class="custom-control-input"
+						  > <label
+						class="custom-control-label" for="entity.isSuperAdmin1">TRUE</label>
+				</div>
+				<div class="custom-control custom-radio custom-control-inline">
+					<input type="radio" id="entity.isSuperAdmin2" name="entity.isSuperAdmin" ng-value="false"
+						ng-model="entity.isSuperAdmin" checked='{{entity.isSuperAdmin}}'
+						class="custom-control-input"> <label
+						class="custom-control-label" for="entity.isSuperAdmin2">FALSE</label>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label for="description" class="col-sm-2 control-label">Description</label>
+				<div class="col-sm-10">
+					<!-- <input type="text" class="form-control" placeholder="description" ng-model="entity.description" id="description" ></input> -->
+					<textarea class="form-control" placeholder="description" ng-model="entity.description" id="description" maxlength="500"></textarea>
+				</div>
+			</div>
+
+<div class="form-group">
+	<label for="description" class="col-sm-2 control-label">Here:
+		{{groupids}}</label>
+
+	<div class="col-sm-6">Select Group(s):</div>
+	{{group.name}}
+	<div class="col-sm-6">
+		<div ng-repeat="group in groups" class="checkbox" align="left">
+			<br><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{group.id}}</span><input type="checkbox" placeholder="skipFirstLine"
+				id="id_{{group.id}}" value="{{group.id}}"
+				ng1-model1="entity.groupList"
+				ng1-1checked1="isChecked(group.id,entity.groupList) "
+				ng-checked="groupids.indexOf(group.id) > -1"
+				ng-checked-backup="groupids.indexOf(group.id) > -1"
+				ng-click="toggleSelection(group.id)">{{group.groupName}}
+			<!-- Good Article to solve above multiple check issue:: https://docs.angularjs.org/api/ng/directive/ngChecked -->
+		</div>
+	</div>
+</div>
+			

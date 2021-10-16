@@ -1,0 +1,5 @@
+cipherTransformation: AES/CBC/PKCS5Padding
+encryptionDecryptionAlgorithm: AES
+iv: pemgail9uzpgzl88
+shaAlgorithm: SHA-256
+secretKey: I am secret key

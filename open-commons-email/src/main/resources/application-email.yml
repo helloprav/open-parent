@@ -1,0 +1,26 @@
+commons:
+    location: open-commons-email.jar
+    email:
+        template:
+            folder: ''
+        thread-pool-executor:
+            size: 1
+debug: true
+spring:
+    mail:
+        host: smtp.gmail.com
+        password: password-text
+        port: 587
+        properties:
+            mail:
+                debug: true
+                smtp:
+                    auth: true
+                    connectiontimeout: 5000
+                    starttls:
+                        enable: true
+                    timeout: 5000
+                    writetimeout: 5000
+                transport:
+                    protocol: smtp
+        username: my-email@my-app.com

@@ -1,0 +1,50 @@
+#leftmenu {
+	width: 150px;
+	float: left;
+	margin: 10px;
+	margin-right: 10px;
+	margin-top: 25px;
+/* 	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3); */
+	font-family: ubuntu, Arial, Helvetica, sans-serif;
+	font-size: 10pt;
+/* 	border-radius: 5px 5px 5px 5px; */
+/* 	border: 1px solid #e1e1e1; */
+	
+}
+
+.menu {
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+	border-radius: 5px 5px 5px 5px;
+	border: 1px solid #e1e1e1;
+	margin: 0 auto 10px auto;
+	background: white;
+	font-weight: normal;
+}
+
+.menuSection {
+	margin: 5px;
+	font-size: 11pt;
+	font-weight: bold;
+	margin-left: -30px;
+}
+
+.menu p {
+	margin-left: -30px;
+}
+
+.menu .nav {
+	list-style-type: none;
+	background: transparent;
+}
+
+.menu .nav li {
+	margin: 5px;
+	margin-left: -20px;
+	background: transparent;
+}
+
+.menu .nav li a {
+	text-decoration: none;
+	color: black;
+	background: transparent;
+}

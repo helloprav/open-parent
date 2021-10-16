@@ -1,0 +1,9 @@
+spring:
+  profiles:
+    include: prod-jdbc, prod-email, prod-actuator, prod-ofds-security
+log4j:
+   logger:
+      org:
+         hibernate:
+            SQL=error
+            type=trace

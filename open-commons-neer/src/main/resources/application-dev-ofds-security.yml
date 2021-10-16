@@ -1,0 +1,21 @@
+ofds:
+  security:
+    encryptionProps:
+      cipherTransformation: AES/CBC/PKCS5Padding
+      encryptionDecryptionAlgorithm: AES
+      iv: pemgail9uzpgzl88
+      shaAlgorithm: SHA-256
+      secretKey: I am secret dev key
+    unprotectedUrls: 
+      - /ofds/api/auth/login
+      - /ofds/api/auth/logout
+      - /api/l10n/languages
+      - /api/l10n/switchLocale
+      - /api/l10n/messages/dashboard
+      - /ofds/secure
+      - /error
+    unprotectedUris: 
+      - /ofds/api/auth/*
+      - /ofds/api/l10n/*
+      - /ofds/secure/*
+      - /webjars/*

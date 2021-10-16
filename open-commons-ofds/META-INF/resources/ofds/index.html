@@ -1,0 +1,221 @@
+<!doctype html>
+<html lang="en">
+<head>
+
+	<!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+	<!-- CSS / Bootstrap -->
+    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css" crossorigin="anonymous">
+    <link rel="stylesheet" href="node_modules/@fortawesome/fontawesome-free/css/all.min.css" crossorigin="anonymous">
+	<!-- bootstrap v3.3.7 is added below to support anular.ui.bootstrap => which is added to support the pagination -->
+	<!-- <link href="https://stackpath.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css1" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"> -->
+    <style>
+        .navbar { border-radius:0; }
+        .selector-for-some-widget {
+ 			 box-sizing: content-box;
+		}
+		/* Below row and container classes are added to solve the right scroll issue:
+		* https://github.com/twbs/bootstrap/issues/8959
+		*/
+		.row {
+		    margin-left: 0;
+		    margin-right: 0;
+		}
+		.container {
+		    .row {
+		        margin-left: -15px;
+		        margin-right: -15px;
+		    }
+		}
+        /* .w-auto { width: auto; } */
+    </style>
+
+    <!-- JQuery and Bootstrap -->
+    <script src="node_modules/jquery/dist/jquery.min.js"></script>
+    <script src="node_modules/popper.js/dist/umd/popper.min.js"></script>
+    <script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+	<!-- AngularJS and Dependencies -->
+    <script src="node_modules/angular/angular.min.js"></script>
+    <script src="node_modules/angular-ui-router/release/angular-ui-router.min.js"></script>
+    <script src="node_modules/angular-ui-bootstrap/dist/ui-bootstrap-tpls.js"></script>
+    <script src="node_modules/angular-translate/dist/angular-translate.min.js"></script>
+    <script src="node_modules/angular-translate/dist/angular-translate-loader-url/angular-translate-loader-url.min.js"></script>
+
+	<!-- AngularJS App's main JavaScript -->
+    <script src="js/app.js"></script>
+
+    <!-- Internationalization / Language module -->
+    <script src="js/utils/internationalization/language-config.js"></script>
+    <script src="js/utils/internationalization/language-controller.js"></script>
+
+    <!-- user security module -->
+    <script src="js/usersecurity/authentication/auth-config.js"></script>
+    <script src="js/usersecurity/authentication/auth-controller.js"></script>
+    <!-- <script src="js/usersecurity/authentication/user-profile-service.js"></script> -->
+    <script src="js/usersecurity/security-interceptor.js"></script>
+
+	<!-- user-mgmt module :: users -->
+    <script src="js/user-mgmt/users/user-config.js"></script>
+    <script src="js/user-mgmt/users/user-factory.js"></script>
+    <script src="js/user-mgmt/users/user-controller.js"></script>
+
+	<!-- user-mgmt module :: groups -->
+    <script src="js/user-mgmt/groups/group-config.js"></script>
+    <script src="js/user-mgmt/groups/group-factory.js"></script>
+    <script src="js/user-mgmt/groups/group-controller.js"></script>
+
+	<!-- user-mgmt module :: functions -->
+    <script src="js/user-mgmt/groups/function-factory.js"></script>
+
+    <!-- Tabular Framework: Start -->
+	<link rel="stylesheet" href="js/utils/pagination/style.css" />
+	<script src="js/utils/pagination/dirPagination.js"></script>
+	<script src="js/utils/pagination/pagination-controller.js"></script>
+    <!-- Tabular Framework: End -->
+
+    <!-- Directive-IncludeCheckerMaker: Start -->
+	<script src="js/utils/directive/include-checker-maker.js"></script>
+    <!-- Directive-IncludeCheckerMaker: End -->
+
+</head>
+
+<!-- apply our angular app to our site -->
+<body ng-app="routerApp">
+
+<!-- NAVIGATION -->
+
+	<nav class="navbar navbar-default navbar-expand-lg">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#" translate="header.app.name">Project name</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="#">Home</a></li>
+            <li><a href="#/user-mgmt/users/list/">Users1</a></li>
+            <li><a href="#/group-mgmt/groups/list/">Groups2</a></li>
+	        <li class="dropdown">
+	          <a href12="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Manage Relations <span class="caret"></span></a>
+	          <ul class="dropdown-menu">
+	          	<li><a href="#/user-mgmt/users/list/">Users</a></li>
+	          	<li><a href="#/group-mgmt/groups/list/">Groups</a></li>
+	            <li role="separator" class="divider"></li>
+	            <li><a href="#/home">Separated link</a></li>
+	            <li role="separator" class="divider"></li>
+	            <li><a target="_blank" href="/neer/swagger-ui.html">Swagger UI</a></li>
+	            <li><a target="_blank" href="/neer/v2/api-docs">API Docs</a></li>
+	            <li role="separator" class="divider"></li>
+	            <li><a target="_blank" href="/neer/actuator" target="_blank">Actuator</a></li>
+	            <li><a target="_blank" href="/neer/admin/" target="_blank">Admin Status</a></li>
+				<li><a class="dropdown-item" target="_blank" href="/neer/gconfig/app" translate="header.config.app"></a></li>
+	          </ul>
+	        </li>
+	        <li class="dropdown">
+	          <a href12="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{selectLanguage.name}} ({{selectLanguage.locale}})<span class="caret"></span></a>
+	          <ul class="dropdown-menu" ng-controller="LanguageCtrl">
+				<li><a  ng-repeat="i in languages" ng-click="changeLanguage(i.locale)" class="dropdown-item" >{{i.name}}</a></li>
+	          </ul>
+	        </li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="../navbar/">Default</a></li>
+            <li><a href="../navbar-static-top/">Static top</a></li>
+            <li class="active"><a href="./">Fixed top <span class="sr-only">(current)</span></a></li>
+          </ul>
+
+        </div>
+      </div>
+    </nav>
+
+	<!-- OLD NAVIGATION SUPPORTED WITH BOOTSTRAP 4, it doesnot work with bootstrap 3 
+	<nav class="navbar navbar-default navbar-expand-lg navbar-light bg-light">
+		<a class="navbar-brand" href="#" translate="header.app.name"></a>
+		<button class="navbar-toggler" type="button" data-toggle="collapse"
+			data-target="#navbarSupportedContent"
+			aria-controls="navbarSupportedContent" aria-expanded="false"
+			aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+
+		<div class="collapse navbar-collapse" id="navbarSupportedContent">
+			<ul class="navbar-nav mr-auto">
+				<li class="nav-item active">
+					<a class="nav-link" href1234="#" ui-sref="home" translate="header.home">Home</a>
+				</li>
+				<li class="nav-item dropdown"><a
+					class="nav-link dropdown-toggle" href1234="#" id="navbarDropdown"
+					role="button" data-toggle="dropdown" aria-haspopup="true"
+					aria-expanded="false" translate="header.usermgmt"></a>
+					<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+						<a class="dropdown-item" ui-sref="user-mgmt.users.list()">Users</a>
+						<a class="dropdown-item" ui-sref="group-mgmt.groups.list()">Groups</a>
+						<div class="dropdown-divider"></div>
+						<a class="dropdown-item" target="_blank" href="/neer/ofds/app" translate="header.config.app"></a>
+					</div>
+				</li>
+			</ul>
+			<ul class="navbar-nav mr-auto">
+				<li class="nav-item dropdown" hidden="true"><a class="nav-link">{{selectLanguage.locale}}:{{selectLanguage.name}}</a></li>
+				<li class="nav-item dropdown"><a
+					class="nav-link dropdown-toggle" href1234="#" id="navbarDropdown"
+					role="button" data-toggle="dropdown" aria-haspopup="true"
+					aria-expanded="false">{{selectLanguage.name}}</a>
+					<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+						<div ng-controller="LanguageCtrl">{{o.languages}}
+							<a  ng-repeat="i in languages" ng-click="changeLanguage(i.locale)" class="dropdown-item" >{{i.name}}</a>
+						</div>
+					</div>
+				</li>
+
+				<li class="nav-item active" ng-controller="LoginCtrl"><a class="nav-link" href1234="#" >{{userProfile.username}}
+						<span class="sr-only">(current)</span>
+				</a></li>
+				<li class="nav-item dropdown"><a
+					class="nav-link dropdown-toggle" href1234="#" id="navbarDropdown"
+					role="button" data-toggle="dropdown" aria-haspopup="true"
+					aria-expanded="false" translate="header.profile"></a>
+					<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+						<a class="dropdown-item" ui-sref="user-mgmt.list" translate="header.profile.myProfile"></a> 
+						<a class="dropdown-item" ui-sref="group-mgmt.list" translate="header.profile.changepassword"></a>
+						<div class="dropdown-divider"></div>
+						<a class="dropdown-item" ui-sref="auth-logout()" translate="header.profile.logout"></a>
+					</div></li>
+				<li class="nav-item active" ng-controller="LoginCtrl"><a class="nav-link" href1234="#" >{{userProfile.firstName}}
+						<span class="sr-only">(current)</span>
+				</a></li>
+			</ul>
+		</div>
+	</nav><br>	-->
+
+	<!-- MAIN CONTENT -->
+<!-- THIS IS WHERE WE WILL INJECT OUR CONTENT ============================== -->
+<div class="row">
+	<div class="col-sm-3 col-3">
+		<div class="container">
+		    <div ui-view="leftMenu"></div>
+		</div>
+	</div>
+	<div class="col-sm-8 col-9">
+		<div class="container">
+		    <div  autoscroll="false" ui-view></div>
+		</div>
+	</div>
+</div>
+<div class="row border">
+	<div class="col-sm-12">
+		<div class="text-center">
+		    <p translate="footer.copyright"> <a href="http://scotch.io" target="_blank">scotch.io</a></p>
+		    <p>View the tutorial: <a href="http://scotch.io/tutorials/javascript/angular-routing-using-ui-router" target="_blank">AngularJS Routing using UI-Router</a></p>
+		</div>
+	</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,20 @@
+security:
+  encryptionProps:
+    cipherTransformation: AES/CBC/PKCS5Padding
+    encryptionDecryptionAlgorithm: AES
+    iv: pemgail9uzpgzl88
+    shaAlgorithm: SHA-256
+    secretKey: I am secret prod key
+  unprotectedUrls: 
+    - /api/auth/login
+    - /api/auth/logout
+    - /api/l10n/languages
+    - /api/l10n/switchLocale
+    - /api/l10n/messages/dashboard
+    - /secure
+    - /error
+  unprotectedUris: 
+    - /api/auth/*
+    - /api/l10n/*
+    - /secure/*
+    - /webjars/*

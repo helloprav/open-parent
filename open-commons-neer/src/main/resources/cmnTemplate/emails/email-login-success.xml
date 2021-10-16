@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mail-template>
+	<!-- <isEnabled>true</isEnabled> -->
+	<subject>Login Success Notification</subject>
+	<fromAddress>noreply-etme@email.com</fromAddress>
+	<fromName>Application Admin</fromName>
+	<body><![CDATA[Hi @firstName@,
+
+This is to notify that you have successfully logged into the application using Web Browser.
+
+Please do not reply to this email.]]>
+	</body>
+</mail-template>

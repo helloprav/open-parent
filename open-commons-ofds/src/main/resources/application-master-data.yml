@@ -1,0 +1,15 @@
+masterdata:
+  appStartQueryList:
+    - name: groups-ofds
+      condition: true
+      read: SELECT count(*) FROM groupe
+      sqls:
+        - INSERT INTO groupe (created_date, is_valid, description, group_name, created_by) VALUES (now(), 1, 'This is user admin group', 'User Admin Group', 1)
+      insert:
+      update:
+    - name: users-ofds
+      condition: true
+      read: Select count(*) from User
+      sqls:
+        - INSERT INTO user (USERNAME, PASSWORD, FIRST_NAME, IS_VALID, EMAIL, GENDER, STATUS, CREATED_BY, CREATED_DATE, IS_SUPER_ADMIN) VALUES ('admin', '5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8', 'Admin', 1, 'praveenatwork2018@gmail.com', 'male', 'active', '1', now(), 1)
+        
