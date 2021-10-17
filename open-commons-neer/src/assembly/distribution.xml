@@ -12,6 +12,7 @@
 			<directory>${basedir}</directory>
 			<includes>
 				<include>*.txt</include>
+				<include>*.zip</include>
 			</includes>
 			<excludes>
 				<exclude>README.txt</exclude>
