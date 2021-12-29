@@ -1,9 +1,9 @@
 spring:
   datasource:
     driverClassName: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/neerdev?createDatabaseIfNotExist=true&autoreconnect=true&useSSL=false&allowPublicKeyRetrieval=true
-    username: root
-    password: root
+    url: jdbc:mysql://localhost:3306/${dbName}?createDatabaseIfNotExist=true&autoreconnect=true&useSSL=false&allowPublicKeyRetrieval=true
+    username: ${dbUser}
+    password: ${dbPassword}
     testOnBorrow: "true"
     testWhileIdle: "true"
     timeBetweenEvictionRunsMillis: "60000"

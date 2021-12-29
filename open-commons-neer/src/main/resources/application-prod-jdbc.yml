@@ -2,8 +2,8 @@ spring:
   datasource:
     driverClassName: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/${dbName}?createDatabaseIfNotExist=true&autoreconnect=true&useSSL=false&allowPublicKeyRetrieval=true
-    username: root
-    password: root
+    username: ${dbUser}
+    password: ${dbPassword}
     testOnBorrow: "true"
     testWhileIdle: "true"
     timeBetweenEvictionRunsMillis: "60000"
@@ -18,3 +18,6 @@ spring:
     hibernate:
       ddl-auto: update
       dialect: org.hibernate.dialect.MySQL5Dialect
+  flyway:
+    baselineOnMigrate: true
+    validateOnMigrate: false

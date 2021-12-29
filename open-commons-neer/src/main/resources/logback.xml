@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration scan="true" scanPeriod="2 seconds" packagingData="true">
 
-	<contextName>ofds</contextName>
-    <property name="LOG_DIR" value="${LOG_DIR}" />
+	<!-- <contextName>neer</contextName> -->
+    <property name="LOG_DIR" value="${APP_HOME}/logs" />
     <property name="LOG_LEVEL" value="${LOG_LEVEL}" />
 
 	<!-- proxy,common,util,web log appender -->
-	<appender name="OFDS-GENERAL"
+	<appender name="NEER-GENERAL"
 		class="ch.qos.logback.core.rolling.RollingFileAppender">
 		<file>${LOG_DIR}/ofds.log</file>
 		<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
@@ -30,7 +30,7 @@
 	</appender>
 
 	<!-- asset management log appender -->
-	<appender name="OFDS-OTHERS"
+	<appender name="NEER-OTHERS"
 		class="ch.qos.logback.core.rolling.RollingFileAppender">
 		<file>${LOG_DIR}/ofds-others.log</file>
 		<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
@@ -48,35 +48,35 @@
 	</appender>
 
 	<logger name="org.openframework" level="${LOG_LEVEL}" additivity="false">
-		<appender-ref ref="OFDS-GENERAL" />
+		<appender-ref ref="NEER-GENERAL" />
 	</logger>
  
 	<logger name="org.springframework" level="${LOG_LEVEL}" additivity="false">
-		<appender-ref ref="OFDS-OTHERS" />
+		<appender-ref ref="NEER-OTHERS" />
 	</logger>
 
 	<logger name="net.sf.ehcache" level="${LOG_LEVEL}" additivity="false">
-		<appender-ref ref="OFDS-OTHERS" />
+		<appender-ref ref="NEER-OTHERS" />
 	</logger>
 
     <logger name="org.hibernate" level="${LOG_LEVEL}" additivity="false">
-        <appender-ref ref="OFDS-OTHERS" />
+        <appender-ref ref="NEER-OTHERS" />
     </logger>
 
     <logger name="com.zaxxer.hikari" level="INFO" additivity="false">
-        <appender-ref ref="OFDS-OTHERS" />
+        <appender-ref ref="NEER-OTHERS" />
     </logger>
 
     <logger name="org.hibernate.SQL" level="${LOG_LEVEL}" additivity="false">
-        <appender-ref ref="OFDS-OTHERS" />
+        <appender-ref ref="NEER-OTHERS" />
     </logger>
 
     <logger name="org.hibernate.type.descriptor.sql " level="${LOG_LEVEL}" additivity="false">
-        <appender-ref ref="OFDS-OTHERS" />
+        <appender-ref ref="NEER-OTHERS" />
     </logger>
 
 	<root level="${LOG_LEVEL}">
-		<appender-ref ref="OFDS-OTHERS" />
+		<appender-ref ref="NEER-OTHERS" />
 	</root>
 
 </configuration>

@@ -1,6 +1,6 @@
 spring:
   profiles:
-    include: prod-jdbc, prod-email, prod-actuator, prod-ofds-security
+    include: prod-jdbc, prod-email, prod-actuator, prod-ofds-security, prod-caching
 log4j:
    logger:
       org:

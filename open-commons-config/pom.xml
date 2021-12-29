@@ -89,11 +89,6 @@
 			<artifactId>standard</artifactId>
 			<version>${tld.version}</version>
 		</dependency>
-		<dependency>
-			<groupId>taglibs</groupId>
-			<artifactId>standard</artifactId>
-			<version>${tld.version}</version>
-		</dependency>
 
 		<!-- Json Support for the Spring Controllers / End Points -->
 		<dependency>

@@ -1,10 +1,10 @@
-common:
-    prop1: prop1 inside email jar
-    prop2: prop2 inside email jar
 commons:
+    location: NeerApp.jar
     email:
         template:
             folder: 'cmnTemplate/emails/'
+        thread-pool-executor:
+            size: 2
 spring:
     mail:
         host: smtp.gmail.com

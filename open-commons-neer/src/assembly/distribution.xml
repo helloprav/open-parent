@@ -24,6 +24,7 @@
 			<outputDirectory>bin</outputDirectory>
 			<includes>
 				<include>db-*.bat</include>
+				<include>app-*.bat</include>
 				<include>ofds-*.bat</include>
 				<include>*.properties</include>
 				<include>*.sql</include>
@@ -59,9 +60,12 @@
 			</includes>
 		</fileSet>
 		<fileSet>
-			<directory>src/main/resources</directory>
+			<directory>src/assembly</directory>
 			<outputDirectory>logs</outputDirectory>
 			<fileMode>0755</fileMode>
+			<includes>
+				<include>filter.properties</include>
+			</includes>
 			<excludes>
 				<exclude>**/*</exclude>
 			</excludes>

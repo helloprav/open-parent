@@ -1,10 +1,12 @@
 management:
   security:
-    enabled: false
+    enabled: true
   endpoints:
-    web:
-      exposure:
-        include: health,info,beans,env
     health:
       show-components: always
       show-details: always
+    info:
+      enabled: true
+    web:
+      exposure:
+        include: health,info,beans,env
