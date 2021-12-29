@@ -10,3 +10,5 @@ buildNumber.properties
 # https://github.com/takari/maven-wrapper#usage-without-binary-jar
 .mvn/wrapper/maven-wrapper.jar
 /target/
+open-commons-neer/src/bin/util-get-date.bat
+open-commons-neer/src/bin/util-get-date2.bat
