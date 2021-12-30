@@ -12,7 +12,7 @@ import javax.persistence.Table;
  * 
  */
 @Entity
-@Table(name="GROUP_HISTORY")
+@Table(name="OFDS_GROUP_HISTORY")
 @NamedQuery(name="GroupHistory.findAll", query="SELECT g FROM Group g join fetch g.groupFunctions gf")
 public class GroupHistory extends HistoryEntity implements Serializable {
 	private static final long serialVersionUID = 1L;

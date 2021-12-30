@@ -19,7 +19,7 @@ import org.openframework.commons.constants.CommonConstants;
  */
 @Entity
 @DynamicUpdate
-@Table(name="USER_GROUP")
+@Table(name="OFDS_USER_GROUP")
 //@NamedQuery(name="UserGroup.findAll", query="SELECT u FROM UserGroup u join fetch u.")
 public class UserGroup extends MainEntity implements Serializable {
 	private static final long serialVersionUID = 1L;

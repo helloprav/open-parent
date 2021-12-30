@@ -13,35 +13,35 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
 -- -----------------------------------------------------
 
 -- -----------------------------------------------------
--- TRIGGER `TRIG_USER_INSERT`
+-- TRIGGER `OFDS_TRIG_USER_INSERT`
 -- -----------------------------------------------------
-DROP TRIGGER IF EXISTS `TRIG_USER_INSERT`;
+DROP TRIGGER IF EXISTS `OFDS_TRIG_USER_INSERT`;
 
 DELIMITER $$
 
-CREATE TRIGGER `TRIG_USER_INSERT` 
-  AFTER INSERT ON `USER`
+CREATE TRIGGER `OFDS_TRIG_USER_INSERT` 
+  AFTER INSERT ON `OFDS_USER`
   FOR EACH ROW 
 BEGIN 
-  INSERT INTO `user_history` (`ver_num`, `parent_id`, `username`, `email`, `first_name`, `last_name`, `gender`, `mobile`, `phone`, `status`, `description`, `is_super_admin`, `is_valid`, `created_by`, `created_date`, `modified_by`, `modified_date`) 
+  INSERT INTO `ofds_user_history` (`ver_num`, `parent_id`, `username`, `email`, `first_name`, `last_name`, `gender`, `mobile`, `phone`, `status`, `description`, `is_super_admin`, `is_valid`, `created_by`, `created_date`, `modified_by`, `modified_date`) 
   VALUES (1, new.id,new.username, new.email, new.first_name, new.last_name, new.gender, new.mobile, new.phone, new.status, new.description, new.is_super_admin, new.is_valid, new.created_by, new.created_date, new.modified_by, new.modified_date);
 
 END$$
 DELIMITER ;
 
 -- -----------------------------------------------------
--- TRIGGER `TRIG_USER_UPDATE`
+-- TRIGGER `OFDS_TRIG_USER_UPDATE`
 -- -----------------------------------------------------
-DROP TRIGGER IF EXISTS `TRIG_USER_UPDATE`;
+DROP TRIGGER IF EXISTS `OFDS_TRIG_USER_UPDATE`;
 
 DELIMITER $$
 
-CREATE TRIGGER `TRIG_USER_UPDATE` 
-  AFTER UPDATE ON `USER`
+CREATE TRIGGER `OFDS_TRIG_USER_UPDATE` 
+  AFTER UPDATE ON `OFDS_USER`
   FOR EACH ROW 
 BEGIN
-  SET @VersionNumber = (SELECT COALESCE(MAX(ver_num),0)+1 FROM `user_history` where parent_id = new.id);
-  INSERT INTO `user_history` (`ver_num`, `parent_id`, `username`, `email`, `first_name`, `last_name`, `gender`, `mobile`, `phone`, `status`, `description`, `is_super_admin`, `is_valid`, `created_by`, `created_date`, `modified_by`, `modified_date`) 
+  SET @VersionNumber = (SELECT COALESCE(MAX(ver_num),0)+1 FROM `ofds_user_history` where parent_id = new.id);
+  INSERT INTO `ofds_user_history` (`ver_num`, `parent_id`, `username`, `email`, `first_name`, `last_name`, `gender`, `mobile`, `phone`, `status`, `description`, `is_super_admin`, `is_valid`, `created_by`, `created_date`, `modified_by`, `modified_date`) 
   VALUES (@VersionNumber, new.id,new.username, new.email, new.first_name, new.last_name, new.gender, new.mobile, new.phone, new.status, new.description, new.is_super_admin, new.is_valid, new.created_by, new.created_date, new.modified_by, new.modified_date);
 
 END$$
@@ -52,41 +52,41 @@ DELIMITER ;
 -- -----------------------------------------------------
 
 -- -----------------------------------------------------
--- TRIGGER `TRIG_GROUP_INSERT`
+-- TRIGGER `OFDS_TRIG_GROUP_INSERT`
 -- -----------------------------------------------------
-DROP TRIGGER IF EXISTS `TRIG_GROUP_INSERT`;
+DROP TRIGGER IF EXISTS `OFDS_TRIG_GROUP_INSERT`;
 
 DELIMITER $$
 
-CREATE TRIGGER `TRIG_GROUP_INSERT` 
-  AFTER INSERT ON `GROUPE`
+CREATE TRIGGER `OFDS_TRIG_GROUP_INSERT` 
+  AFTER INSERT ON `OFDS_GROUP`
   FOR EACH ROW 
 BEGIN 
-  INSERT INTO `group_history` (`ver_num`, `action`, `parent_id`, `group_name`, `description`, `is_valid`, `created_by`, `created_date`, `modified_by`, `modified_date`) 
+  INSERT INTO `ofds_group_history` (`ver_num`, `action`, `parent_id`, `group_name`, `description`, `is_valid`, `created_by`, `created_date`, `modified_by`, `modified_date`) 
   VALUES (1, 'ADD', new.id, new.group_name, new.description, new.is_valid, new.created_by, new.created_date, new.modified_by, new.modified_date);
 
 END$$
 DELIMITER ;
 
 -- -----------------------------------------------------
--- TRIGGER `TRIG_GROUP_UPDATE`
+-- TRIGGER `OFDS_TRIG_GROUP_UPDATE`
 -- -----------------------------------------------------
-DROP TRIGGER IF EXISTS `TRIG_GROUP_UPDATE`;
+DROP TRIGGER IF EXISTS `OFDS_TRIG_GROUP_UPDATE`;
 
 DELIMITER $$
 
-CREATE TRIGGER `TRIG_GROUP_UPDATE` 
-  AFTER UPDATE ON `GROUPE`
+CREATE TRIGGER `OFDS_TRIG_GROUP_UPDATE` 
+  AFTER UPDATE ON `OFDS_GROUP`
   FOR EACH ROW 
 BEGIN
-  SET @VersionNumber = (SELECT COALESCE(MAX(ver_num),0)+1 FROM `group_history` where parent_id = new.id);
-  INSERT INTO `group_history` (`ver_num`, `action`, `parent_id`, `group_name`, `description`, `is_valid`, `created_by`, `created_date`, `modified_by`, `modified_date`) 
+  SET @VersionNumber = (SELECT COALESCE(MAX(ver_num),0)+1 FROM `ofds_group_history` where parent_id = new.id);
+  INSERT INTO `ofds_group_history` (`ver_num`, `action`, `parent_id`, `group_name`, `description`, `is_valid`, `created_by`, `created_date`, `modified_by`, `modified_date`) 
   VALUES (@VersionNumber, 'MOD', new.id, new.group_name, new.description, new.is_valid, new.created_by, new.created_date, new.modified_by, new.modified_date);
 
 END$$
 DELIMITER ;
 
-UPDATE `admin_status` SET `status` = 'completed', created_date = now()  WHERE (`name` = 'TRIGGER_CREATED');
+-- UPDATE `admin_status` SET `status` = 'completed', created_date = now()  WHERE (`name` = 'TRIGGER_CREATED');
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;

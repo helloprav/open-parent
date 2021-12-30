@@ -19,7 +19,7 @@ import org.openframework.commons.enums.UserStatus;
  */
 @Entity
 //@DynamicUpdate
-@Table(name = "UserHistory")
+@Table(name = "Ofds_UserHistory")
 @NamedQuery(name = "UserHistory.findAll", query = "SELECT u FROM UserHistory u")
 public class UserHistory extends HistoryEntity implements Serializable {
 	private static final long serialVersionUID = 1L;

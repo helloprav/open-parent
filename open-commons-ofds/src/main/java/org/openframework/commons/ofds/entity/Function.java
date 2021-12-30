@@ -13,7 +13,7 @@ import java.util.List;
  */
 @Entity
 @DynamicUpdate
-@Table(name = "FUNCTIONS")
+@Table(name = "OFDS_FUNCTION")
 @NamedQuery(name = "Function.findAll", query = "SELECT g FROM Function g")
 public class Function extends MainEntity implements Serializable {
 	private static final long serialVersionUID = 1L;

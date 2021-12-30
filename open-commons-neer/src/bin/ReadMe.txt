@@ -22,7 +22,3 @@ A. start the windows service mysql-8.0.19-winx64 (registered in step 7,8,9 above
 B. start the ofds db  (distribution-root-directory\bin\db-start.bat)
 C. start the ofds app (distribution-root-directory\bin\ofds-start.bat)
 
-
-
-## To create db triggers/ for history data
-10. run the script: distribution-root-directory\bin\db-service_admin.bat

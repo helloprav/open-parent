@@ -19,7 +19,7 @@ import org.openframework.commons.constants.CommonConstants;
  */
 @Entity
 @DynamicUpdate
-@Table(name = "GROUP_FUNCTION")
+@Table(name = "OFDS_GROUP_FUNCTION")
 @NamedQuery(name = "GroupFunction.findAll", query = "SELECT g FROM GroupFunction g")
 public class GroupFunction extends MainEntity implements Serializable {
 	private static final long serialVersionUID = 1L;

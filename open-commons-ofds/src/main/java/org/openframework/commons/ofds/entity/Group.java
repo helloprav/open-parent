@@ -19,7 +19,7 @@ import org.hibernate.annotations.DynamicUpdate;
  */
 @Entity
 @DynamicUpdate
-@Table(name="GROUPE")
+@Table(name="OFDS_GROUP")
 @NamedQuery(name="Group.findAll", query="SELECT g FROM Group g join fetch g.groupFunctions gf")
 public class Group extends MainEntity implements Serializable {
 	private static final long serialVersionUID = 1L;

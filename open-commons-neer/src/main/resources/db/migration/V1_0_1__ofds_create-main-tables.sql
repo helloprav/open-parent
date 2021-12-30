@@ -16,13 +16,13 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `functions`
+-- Table structure for table `ofds_function`
 --
 
-DROP TABLE IF EXISTS `functions`;
+DROP TABLE IF EXISTS `ofds_function`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `functions` (
+CREATE TABLE `ofds_function` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `created_date` datetime DEFAULT NULL,
   `is_valid` tinyint(1) DEFAULT '1',
@@ -38,13 +38,13 @@ CREATE TABLE `functions` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Table structure for table `group_function`
+-- Table structure for table `ofds_group_function`
 --
 
-DROP TABLE IF EXISTS `group_function`;
+DROP TABLE IF EXISTS `ofds_group_function`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `group_function` (
+CREATE TABLE `ofds_group_function` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `created_date` datetime DEFAULT NULL,
   `is_valid` tinyint(1) DEFAULT '1',
@@ -62,13 +62,13 @@ CREATE TABLE `group_function` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Table structure for table `groupe`
+-- Table structure for table `ofds_group`
 --
 
-DROP TABLE IF EXISTS `groupe`;
+DROP TABLE IF EXISTS `ofds_group`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `groupe` (
+CREATE TABLE `ofds_group` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `created_date` datetime DEFAULT NULL,
   `is_valid` tinyint(1) DEFAULT '1',
@@ -85,13 +85,13 @@ CREATE TABLE `groupe` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Table structure for table `user`
+-- Table structure for table `ofds_user`
 --
 
-DROP TABLE IF EXISTS `user`;
+DROP TABLE IF EXISTS `ofds_user`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `user` (
+CREATE TABLE `ofds_user` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `created_date` datetime DEFAULT NULL,
   `is_valid` tinyint(1) DEFAULT '1',
@@ -116,13 +116,13 @@ CREATE TABLE `user` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Table structure for table `user_group`
+-- Table structure for table `ofds_user_group`
 --
 
-DROP TABLE IF EXISTS `user_group`;
+DROP TABLE IF EXISTS `ofds_user_group`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `user_group` (
+CREATE TABLE `ofds_user_group` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `created_date` datetime DEFAULT NULL,
   `is_valid` tinyint(1) DEFAULT '1',

@@ -16,13 +16,13 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `group_history`
+-- Table structure for table `ofds_group_history`
 --
 
-DROP TABLE IF EXISTS `group_history`;
+DROP TABLE IF EXISTS `ofds_group_history`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `group_history` (
+CREATE TABLE `ofds_group_history` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `created_date` datetime DEFAULT NULL,
   `is_valid` tinyint(1) DEFAULT '1',
@@ -41,13 +41,13 @@ CREATE TABLE `group_history` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Table structure for table `user_history`
+-- Table structure for table `ofds_user_history`
 --
 
-DROP TABLE IF EXISTS `user_history`;
+DROP TABLE IF EXISTS `ofds_user_history`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `user_history` (
+CREATE TABLE `ofds_user_history` (
   `id` bigint NOT NULL AUTO_INCREMENT,
   `created_date` datetime DEFAULT NULL,
   `is_valid` tinyint(1) DEFAULT '1',
