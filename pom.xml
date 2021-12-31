@@ -483,12 +483,10 @@
 		<module>open-commons-spring-data-jpa</module>
 		<module>open-commons-email</module>
 		<module>open-commons-aop</module>
-		<module>open-commons-master-data</module>
 		<module>open-commons-swagger</module>
 		<module>open-commons-reports</module>
 		<module>open-commons-ofds</module>
 		<module>open-commons-cache</module>
-		
 		<module>open-commons-neer</module>
 	</modules>
 </project>

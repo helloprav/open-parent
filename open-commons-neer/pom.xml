@@ -93,10 +93,6 @@
 		</dependency>
 		<dependency>
 			<groupId>org.openframework</groupId>
-			<artifactId>open-commons-master-data</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.openframework</groupId>
 			<artifactId>open-commons-rest</artifactId>
 		</dependency>
 		<dependency>

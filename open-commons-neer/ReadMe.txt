@@ -119,6 +119,13 @@ https://howtodoinjava.com/spring-boot2/sb-multi-module-maven-project/
 - Spring Boot Events
 	- Publish event in OFDS & Listen in email module to sendEmail()
 =====================================================================
+2021-12-31
+------------------------------------------------------------
+Modular Database
+- Table names to prepend module name (in previous check-ins)
+- db/migration/*.sql file names to prepend module version(yy.mm) & name(ofds)
+- remove master data module if not required
+=====================================================================
 2021-03-14
 ------------------------------------------------------------
 - Moved Neer app inside open-parent as a module
