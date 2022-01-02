@@ -7,7 +7,7 @@ import java.util.Map;
 import javax.servlet.ServletRegistration;
 import javax.servlet.http.HttpServletRequest;
 
-import org.openframework.commons.config.constants.AppConstants;
+import org.openframework.commons.config.constants.ConfigAppConstants;
 import org.openframework.commons.config.model.LanguageBean;
 import org.openframework.commons.config.model.MessageResourceLocale;
 import org.openframework.commons.config.service.I18nService;
@@ -29,7 +29,7 @@ public class AppConfigController {
 	@RequestMapping(method = RequestMethod.GET)
 	public String init(HttpServletRequest request) {
 
-		System.out.println("CONFIG_APP_NAME:: "+ request.getServletContext().getAttribute(AppConstants.CONFIG_APP_NAME));
+		System.out.println("CONFIG_APP_NAME:: "+ request.getServletContext().getAttribute(ConfigAppConstants.CONFIG_APP_NAME));
 		Map<String, MessageResourceLocale> messageResources = i18nService.getMessageResourceMap();
 		request.setAttribute("messageResources", messageResources);
 

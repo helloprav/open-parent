@@ -2,4 +2,4 @@ security:
   config: false
 home:
   redirect:
-    path: home.html
+    path: redirect:/ofds/index.html

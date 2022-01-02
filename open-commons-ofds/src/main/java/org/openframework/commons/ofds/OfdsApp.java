@@ -2,10 +2,16 @@ package org.openframework.commons.ofds;
 
 import java.util.List;
 
+import javax.annotation.PostConstruct;
+
+import org.openframework.commons.config.constants.ConfigAppConstants;
 import org.openframework.commons.ofds.controller.argumentresolver.UserProfileHandlerMethodArgumentResolver;
 import org.openframework.commons.ofds.controller.interceptor.OfdsSecurityInterceptor;
 import org.openframework.commons.ofds.props.MasterDataProps;
 import org.openframework.commons.ofds.props.OfdsSecurityProps;
+import org.openframework.commons.utils.FileFolderUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -21,6 +27,18 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @EnableJpaRepositories(basePackages = "org.openframework.commons.ofds")
 @EntityScan(basePackageClasses = OfdsApp.class)
 public class OfdsApp implements WebMvcConfigurer {
+
+	private static final Logger logger = LoggerFactory.getLogger(OfdsApp.class);
+
+	@PostConstruct
+	public void validateEnvVariables() {
+		String appHome = System.getProperty(ConfigAppConstants.CONST_APP_HOME);
+		logger.info(ConfigAppConstants.CONST_APP_HOME+" from environment variable: "+appHome);
+		if(!FileFolderUtils.isDirectoryExists(appHome)) {
+			logger.error(ConfigAppConstants.CONST_APP_HOME + " from environment variable does not exists.");
+			throw new Error(ConfigAppConstants.CONST_APP_HOME + " from environment variable does not exists.");
+		}
+	}
 
 	@Autowired
 	private UserProfileHandlerMethodArgumentResolver userProfileHandlerMethodArgumentResolver;

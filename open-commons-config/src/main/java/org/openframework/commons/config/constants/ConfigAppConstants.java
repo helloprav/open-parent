@@ -1,6 +1,6 @@
 package org.openframework.commons.config.constants;
 
-public class AppConstants {
+public class ConfigAppConstants {
 
 	public static final String CONFIG_APP_NAME = "gconfig";
 	public static final String SLASH_CONFIG_APP = "/"+CONFIG_APP_NAME;
@@ -17,6 +17,7 @@ public class AppConstants {
 	public static final String MESSAGE_TYPE_DASHBOARD = "dashboard";
 	public static final String MESSAGE_TYPE_ERRORS = "errors";
 
+	public static final String CONST_APP_HOME = "APP_HOME";
 	public static final String SHARED_PATH = "sharedPath";
 	public static final String APPLICATION_CONFIG_DIR = "cmnConfig";
 	public static final String APPLICATION_MESSAGE_DIR = "cmnMessage";

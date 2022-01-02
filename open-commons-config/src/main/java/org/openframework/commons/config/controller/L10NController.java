@@ -9,7 +9,7 @@ import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.openframework.commons.config.constants.AppConstants;
+import org.openframework.commons.config.constants.ConfigAppConstants;
 import org.openframework.commons.config.model.LanguageBean;
 import org.openframework.commons.config.service.I18nService;
 import org.slf4j.Logger;
@@ -26,7 +26,7 @@ import org.springframework.web.servlet.LocaleResolver;
 import io.swagger.annotations.Api;
 
 @RestController
-@RequestMapping(AppConstants.CONFIG_API_L10N_PATH)
+@RequestMapping(ConfigAppConstants.CONFIG_API_L10N_PATH)
 @Api(value = "L10N Controller", description = "REST APIs related to Student Entity!!!!")
 public class L10NController {
 
@@ -57,7 +57,7 @@ public class L10NController {
 
 	@GetMapping(value = "/messages", produces = { "application/json" })
 	public @ResponseBody Map<String, String> getMessages(HttpServletRequest request) {
-		return getMessagesByTypeAndLocale(request, AppConstants.MESSAGE_TYPE_DASHBOARD, null);
+		return getMessagesByTypeAndLocale(request, ConfigAppConstants.MESSAGE_TYPE_DASHBOARD, null);
 	}
 
 	@GetMapping(path = "/messages/{messageType}")

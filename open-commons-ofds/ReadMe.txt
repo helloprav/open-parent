@@ -1,10 +1,4 @@
 2021-10-31
-------------------------------------------------------------
-Database
-- properties file names to prepend module name
-- Table names to prepend module name
-- db/migration/*.sql file names to prepend module version(yy.mm) & name(ofds)
-- remove master data module if not required
 ============================================================
 List of tasks against each service:
 - db main table
@@ -20,4 +14,5 @@ List of tasks against each service:
 List of tasks against tabular data:
 - pagination
 - sorting
+- historic data
 - report (pdf/xls)

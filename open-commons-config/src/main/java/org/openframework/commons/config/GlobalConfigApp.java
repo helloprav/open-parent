@@ -76,11 +76,14 @@ public class GlobalConfigApp implements WebMvcConfigurer {
 	/**
 	 * This code isn't required in spring boot app, as it is automatically done by spring boot framework.
 	 */
-	@Override
-	public void addResourceHandlers(ResourceHandlerRegistry registry) {
-		//registry.addResourceHandler("/resources/**").addResourceLocations("/resources/");
-		//registry.addResourceHandler("swagger-ui.html").addResourceLocations("classpath:/META-INF/resources/");
-		registry.addResourceHandler("/webjars/**").addResourceLocations("classpath:/META-INF/resources/webjars/");
-	}
+	/*
+	 * @Override public void addResourceHandlers(ResourceHandlerRegistry registry) {
+	 * //registry.addResourceHandler("/resources/**").addResourceLocations(
+	 * "/resources/");
+	 * //registry.addResourceHandler("swagger-ui.html").addResourceLocations(
+	 * "classpath:/META-INF/resources/");
+	 * //registry.addResourceHandler("/webjars/**").addResourceLocations(
+	 * "classpath:/META-INF/resources/webjars/"); }
+	 */
 
 }

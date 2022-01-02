@@ -23,7 +23,7 @@ import javax.annotation.PostConstruct;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.openframework.commons.config.constants.AppConstants;
+import org.openframework.commons.config.constants.ConfigAppConstants;
 import org.openframework.commons.config.model.LanguageBean;
 import org.openframework.commons.config.model.MessageResourceLocale;
 import org.openframework.commons.config.service.I18nService;
@@ -57,7 +57,7 @@ public class MessageResourceASImpl implements MessageResourceAS {
 
 	public MessageResourceASImpl() {
 		System.out.println("MessageResourceASImpl() called");
-		System.out.println("SHARED_PATH: "+System.getProperty(AppConstants.SHARED_PATH));
+		System.out.println("SHARED_PATH: "+System.getProperty(ConfigAppConstants.SHARED_PATH));
 		Properties properties = System.getProperties();
 		LinkedHashMap<String, String> collect = properties.entrySet().stream()
                 .collect(Collectors.toMap(k -> (String) k.getKey(), e -> (String) e.getValue()))
@@ -93,12 +93,12 @@ public class MessageResourceASImpl implements MessageResourceAS {
 
 	private String getMessageDir(String sharedPath) {
 
-		return getResourcePath(sharedPath, AppConstants.APPLICATION_MESSAGE_DIR);
+		return getResourcePath(sharedPath, ConfigAppConstants.APPLICATION_MESSAGE_DIR);
 	}
 
 	private String getConfigDir(String sharedPath) {
 
-		return getResourcePath(sharedPath, AppConstants.APPLICATION_CONFIG_DIR);
+		return getResourcePath(sharedPath, ConfigAppConstants.APPLICATION_CONFIG_DIR);
 	}
 
 	private String getResourcePath(String sharedPath, String resourceDir) {
@@ -114,11 +114,11 @@ public class MessageResourceASImpl implements MessageResourceAS {
 			logger.warn("resourcePath from environment variable: "+resourcePath);
 		} else {
 
-			if(AppConstants.APPLICATION_MESSAGE_DIR.equals(resourceDir)) {
+			if(ConfigAppConstants.APPLICATION_MESSAGE_DIR.equals(resourceDir)) {
 
 				resourcePath = getMessageDirFromClasspath(resourceDir);
 				logger.warn("resourcePath (message) from classpath: "+resourcePath);
-			} else if(AppConstants.APPLICATION_CONFIG_DIR.equals(resourceDir)) {
+			} else if(ConfigAppConstants.APPLICATION_CONFIG_DIR.equals(resourceDir)) {
 
 				resourcePath = getConfigDirFromClasspath(resourceDir);
 				logger.warn("resourcePath (config) from classpath: "+resourcePath);
@@ -132,7 +132,7 @@ public class MessageResourceASImpl implements MessageResourceAS {
 
 	private String getMessageDirFromClasspath(String resourceDir) {
 
-		String messageDirFromClasspath = System.getProperty(AppConstants.MESSAGE_DIR_KEY, resourceDir);
+		String messageDirFromClasspath = System.getProperty(ConfigAppConstants.MESSAGE_DIR_KEY, resourceDir);
 		logger.warn("messageDirFromClasspath: "+messageDirFromClasspath);
 		if(null != messageDirFromClasspath) {
 			messageDirFromClasspath = ClasspathUtils.getPathFromClasspathFolder(messageDirFromClasspath);
@@ -146,7 +146,7 @@ public class MessageResourceASImpl implements MessageResourceAS {
 		 * get messageDirName from System Property supplied using -DmessageKey=xyz in jvm arguments
 		 * if "messageKey" system property not found, then use the default value i.e. "message"
 		 */
-		String configDirFromClasspath = System.getProperty(AppConstants.CONFIG_DIR_KEY, resourceDir);
+		String configDirFromClasspath = System.getProperty(ConfigAppConstants.CONFIG_DIR_KEY, resourceDir);
 		logger.warn("configDirFromClasspath: "+configDirFromClasspath);
 		if(null != configDirFromClasspath) {
 			configDirFromClasspath = ClasspathUtils.getPathFromClasspathFolder(configDirFromClasspath);
@@ -161,9 +161,9 @@ public class MessageResourceASImpl implements MessageResourceAS {
 
 		for (File file : globalPropertyFileList) {
 			final String fileName = file.getName();
-			if(fileName.endsWith(AppConstants.FILE_EXTENSION_PROPERTIES)) {
+			if(fileName.endsWith(ConfigAppConstants.FILE_EXTENSION_PROPERTIES)) {
 				appConfigsMap.put(FilenameUtils.removeExtension(fileName).toLowerCase(), FileFolderUtils.loadPropFromFile(file));
-			} else if(fileName.endsWith(AppConstants.FILE_EXTENSION_YML)) {
+			} else if(fileName.endsWith(ConfigAppConstants.FILE_EXTENSION_YML)) {
 				appConfigsMap.put(FilenameUtils.removeExtension(fileName).toLowerCase(), YamlUtils.loadYamlFromFile(file));
 			}
 		}
@@ -171,7 +171,7 @@ public class MessageResourceASImpl implements MessageResourceAS {
 
 	private String getSharedPath() {
 
-		return System.getProperty(AppConstants.SHARED_PATH);
+		return System.getProperty(ConfigAppConstants.SHARED_PATH);
 	}
 
 	private void initMessageResources(String messageDir) {
@@ -192,7 +192,7 @@ public class MessageResourceASImpl implements MessageResourceAS {
 					String localeCode = getLocale(innerFile.getName())[1];
 					messageResourceLocale.getPropertiesMap().put(localeCode, props);
 					if (!I18nService.DEFAULT.equals(localeCode)
-							&& AppConstants.MESSAGE_TYPE_DASHBOARD.equalsIgnoreCase(file.getName())) {
+							&& ConfigAppConstants.MESSAGE_TYPE_DASHBOARD.equalsIgnoreCase(file.getName())) {
 
 						// add above supported language/localeCode in a list
 						String languageName = props.getProperty("languageName");
@@ -206,7 +206,7 @@ public class MessageResourceASImpl implements MessageResourceAS {
 						newSupportedLanguages.add(toAdd);
 					}
 				}
-				if (AppConstants.MESSAGE_TYPE_DASHBOARD.equalsIgnoreCase(file.getName())) {
+				if (ConfigAppConstants.MESSAGE_TYPE_DASHBOARD.equalsIgnoreCase(file.getName())) {
 					supportedLanguages.addAll(newSupportedLanguages);
 				}
 				messageResourceMapTemp.put(file.getName(), messageResourceLocale);
@@ -223,7 +223,7 @@ public class MessageResourceASImpl implements MessageResourceAS {
 				.iterator();
 		while (messageEntrySetIterator.hasNext()) {
 			Entry<String, MessageResourceLocale> messageEntry = messageEntrySetIterator.next();
-			if (!AppConstants.MESSAGE_TYPE_DASHBOARD.equals(messageEntry.getKey())) {
+			if (!ConfigAppConstants.MESSAGE_TYPE_DASHBOARD.equals(messageEntry.getKey())) {
 
 				Map<String, Properties> propertiesMap = messageEntry.getValue().getPropertiesMap();
 				Iterator<String> propertiesMapIterator = propertiesMap.keySet().iterator();
@@ -399,8 +399,8 @@ public class MessageResourceASImpl implements MessageResourceAS {
     @Override
     public String getPropertyValueAsString(String configName, String key) {
         Object value = this.getPropertyValue(configName, key);
-        if (value == null && !AppConstants.GLOBAL_CONFIG.equals(configName)) {
-            value = this.getPropertyValue(AppConstants.GLOBAL_CONFIG, key);
+        if (value == null && !ConfigAppConstants.GLOBAL_CONFIG.equals(configName)) {
+            value = this.getPropertyValue(ConfigAppConstants.GLOBAL_CONFIG, key);
         }
         if (value == null) {
             logger.info(key + PROPERTY_NOT_FOUND_IN + configName + " property file!");
@@ -422,8 +422,8 @@ public class MessageResourceASImpl implements MessageResourceAS {
     @Override
     public int getPropertyValueAsInteger(String configName, String key) {
         Object value = this.getPropertyValue(configName, key);
-        if (value == null && !AppConstants.GLOBAL_CONFIG.equals(configName)) {
-            value = this.getPropertyValue(AppConstants.GLOBAL_CONFIG, key);
+        if (value == null && !ConfigAppConstants.GLOBAL_CONFIG.equals(configName)) {
+            value = this.getPropertyValue(ConfigAppConstants.GLOBAL_CONFIG, key);
         }
         if (value == null) {
             logger.info(key + PROPERTY_NOT_FOUND_IN + configName + PROPERTY_FILE);

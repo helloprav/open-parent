@@ -1,7 +1,7 @@
 package org.openframework.commons.config.servlet;
 
-import static org.openframework.commons.config.constants.AppConstants.SLASH_CONFIG_APP;
-import static org.openframework.commons.config.constants.AppConstants.SLASH_CONFIG_APP_SLASH;
+import static org.openframework.commons.config.constants.ConfigAppConstants.SLASH_CONFIG_APP;
+import static org.openframework.commons.config.constants.ConfigAppConstants.SLASH_CONFIG_APP_SLASH;
 
 import java.io.IOException;
 

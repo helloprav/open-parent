@@ -10,7 +10,7 @@ import java.util.Properties;
 
 import javax.inject.Inject;
 
-import org.openframework.commons.config.constants.AppConstants;
+import org.openframework.commons.config.constants.ConfigAppConstants;
 import org.openframework.commons.config.model.LanguageBean;
 import org.openframework.commons.config.model.MessageResourceLocale;
 import org.openframework.commons.config.service.I18nService;
@@ -91,7 +91,7 @@ public class I18nServiceImpl implements I18nService {
 	@Override
 	public Map<String, String> getMessageProperties(String language) {
 
-		return getMessageProperties(language, AppConstants.MESSAGE_TYPE_DASHBOARD);
+		return getMessageProperties(language, ConfigAppConstants.MESSAGE_TYPE_DASHBOARD);
 	}
 
 	@Override

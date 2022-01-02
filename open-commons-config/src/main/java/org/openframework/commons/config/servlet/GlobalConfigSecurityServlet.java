@@ -1,9 +1,9 @@
 package org.openframework.commons.config.servlet;
 
-import static org.openframework.commons.config.constants.AppConstants.CONFIG_APP_PATH;
-import static org.openframework.commons.config.constants.AppConstants.CONFIG_APP_PATH_ASTRIX;
-import static org.openframework.commons.config.constants.AppConstants.SECURITY_SECURE_MAPPING;
-import static org.openframework.commons.config.constants.AppConstants.TOMCAT_ROLE;
+import static org.openframework.commons.config.constants.ConfigAppConstants.CONFIG_APP_PATH;
+import static org.openframework.commons.config.constants.ConfigAppConstants.CONFIG_APP_PATH_ASTRIX;
+import static org.openframework.commons.config.constants.ConfigAppConstants.SECURITY_SECURE_MAPPING;
+import static org.openframework.commons.config.constants.ConfigAppConstants.TOMCAT_ROLE;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;

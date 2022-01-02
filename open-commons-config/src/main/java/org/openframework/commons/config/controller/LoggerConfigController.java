@@ -13,7 +13,7 @@ import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.openframework.commons.config.constants.AppConstants;
+import org.openframework.commons.config.constants.ConfigAppConstants;
 import org.openframework.commons.config.service.as.MessageResourceAS;
 import org.openframework.commons.utils.FileFolderUtils;
 import org.openframework.commons.utils.LogbackUtils;
@@ -28,7 +28,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 //@ApiIgnore
 public class LoggerConfigController {
 
-	private static final String LOG_DIR = "LOG_DIR";
 	private static final String LOG_MAX_LINE_COUNT = "logs.lines.maxCount";
 
 	@Inject
@@ -65,7 +64,7 @@ public class LoggerConfigController {
 		List<String> lastLines = new ArrayList<>();
 		String logPath = getLogPath();
 		String logFilePath = logPath.concat(File.separator).concat(fileName);
-		int logLinesCount = messageResourceAS.getPropertyValueAsInteger(AppConstants.GLOBAL_CONFIG, LOG_MAX_LINE_COUNT);
+		int logLinesCount = messageResourceAS.getPropertyValueAsInteger(ConfigAppConstants.GLOBAL_CONFIG, LOG_MAX_LINE_COUNT);
 		lastLines = FileFolderUtils.readFileLines(logFilePath, logLinesCount);
 		request.setAttribute("title", "Logs");
 		request.setAttribute("messages", lastLines);
@@ -73,9 +72,15 @@ public class LoggerConfigController {
 	}
 
 	private String getLogPath() {
-		String logPath = System.getProperty(LOG_DIR);
+		String logPath = System.getProperty(ConfigAppConstants.CONST_APP_HOME);
+		if (null != logPath) {
+			if (!logPath.endsWith(File.separator)) {
+				logPath = logPath.concat(File.separator);
+			}
+			logPath = logPath.concat(ConfigAppConstants.APPLICATION_LOG_DIR);
+		}
 		if(null == logPath) {
-			logPath = LOG_DIR + "_IS_UNDEFINED";
+			logPath = ConfigAppConstants.APPLICATION_LOG_DIR + "_IS_UNDEFINED";
 		}
 		return logPath;
 	}
