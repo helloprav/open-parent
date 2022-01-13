@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Locale;
@@ -16,7 +15,6 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Properties;
 import java.util.TreeMap;
-import java.util.stream.Collectors;
 
 import javax.annotation.PostConstruct;
 
@@ -58,14 +56,6 @@ public class MessageResourceASImpl implements MessageResourceAS {
 	public MessageResourceASImpl() {
 		System.out.println("MessageResourceASImpl() called");
 		System.out.println("SHARED_PATH: "+System.getProperty(ConfigAppConstants.SHARED_PATH));
-		Properties properties = System.getProperties();
-		LinkedHashMap<String, String> collect = properties.entrySet().stream()
-                .collect(Collectors.toMap(k -> (String) k.getKey(), e -> (String) e.getValue()))
-                .entrySet().stream().sorted(Map.Entry.comparingByKey())
-                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue,
-                        (oldValue, newValue) -> oldValue, LinkedHashMap::new));
-
-        collect.forEach((k, v) -> System.out.println(k + ":" + v));
     }
 
 	/**

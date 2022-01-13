@@ -32,8 +32,8 @@ public class SpringUtils {
 	public static boolean isActiveProfile(Environment environment, String profileName) {
 
 		String[] envs = environment.getActiveProfiles();
-		for(String env: envs) {
-			if(profileName.equals(env)) {
+		for (String env : envs) {
+			if (profileName.equals(env)) {
 				return true;
 			}
 		}
@@ -57,7 +57,7 @@ public class SpringUtils {
 			System.out.println("-------------------------------------------");
 			System.out.println("name =  " + propertySource.getName() + "\nsource = "
 					+ propertySource.getSource().getClass() + "\n");
-			if(propertySource.getName().startsWith("applicationConfig")) {
+			if (propertySource.getName().startsWith("applicationConfig")) {
 
 				printPropertySource(propertySource);
 			}
@@ -72,6 +72,15 @@ public class SpringUtils {
 
 	public static void printMap(Map<?, ?> map) {
 		map.entrySet().stream().forEach(e -> System.out.println(e.getKey() + " = " + e.getValue()));
+	}
 
+	public static void printServerDetails() {
+
+		Map<String, String> serverInfo = ApplicationContextProvider.getApplicationContext().getBean(ServerDetails.class)
+				.getServerDetails();
+
+		System.out.println("*********************************************************");
+		System.out.printf("Web server is running: %s\n", serverInfo.get("applicationUrl"));
+		System.out.println("*********************************************************");
 	}
 }

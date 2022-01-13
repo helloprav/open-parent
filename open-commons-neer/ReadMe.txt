@@ -61,6 +61,11 @@ All Topics
 UI
 - Success/Error message system
 ============================================================
+2020-10-xx
+------------------------------------------------------------
+- Spring Boot Events
+	- Publish event in OFDS & Listen in email module to sendEmail()
+=====================================================================
 2020-05-xx
 ------------------------------------------------------------
 Refactor Code
@@ -99,10 +104,17 @@ https://howtodoinjava.com/spring-boot2/sb-multi-module-maven-project/
 	- ui to manage lifecycle of cache??
 	- help from alcs??
 =====================================================================
-2020-10-xx
+2022-01-xx
 ------------------------------------------------------------
-- ofds
+Sprint Boot
 	- Download tomcat logs using the gconfig app (https://www.baeldung.com/spring-boot-embedded-tomcat-logs)
+	- https://www.baeldung.com/spring-boot-app-as-a-service
+Additional UI (to display following lists of):
+	- scheduledtasks (http://localhost:9080/neer/actuator/scheduledtasks)
+	- cache (http://localhost:9080/neer/actuator/caches) OR
+	- Display the list of all cacheManagers and their cacheNames on UI and allow user to manage it.
+Caching and versioning of static resources
+	- https://www.baeldung.com/cachable-static-assets-with-spring-mvc
 =====================================================================
 2021-04-xx
 ------------------------------------------------------------
@@ -114,10 +126,18 @@ https://howtodoinjava.com/spring-boot2/sb-multi-module-maven-project/
 	https://reflectoring.io/spring-boot-web-controller-test/
 	https://reflectoring.io/testing-verticals-and-layers-spring-boot/
 =====================================================================
-2020-10-xx
+2022-01-13
 ------------------------------------------------------------
-- Spring Boot Events
-	- Publish event in OFDS & Listen in email module to sendEmail()
+On Application Startup:
+- Print server details in console [http://serverName:port/contextName]
+- Print other details (scanSpringBeansOfCache, printSystemProperties) based on parameters passed
+=====================================================================
+2022-01-02
+------------------------------------------------------------
+APP_HOME 
+- It is now mandatory to start the app
+- logs are geerated inside $APP_HOME/logs/ directory
+- module*/AppConstants.java -> renamed to module*/${Module}AppConstants.java
 =====================================================================
 2021-12-31
 ------------------------------------------------------------

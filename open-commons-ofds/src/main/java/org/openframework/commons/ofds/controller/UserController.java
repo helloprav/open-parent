@@ -6,6 +6,7 @@ package org.openframework.commons.ofds.controller;
 import javax.inject.Inject;
 import javax.validation.Valid;
 
+import org.openframework.commons.ofds.service.bo.UserService;
 import org.openframework.commons.rest.annotations.GetMappingProduces;
 import org.openframework.commons.rest.beans.ResponseBean;
 import org.openframework.commons.rest.controller.BaseController;
@@ -13,7 +14,6 @@ import org.openframework.commons.rest.vo.UserHistoryVO;
 import org.openframework.commons.rest.vo.UserVO;
 import org.openframework.commons.spring.PageList;
 import org.openframework.commons.spring.Pagination;
-import org.openframework.commons.ofds.service.bo.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.DeleteMapping;
