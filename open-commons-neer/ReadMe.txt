@@ -66,6 +66,16 @@ UI
 - Spring Boot Events
 	- Publish event in OFDS & Listen in email module to sendEmail()
 =====================================================================
+2021-04-xx
+------------------------------------------------------------
+-Modular Unit & Integration Testing
+	https://reflectoring.io/spring-boot-modules/
+	https://reflectoring.io/spring-boot-application-events-explained/
+	https://reflectoring.io/spring-boot-test/
+	https://reflectoring.io/unit-testing-spring-boot/
+	https://reflectoring.io/spring-boot-web-controller-test/
+	https://reflectoring.io/testing-verticals-and-layers-spring-boot/
+=====================================================================
 2020-05-xx
 ------------------------------------------------------------
 Refactor Code
@@ -116,15 +126,10 @@ Additional UI (to display following lists of):
 Caching and versioning of static resources
 	- https://www.baeldung.com/cachable-static-assets-with-spring-mvc
 =====================================================================
-2021-04-xx
+2022-01-14
 ------------------------------------------------------------
--Modular Unit & Integration Testing
-	https://reflectoring.io/spring-boot-modules/
-	https://reflectoring.io/spring-boot-application-events-explained/
-	https://reflectoring.io/spring-boot-test/
-	https://reflectoring.io/unit-testing-spring-boot/
-	https://reflectoring.io/spring-boot-web-controller-test/
-	https://reflectoring.io/testing-verticals-and-layers-spring-boot/
+Sprint Boot
+	- Download tomcat logs using the gconfig app (https://www.baeldung.com/spring-boot-embedded-tomcat-logs)
 =====================================================================
 2022-01-13
 ------------------------------------------------------------
