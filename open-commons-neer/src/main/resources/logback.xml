@@ -8,7 +8,7 @@
 	<!-- proxy,common,util,web log appender -->
 	<appender name="NEER-GENERAL"
 		class="ch.qos.logback.core.rolling.RollingFileAppender">
-		<file>${LOG_DIR}/ofds.log</file>
+		<file>${LOG_DIR}/neer.log</file>
 		<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
 			<Pattern>[%d{"HH:mm:ss.SSS"}] [%-5p] [%45logger{45} %3line] %msg%n</Pattern>
 
@@ -20,7 +20,7 @@
 		</encoder>
 		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
 			<!-- rollover daily -->
-			<fileNamePattern>${LOG_DIR}/archived/ofds.%d{yyyy-MM-dd}.%i.log
+			<fileNamePattern>${LOG_DIR}/archived/neer.%d{yyyy-MM-dd}.%i.log
 			</fileNamePattern>
 			<timeBasedFileNamingAndTriggeringPolicy
 				class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
@@ -32,13 +32,13 @@
 	<!-- asset management log appender -->
 	<appender name="NEER-OTHERS"
 		class="ch.qos.logback.core.rolling.RollingFileAppender">
-		<file>${LOG_DIR}/ofds-others.log</file>
+		<file>${LOG_DIR}/neer-others.log</file>
 		<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
 			<Pattern>[%d{"HH:mm:ss.SSS"}] [%-5p] [%45logger{45} %3line] %msg%n</Pattern>
 		</encoder>
 		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
 			<!-- rollover daily -->
-			<fileNamePattern>${LOG_DIR}/archived/ofds-others.%d{yyyy-MM-dd}.%i.log
+			<fileNamePattern>${LOG_DIR}/archived/neer-others.%d{yyyy-MM-dd}.%i.log
 			</fileNamePattern>
 			<timeBasedFileNamingAndTriggeringPolicy
 				class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">

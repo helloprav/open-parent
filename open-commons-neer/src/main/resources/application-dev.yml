@@ -5,5 +5,15 @@ log4j:
    logger:
       org:
          hibernate:
-            SQL=debug
-            type=trace
+            SQL: debug
+            type: trace
+server:
+  tomcat:
+    accesslog:
+      enabled: true
+      prefix: access_log
+      file-date-format: .yyyy-MM-dd
+      suffix: .log
+      directory: logs
+    basedir: ${APP_HOME}
+      
