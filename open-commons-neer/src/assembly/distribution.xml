@@ -34,8 +34,8 @@
 			<fileMode>0755</fileMode>
 		</fileSet>
 		<fileSet>
-			<directory>src/main/resources</directory>
-			<outputDirectory>externalPath</outputDirectory>
+			<directory>${basedir}</directory>
+			<outputDirectory></outputDirectory>
 			<includes>
 				<include>env/dev/**</include>
 				<include>env/prod/**</include>

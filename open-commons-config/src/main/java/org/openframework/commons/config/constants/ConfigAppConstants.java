@@ -17,16 +17,16 @@ public class ConfigAppConstants {
 	public static final String MESSAGE_TYPE_DASHBOARD = "dashboard";
 	public static final String MESSAGE_TYPE_ERRORS = "errors";
 
-	public static final String CONST_APP_HOME = "APP_HOME";
-	public static final String SHARED_PATH = "sharedPath";
-	public static final String APPLICATION_CONFIG_DIR = "cmnConfig";
-	public static final String APPLICATION_MESSAGE_DIR = "cmnMessage";
-	public static final String APPLICATION_LOG_DIR = "logs";
-
+	public static final String CONFIG_DIR = "cmnConfig";
+	public static final String MESSAGE_DIR = "cmnMessage";
 	public static final String GLOBAL_CONFIG = "global-config";
 
+	public static final String ARGS_APP_HOME = "APP_HOME";
+
+	public static final String APPLICATION_ENV = "env";
 	public static final String APPLICATION_ENV_DEV = "dev";
 	public static final String APPLICATION_ENV_PROD = "prod";
+	public static final String APPLICATION_LOG_DIR = "logs";
 
     public static final String APP_INITI_FILE = "appInitialization.yml";
 

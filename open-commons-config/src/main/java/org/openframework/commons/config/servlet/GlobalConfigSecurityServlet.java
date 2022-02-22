@@ -34,9 +34,12 @@ import org.slf4j.LoggerFactory;
 public class GlobalConfigSecurityServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
-	protected final Logger logger = LoggerFactory.getLogger(getClass());
 	private static final String AUTHORIZATION_PROPERTY = "Authorization";
 	private static final String AUTHENTICATION_SCHEME = "Basic";
+
+	private boolean tomcatSecurityEnabled = false;
+
+	protected final Logger logger = LoggerFactory.getLogger(getClass());
 
 	@Override
 	public void init() throws ServletException {
@@ -45,6 +48,8 @@ public class GlobalConfigSecurityServlet extends HttpServlet {
 		System.out.println("GlobalConfigSecurityServlet.init()");
 		super.init();
 		System.out.println("GlobalConfigSecurityServlet.init(2)");
+		Credentials credentials = Credentials.getInstance();
+		tomcatSecurityEnabled = !credentials.getCredProperties().isEmpty();
 	}
 
 	/**
@@ -55,12 +60,15 @@ public class GlobalConfigSecurityServlet extends HttpServlet {
 	public void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		logger.warn("App Settings page accessd by User");
-		boolean isAuthenticated = doAuthenticate(request);
-		if (!isAuthenticated) {
-			response.setHeader("WWW-Authenticate", "Basic realm=\"Config App Authentication\"");
-			response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Access Denied");
-			return;
+		if(tomcatSecurityEnabled) {
+			boolean isAuthenticated = doAuthenticate(request);
+			if (!isAuthenticated) {
+				response.setHeader("WWW-Authenticate", "Basic realm=\"Config App Authentication\"");
+				response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Access Denied");
+				return;
+			}
 		}
+
 		String appUrl = request.getContextPath().concat(CONFIG_APP_PATH);
 		RequestDispatcher rd = null;
 
@@ -100,6 +108,10 @@ public class GlobalConfigSecurityServlet extends HttpServlet {
 	public boolean hasProperty(String key, String value) {
 		Credentials cred = Credentials.getInstance();
 		Properties prop = cred.getCredProperties();
+		if(prop.isEmpty()) {
+			// prop is empty or the cred.properties file not found, means security is not applied
+			return true;
+		}
 		if(prop.containsKey(key)) {
 			String propValue = prop.getProperty(key);
 			return value.equals(propValue);

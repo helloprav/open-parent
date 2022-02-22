@@ -72,7 +72,7 @@ public class LoggerConfigController {
 	}
 
 	private String getLogPath() {
-		String logPath = System.getProperty(ConfigAppConstants.CONST_APP_HOME);
+		String logPath = System.getProperty(ConfigAppConstants.ARGS_APP_HOME);
 		if (null != logPath) {
 			if (!logPath.endsWith(File.separator)) {
 				logPath = logPath.concat(File.separator);

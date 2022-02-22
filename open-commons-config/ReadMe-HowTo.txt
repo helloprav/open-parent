@@ -1,28 +1,24 @@
 How to use Config Application:
+- Create Spring Boot Project (only for non open-parent projects)
 - Add the following dependency in pom.xml
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-web</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.tomcat</groupId>
-			<artifactId>tomcat-jasper</artifactId>
-			<version>9.0.1</version>
-		</dependency>
 		<dependency>
 			<groupId>org.openframework</groupId>
 			<artifactId>open-commons-config</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
+		<dependency>
+			<groupId>org.apache.tomcat.embed</groupId>
+			<artifactId>tomcat-embed-jasper</artifactId>
+			<scope>provided</scope>
+		</dependency>
 - Scan the beans defined in the config project by adding package as below::
-	@SpringBootApplication(scanBasePackageClasses = GlobalConfigSpringMvcWebConfig.class)
-- Add the config files in src/main/resources directory
+	@SpringBootApplication(scanBasePackageClasses = { TestAppApplication.class, GlobalConfigApp.class })
+- application.properties: add context-path [server.servlet.context-path=/demoApp]
+- Build the project
+- mvn clean install
+- Run the app with VM args [-DsharedPath=C:\demo] OR by Adding the config files in src/main/resources directory
 	- alternatively the config files can be kept outside the classpath, but the location needs to be given as argument to program as below:
-		> java -jar spring-boot-executable.jar -DsharedPath=C:\configLocation
+		> java -jar spring-boot-executable.jar -DAPP_HOME=C:\appHome -Dspring.profiles.active=dev
 -----------------------------------------------------------------------------------------------------------------------------------------
 -----------------------------------------------------------------------------------------------------------------------------------------
 - Why tomcat-jasper dependency is added?

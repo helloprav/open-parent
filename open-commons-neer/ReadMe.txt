@@ -94,6 +94,7 @@ https://howtodoinjava.com/spring-boot2/sb-multi-module-maven-project/
 2020-01-xx
 ------------------------------------------------------------
 - Convert Project/ReadMe.txt file into README.md
+- replace all SOP with debug/info logs
 =====================================================================
 2020-09-xx
 ------------------------------------------------------------
@@ -125,6 +126,16 @@ Additional UI (to display following lists of):
 	- Display the list of all cacheManagers and their cacheNames on UI and allow user to manage it.
 Caching and versioning of static resources
 	- https://www.baeldung.com/cachable-static-assets-with-spring-mvc
+=====================================================================
+2022-02-22
+------------------------------------------------------------
+Config App
+	- replace 'sharedPath' with 'env' and always use APP_HOME
+	- test by deploying and running from fat jar (not eclipse)
+	- download log files also to depend on APP_HOME/logs
+	- Rename the language 'Master collection' to 'OtherLang'
+	- tomcat manager's security is optional. If cred.properties is not found or is empty, then tomcat security disabled
+	- test for classpath=> 'env' and always use APP_HOME
 =====================================================================
 2022-01-14
 ------------------------------------------------------------

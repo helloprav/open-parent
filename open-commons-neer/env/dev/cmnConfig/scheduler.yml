@@ -1,0 +1,5 @@
+#sec min hour day-of-month month day-of-week
+#Every 5 min
+quartz:
+    corn:
+        expression: 0 */5 * * * ?

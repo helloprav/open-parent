@@ -32,11 +32,11 @@ public class OfdsApp implements WebMvcConfigurer {
 
 	@PostConstruct
 	public void validateEnvVariables() {
-		String appHome = System.getProperty(ConfigAppConstants.CONST_APP_HOME);
-		logger.info(ConfigAppConstants.CONST_APP_HOME+" from environment variable: "+appHome);
+		String appHome = System.getProperty(ConfigAppConstants.ARGS_APP_HOME);
+		logger.info(ConfigAppConstants.ARGS_APP_HOME+" from environment variable: "+appHome);
 		if(!FileFolderUtils.isDirectoryExists(appHome)) {
-			logger.error(ConfigAppConstants.CONST_APP_HOME + " from environment variable does not exists.");
-			throw new Error(ConfigAppConstants.CONST_APP_HOME + " from environment variable does not exists.");
+			logger.error(ConfigAppConstants.ARGS_APP_HOME + " from environment variable does not exists.");
+			throw new Error(ConfigAppConstants.ARGS_APP_HOME + " from environment variable does not exists.");
 		}
 	}
 

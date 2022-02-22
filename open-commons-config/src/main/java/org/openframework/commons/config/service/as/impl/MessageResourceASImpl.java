@@ -32,6 +32,7 @@ import org.openframework.commons.spring.utils.YamlUtils;
 import org.openframework.commons.utils.FileFolderUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 /**
@@ -49,13 +50,16 @@ public class MessageResourceASImpl implements MessageResourceAS {
 
 	private static final int INVALID_VAL = -999;
 
+	@Value("${spring.profiles.active:}")
+	private String activeProfile;
+
 	private Map<String, MessageResourceLocale> messageResourceMap;
 	private List<LanguageBean> supportedLanguages = new ArrayList<>();
 	private Map<String, Properties> appConfigsMap = new TreeMap<>();
 
 	public MessageResourceASImpl() {
 		System.out.println("MessageResourceASImpl() called");
-		System.out.println("SHARED_PATH: "+System.getProperty(ConfigAppConstants.SHARED_PATH));
+		System.out.println("APP_HOME: "+System.getProperty(ConfigAppConstants.ARGS_APP_HOME));
     }
 
 	/**
@@ -63,52 +67,52 @@ public class MessageResourceASImpl implements MessageResourceAS {
 	 */
 	@PostConstruct
 	public void init() {
-		String sharedPath = getSharedPath();
-		logger.warn("sharedPath1 from environment variable: "+sharedPath);
-		if(!FileFolderUtils.isDirectoryExists(sharedPath)) {
-			logger.warn("sharedPath1 from environment variable does not exists.");
-			sharedPath = null;
+		String envPath = getEnvPath();
+		logger.warn("envPath from environment variable: "+envPath);
+		if(!FileFolderUtils.isDirectoryExists(envPath)) {
+			logger.warn("envPath from environment variable does not exists.");
+			envPath = null;
 		}
-		initMessage(sharedPath);
-		initAppConfig(sharedPath);
+		initMessage(envPath);
+		initAppConfig(envPath);
 		validateLanguageProperties();
 	}
 
-	private void initMessage(String sharedPath) {
+	private void initMessage(String envPath) {
 
-		String messageDir = getMessageDir(sharedPath);
+		String messageDir = getMessageDir(envPath);
 		logger.warn("messageDir: "+messageDir);
 		initMessageResources(messageDir);
 	}
 
-	private String getMessageDir(String sharedPath) {
+	private String getMessageDir(String envPath) {
 
-		return getResourcePath(sharedPath, ConfigAppConstants.APPLICATION_MESSAGE_DIR);
+		return getResourcePath(envPath, ConfigAppConstants.MESSAGE_DIR);
 	}
 
-	private String getConfigDir(String sharedPath) {
+	private String getConfigDir(String envPath) {
 
-		return getResourcePath(sharedPath, ConfigAppConstants.APPLICATION_CONFIG_DIR);
+		return getResourcePath(envPath, ConfigAppConstants.CONFIG_DIR);
 	}
 
-	private String getResourcePath(String sharedPath, String resourceDir) {
+	private String getResourcePath(String envPath, String resourceDir) {
 
 		String resourcePath = null;
-		logger.warn("sharedPath2: "+sharedPath);
-		if(null != sharedPath) {
-			logger.warn("resourceDir: "+sharedPath.concat(File.separator).concat(resourceDir));
+		logger.warn("envPath: "+envPath);
+		if(null != envPath) {
+			logger.warn("resourceDir: "+envPath.concat(File.separator).concat(resourceDir));
 		}
-		if (FileFolderUtils.isDirectoryExists(sharedPath) && FileFolderUtils.isDirectoryExists(
-				sharedPath.concat(File.separator).concat(resourceDir))) {
-			resourcePath = sharedPath.concat(File.separator).concat(resourceDir);
+		if (FileFolderUtils.isDirectoryExists(envPath) && FileFolderUtils.isDirectoryExists(
+				envPath.concat(File.separator).concat(resourceDir))) {
+			resourcePath = envPath.concat(File.separator).concat(resourceDir);
 			logger.warn("resourcePath from environment variable: "+resourcePath);
 		} else {
 
-			if(ConfigAppConstants.APPLICATION_MESSAGE_DIR.equals(resourceDir)) {
+			if(ConfigAppConstants.MESSAGE_DIR.equals(resourceDir)) {
 
 				resourcePath = getMessageDirFromClasspath(resourceDir);
 				logger.warn("resourcePath (message) from classpath: "+resourcePath);
-			} else if(ConfigAppConstants.APPLICATION_CONFIG_DIR.equals(resourceDir)) {
+			} else if(ConfigAppConstants.CONFIG_DIR.equals(resourceDir)) {
 
 				resourcePath = getConfigDirFromClasspath(resourceDir);
 				logger.warn("resourcePath (config) from classpath: "+resourcePath);
@@ -144,9 +148,9 @@ public class MessageResourceASImpl implements MessageResourceAS {
 		return configDirFromClasspath;
 	}
 
-	private void initAppConfig(String sharedPath) {
+	private void initAppConfig(String envPath) {
 
-		String configDir = getConfigDir(sharedPath);
+		String configDir = getConfigDir(envPath);
 		File[] globalPropertyFileList = FileFolderUtils.getMessagePropertyFileList(configDir);
 
 		for (File file : globalPropertyFileList) {
@@ -159,9 +163,18 @@ public class MessageResourceASImpl implements MessageResourceAS {
 		}
 	}
 
-	private String getSharedPath() {
+	private String getEnvPath() {
 
-		return System.getProperty(ConfigAppConstants.SHARED_PATH);
+		String appHome = System.getProperty(ConfigAppConstants.ARGS_APP_HOME);
+		if(StringUtils.isBlank(appHome)) {
+			throw new IllegalArgumentException("APP_HOME is not set");
+		}
+
+		if(StringUtils.isBlank(this.activeProfile)) {
+			return appHome;
+		} else {
+			return appHome.concat(File.separator).concat(ConfigAppConstants.APPLICATION_ENV).concat(File.separator).concat(this.activeProfile);
+		}
 	}
 
 	private void initMessageResources(String messageDir) {
@@ -226,8 +239,10 @@ public class MessageResourceASImpl implements MessageResourceAS {
 								messageEntry.getKey(), propertiesMapLanguage);
 					}
 				}
-				logger.error("No properties of languages {} found for the type {}", languageList,
-						messageEntry.getKey());
+				if(!languageList.isEmpty()) {
+					logger.error("No properties of languages {} found for the type {}", languageList,
+							messageEntry.getKey());
+				}
 			}
 		}
 	}
