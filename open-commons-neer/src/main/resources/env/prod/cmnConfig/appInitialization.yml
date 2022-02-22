@@ -1,5 +1,0 @@
-security:
-  config: false
-home:
-  redirect:
-    path: redirect:/ofds/index.html
