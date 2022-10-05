@@ -1,7 +1,10 @@
 CLS
-set "projectName=open-commons-neer"
-set appDistName=open-commons-neer-0.0.1-SNAPSHOT
-set distDir=%projectName%\target\open-commons-neer-0.0.1-SNAPSHOT-distribution
+FOR /F "tokens=1,2 delims==" %%G IN (env.properties) DO (
+	set %%G=%%H
+	echo "%%G=%%H"
+)
+set appDistName=%appName%-%appVersion%
+set distDir=%appName%\target\%appDistName%-distribution
 set currentDir=%~dp0
 set scriptDir=%~dp0
 set scriptFile=%~dpnx0
@@ -24,7 +27,8 @@ set dTM=%today%-%hh%%mm%
 
 REM ## Step2: Navigate to open-parent and do complete mvn clean install
 cd ../../..
-call mvn clean install
+call mvn clean install -Drevision=%appVersion%
+@echo on
 if %errorlevel%==0 (
 	REM ## cd src\bin
 	echo %cd%

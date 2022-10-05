@@ -5,9 +5,6 @@ server:
 spring:
   datasource:
     initialization-mode:  always
-  profiles:
-    include: master-data
   cache:
-    
     cache-names:
     - 

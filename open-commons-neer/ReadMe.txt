@@ -110,8 +110,7 @@ https://howtodoinjava.com/spring-boot2/sb-multi-module-maven-project/
 - AOP Aspect: Performance
 	- log time in ms
 	- enable based on configuration
-- Versioning of Module:
-	- Upgrade the release version from <version>0.0.1-SNAPSHOT</version> to <version>0.0.x-SNAPSHOT</version>
+- BuildNo of Application:
 	- ui to manage lifecycle of cache??
 	- help from alcs??
 =====================================================================
@@ -126,6 +125,14 @@ Additional UI (to display following lists of):
 	- Display the list of all cacheManagers and their cacheNames on UI and allow user to manage it.
 Caching and versioning of static resources
 	- https://www.baeldung.com/cachable-static-assets-with-spring-mvc
+=====================================================================
+2022-10-05
+------------------------------------------------------------
+- Versioning of Module:
+	- Upgrade the release version from <version>0.0.1-SNAPSHOT</version> to <version>0.0.x-SNAPSHOT</version>
+	- The version/revision is kept at: 
+		/open-commons-neer/src/bin/env.properties	: if executed through app-build.bat or app-start.bat
+		/open-parent/pom.xml						: if executed through pom.xml
 =====================================================================
 2022-02-22
 ------------------------------------------------------------

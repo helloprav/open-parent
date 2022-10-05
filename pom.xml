@@ -12,7 +12,7 @@
 
 	<groupId>org.openframework</groupId>
 	<artifactId>open-parent</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>${revision}</version>
 	<packaging>pom</packaging>
 
 	<name>open-parent</name>
@@ -22,7 +22,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.plugin.version>3.3</maven.compiler.plugin.version>
 		<java.version>11</java.version>
-		<version.project>0.0.1-SNAPSHOT</version.project>
+		<revision>22.4.1.0</revision>
 		<javax.servlet-api>4.0.1</javax.servlet-api>
 		<javax.jsp-api>2.3.3</javax.jsp-api>
 		<javax.jstl>1.2</javax.jstl>
@@ -53,9 +53,7 @@
 		<version.json-path>2.2.0</version.json-path>
 		<version.java-mail>1.4.7</version.java-mail>
 		<jaxb-version>2.3.0</jaxb-version>
-		<openframework.version>0.0.1-SNAPSHOT</openframework.version>
 	</properties>
-
 
 	<dependencyManagement>
 		<dependencies>
@@ -64,77 +62,77 @@
 			<dependency>
 				<groupId>org.openframework</groupId>
 				<artifactId>open-commons</artifactId>
-				<version>${version.project}</version>
+				<version>${revision}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.openframework</groupId>
 				<artifactId>open-commons-aop</artifactId>
-				<version>${version.project}</version>
+				<version>${revision}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.openframework</groupId>
 				<artifactId>open-commons-cache</artifactId>
-				<version>${version.project}</version>
+				<version>${revision}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.openframework</groupId>
 				<artifactId>open-commons-config</artifactId>
-				<version>${version.project}</version>
+				<version>${revision}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.openframework</groupId>
 				<artifactId>open-commons-config-stub</artifactId>
-				<version>${version.project}</version>
+				<version>${revision}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.openframework</groupId>
 				<artifactId>open-commons-email</artifactId>
-				<version>${version.project}</version>
+				<version>${revision}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.openframework</groupId>
 				<artifactId>open-commons-encrypt</artifactId>
-				<version>${version.project}</version>
+				<version>${revision}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.openframework</groupId>
 				<artifactId>open-commons-jpa</artifactId>
-				<version>${version.project}</version>
+				<version>${revision}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.openframework</groupId>
 				<artifactId>open-commons-master-data</artifactId>
-				<version>${version.project}</version>
+				<version>${revision}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.openframework</groupId>
 				<artifactId>open-commons-ofds</artifactId>
-				<version>${version.project}</version>
+				<version>${revision}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.openframework</groupId>
 				<artifactId>open-commons-reports</artifactId>
-				<version>${version.project}</version>
+				<version>${revision}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.openframework</groupId>
 				<artifactId>open-commons-rest</artifactId>
-				<version>${version.project}</version>
+				<version>${revision}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.openframework</groupId>
 				<artifactId>open-commons-spring</artifactId>
-				<version>${version.project}</version>
+				<version>${revision}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.openframework</groupId>
 				<artifactId>open-commons-spring-data-jpa</artifactId>
-				<version>${version.project}</version>
+				<version>${revision}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.openframework</groupId>
 				<artifactId>open-commons-swagger</artifactId>
-				<version>${version.project}</version>
+				<version>${revision}</version>
 			</dependency>
 
 			<!-- Servlet Dependency -->

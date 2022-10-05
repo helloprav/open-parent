@@ -1,4 +1,3 @@
-<%@page import="org.openframework.commons.rest.constants.ApplicationConstants"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="org.openframework.commons.config.constants.ConfigAppConstants" %>
 <link rel="stylesheet" type="text/css"

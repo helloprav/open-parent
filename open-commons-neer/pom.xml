@@ -7,7 +7,7 @@
 	<parent>
 		<groupId>org.openframework</groupId>
 		<artifactId>open-parent</artifactId>
-		<version>0.0.1-SNAPSHOT</version>
+		<version>${revision}</version>
 	</parent>
 
 	<artifactId>open-commons-neer</artifactId>
@@ -18,7 +18,6 @@
 		<java.version>11</java.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-		<openframework.version>0.0.1-SNAPSHOT</openframework.version>
 	</properties>
 
 	<dependencies>

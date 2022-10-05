@@ -129,7 +129,8 @@ public class GlobalCacheApp {
 	private Set<String> getCaffeineCacheNamesFromCode() {
 		Set<String> caffeineCacheNames = cacheManagerNameMap.get(caffeineCacheManager);
 		if (null == caffeineCacheNames) {
-			throw new IllegalArgumentException("caffeineCacheNames are not initialized for caffeineCacheManager");
+			//throw new IllegalArgumentException("caffeineCacheNames are not initialized for caffeineCacheManager");
+			caffeineCacheNames = new TreeSet<String>();
 		}
 		return caffeineCacheNames;
 	}
