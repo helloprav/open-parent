@@ -22,7 +22,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.plugin.version>3.3</maven.compiler.plugin.version>
 		<java.version>11</java.version>
-		<revision>22.4.1.0</revision>
+		<revision>22.4.1.2</revision>
 		<javax.servlet-api>4.0.1</javax.servlet-api>
 		<javax.jsp-api>2.3.3</javax.jsp-api>
 		<javax.jstl>1.2</javax.jstl>

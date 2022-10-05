@@ -58,8 +58,8 @@ public class AuthenticationServiceImpl extends BaseServiceImpl implements Authen
 	@Inject
 	private ApplicationContext appContext;
 
-	@Inject
-	private EmailApplication emailApplication;
+	//@Inject
+	//private EmailApplication emailApplication;
 
 	@Override
 	public Map<String, Object> authenticateUser(UserCredentialsVO userCredentialsVO) {
@@ -89,7 +89,7 @@ public class AuthenticationServiceImpl extends BaseServiceImpl implements Authen
 
 		EmailService emailService = appContext.getBean(LoginEmailServiceImpl.class);
 		emailService.init(org.openframework.commons.ofds.constant.EmailConstants.TEMPLATE_LOGIN_SUCCESS, userVO, userVO.getEmail());
-		emailApplication.execute(emailService);
+		//emailApplication.execute(emailService);
 	}
 
 	private List<Cookie> getLoginCookieList(UserVO userVO) {

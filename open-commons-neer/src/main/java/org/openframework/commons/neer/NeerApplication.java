@@ -6,10 +6,10 @@ import org.openframework.commons.aop.CommonsLoggingAspect;
 import org.openframework.commons.cache.EnableCommonsCaching;
 import org.openframework.commons.cache.GlobalCacheApp;
 import org.openframework.commons.config.GlobalConfigApp;
-import org.openframework.commons.email.EmailApplication;
-import org.openframework.commons.email.service.DefaultEmailServiceImpl;
-import org.openframework.commons.email.service.EmailService;
-import org.openframework.commons.email.vo.EmailVO;
+//import org.openframework.commons.email.EmailApplication;
+//import org.openframework.commons.email.service.DefaultEmailServiceImpl;
+//import org.openframework.commons.email.service.EmailService;
+//import org.openframework.commons.email.vo.EmailVO;
 import org.openframework.commons.encrypt.EncryptionUtil;
 import org.openframework.commons.ofds.OfdsApp;
 import org.openframework.commons.rest.advice.RestResponseBodyAdvice;
@@ -23,9 +23,12 @@ import org.springframework.cache.Cache;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ConfigurableApplicationContext;
 
+/*
+ * Sending email is disabled by GMail: https://support.google.com/mail/thread/166547017/access-to-gmail-through-third-party-apps-or-devices?hl=en
+ */
 @EnableCommonsCaching
 @SpringBootApplication(scanBasePackageClasses = { NeerApplication.class, CommonsLoggingAspect.class,
-		GlobalConfigApp.class, EmailApplication.class, EncryptionUtil.class, RestResponseBodyAdvice.class,
+		GlobalConfigApp.class, EncryptionUtil.class, RestResponseBodyAdvice.class,
 		ApplicationContextProvider.class, Swagger2UiConfiguration.class, OfdsApp.class, GlobalCacheApp.class })
 public class NeerApplication {
 
@@ -53,7 +56,7 @@ public class NeerApplication {
 
 			scanSpringBeansOfCache();
 			scanSpringBeansOfCache();
-			sendTestEmail();
+			//sendTestEmail();
 			SpringUtils.printServerDetails();
 		}
 	}
@@ -76,6 +79,7 @@ public class NeerApplication {
 		System.out.println(cache.getName());
 	}
 
+	/*
 	public static void sendTestEmail() {
 		EmailService emailService = ApplicationContextProvider.getApplicationContext().getBean(DefaultEmailServiceImpl.class);
 		EmailVO emailVO = new EmailVO();
@@ -84,7 +88,7 @@ public class NeerApplication {
 		emailVO.setBody("body");
 		emailVO.setFromAddress("praveenatwork2017@gmail.com");
 		emailService.sendSimpleMail(emailVO);
-	}
+	}	*/
 
 }
 
