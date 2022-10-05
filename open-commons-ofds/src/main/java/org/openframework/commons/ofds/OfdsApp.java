@@ -54,7 +54,7 @@ public class OfdsApp implements WebMvcConfigurer {
 	public void addInterceptors(InterceptorRegistry registry) {
 
 		WebMvcConfigurer.super.addInterceptors(registry);
-		registry.addInterceptor(securityInterceptor).addPathPatterns("/**/ofds/api/**");
+		registry.addInterceptor(securityInterceptor).addPathPatterns("/ofds/api/**");
 	}
 
 	@Override

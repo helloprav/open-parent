@@ -2,9 +2,14 @@ server:
   port: "80"
   servlet:
     context-path: /neer
+    #register-default-servlet: true
 spring:
   datasource:
     initialization-mode:  always
   cache:
     cache-names:
     - 
+  profiles:
+    group:
+      dev: dev-jdbc, dev-email, dev-actuator, dev-ofds-security, dev-caching
+      prod: prod-jdbc, prod-email, prod-actuator, prod-ofds-security, prod-caching

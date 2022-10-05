@@ -7,10 +7,10 @@ import org.openframework.commons.config.constants.ConfigAppConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
-import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
+import org.springframework.web.servlet.HandlerInterceptor;
 
 @Component
-public class AppConfigSecurityInterceptor extends HandlerInterceptorAdapter {
+public class AppConfigSecurityInterceptor implements HandlerInterceptor {
 
 	protected final Logger logger = LoggerFactory.getLogger(getClass());
 

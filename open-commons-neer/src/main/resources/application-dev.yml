@@ -1,6 +1,3 @@
-spring:
-  profiles:
-    include: dev-jdbc, dev-email, dev-actuator, dev-ofds-security, dev-caching
 log4j:
    logger:
       org:

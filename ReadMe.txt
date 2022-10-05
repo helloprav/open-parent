@@ -1,3 +1,5 @@
+https://spring.io/blog/2020/04/30/updates-to-spring-versions
+
 This parent pom project should have all sub modules that can be plugged into any spring/spring-boot project.
 It should be developer friendly to use any module from this parent project.
 Typically the followings can be order of steps to use any module from this parent project:
