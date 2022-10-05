@@ -126,8 +126,22 @@ Additional UI (to display following lists of):
 Caching and versioning of static resources
 	- https://www.baeldung.com/cachable-static-assets-with-spring-mvc
 =====================================================================
+2022-10-xx
+------------------------------------------------------------
+- Automation Framework for following tests:
+	- App is running and accesible
+	- Login success
+	- All major links are working and accesible (Swagger, Actuator, ConfigApp etc)
+	- Create/Update/Delete/Retrieve of user and group working
+=====================================================================
+2022-10-xx
+------------------------------------------------------------
+- UI Pagination for Users/Groups to work for all scenarios
+	- Create many users/groups and test the pagination & sorting on ui
+=====================================================================
 2022-10-05
 ------------------------------------------------------------
+- Spring boot upgraded to 2.4.2 from 2.3.5.RELEASE
 - Versioning of Module:
 	- Upgrade the release version from <version>0.0.1-SNAPSHOT</version> to <version>0.0.x-SNAPSHOT</version>
 	- The version/revision is kept at: 
