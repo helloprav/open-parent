@@ -32,8 +32,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import io.swagger.annotations.Api;
-import springfox.documentation.annotations.ApiIgnore;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.tags.Tag;
+
+//import io.swagger.annotations.Api;
+//import springfox.documentation.annotations.ApiIgnore;
 
 /**
  * 
@@ -45,7 +48,7 @@ import springfox.documentation.annotations.ApiIgnore;
  */
 @RestController
 @RequestMapping(GroupController.GROUPS_URL)
-@Api(value = "Group Controller", consumes = "JSON", produces = "JSON")
+@Tag(name = "OFDS/Group Controller", description = "REST APIs to manage life cycle of Groups")
 public class GroupController extends BaseController {
 
 	public static final String GROUPS_URL = "/ofds/api/groups";
@@ -118,7 +121,7 @@ public class GroupController extends BaseController {
 	}
 
 	@PostMapping
-	public ResponseBean<Object> createGroup(@Valid @RequestBody GroupVO groupVO, @ApiIgnore UserVO loggedInUser) {
+	public ResponseBean<Object> createGroup(@Valid @RequestBody GroupVO groupVO, @Parameter(hidden = true) UserVO loggedInUser) {
 
 		groupVO.setLoggedInUserId(loggedInUser.getId());
 		Long id = groupService.createGroup(groupVO);
@@ -127,7 +130,7 @@ public class GroupController extends BaseController {
 	}
 
 	@PutMapping(path = "/{id}")
-	public GroupVO updateGroup(@PathVariable Long id, @Valid @RequestBody GroupVO groupVO, @ApiIgnore UserVO loggedInUser) {
+	public GroupVO updateGroup(@PathVariable Long id, @Valid @RequestBody GroupVO groupVO, UserVO loggedInUser) {
 
 		groupVO.setId(id);
 		groupVO.setLoggedInUserId(loggedInUser.getId());
@@ -135,7 +138,7 @@ public class GroupController extends BaseController {
 	}
 
 	@PatchMapping(path = "/{id}/status/{status}")
-	public GroupVO updateStatus(@PathVariable Long id, @PathVariable Boolean status, @ApiIgnore UserVO loggedInUser) {
+	public GroupVO updateStatus(@PathVariable Long id, @PathVariable Boolean status, UserVO loggedInUser) {
 
 		GroupVO groupVO = new GroupVO();
 		groupVO.setId(id);
@@ -145,7 +148,7 @@ public class GroupController extends BaseController {
 	}
 
 	@DeleteMapping(path = "/{id}")
-	public ResponseBean<Object> deleteGroup(@PathVariable Long id, @ApiIgnore UserVO loggedInUser) {
+	public ResponseBean<Object> deleteGroup(@PathVariable Long id, UserVO loggedInUser) {
 
 		GroupVO groupVO = new GroupVO();
 		groupVO.setId(id);

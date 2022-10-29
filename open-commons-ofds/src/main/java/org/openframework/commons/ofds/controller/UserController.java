@@ -27,8 +27,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import io.swagger.annotations.Api;
-import springfox.documentation.annotations.ApiIgnore;
+import io.swagger.v3.oas.annotations.Parameter;
+//import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 
 /**
  * 
@@ -40,7 +42,7 @@ import springfox.documentation.annotations.ApiIgnore;
  */
 @RestController
 @RequestMapping(UserController.USERS_URL)
-@Api(value = "User Controller", consumes = "JSON", produces = "JSON")
+@Tag(name = "User Controller", description = "REST APIs to manage life cycle of Users")
 public class UserController extends BaseController {
 
 	public static final String USERS_URL = "/ofds/api/users";
@@ -61,7 +63,7 @@ public class UserController extends BaseController {
 	 */
 	//@SecuredPermissions("student")
 	@GetMappingProduces("")
-	public PageList<UserVO> findUsers(@ApiIgnore UserVO userProfile, Pagination pagingDetails) {
+	public PageList<UserVO> findUsers(UserVO userProfile, Pagination pagingDetails) {
 		return userService.findUsers(pagingDetails);
 	}
 
@@ -82,7 +84,8 @@ public class UserController extends BaseController {
 	}
 
 	@PostMapping()
-	public ResponseBean<Object> createUser(@Valid @RequestBody UserVO userVO, @ApiIgnore UserVO loggedInUser) {
+	//@Operation(hidden = true)
+	public ResponseBean<Object> createUser(@Valid @RequestBody UserVO userVO, @Parameter(hidden = true) UserVO loggedInUser) {
 
 		if(null == userVO.getStatus()) {
 			userVO.setStatus("active");
@@ -97,14 +100,14 @@ public class UserController extends BaseController {
 	}
 
 	@PutMapping(path = "/{id}")
-	public UserVO updateUser(@PathVariable Long id, @Valid @RequestBody UserVO userVO, @ApiIgnore UserVO loggedInUser) {
+	public UserVO updateUser(@PathVariable Long id, @Valid @RequestBody UserVO userVO, UserVO loggedInUser) {
 		userVO.setId(id);
 		userVO.setLoggedInUserId(loggedInUser.getId());
 		return userService.updateUser(userVO);
 	}
 
 	@PatchMapping(path = "/{id}/status/{status}")
-	public UserVO updateStatus(@PathVariable Long id, @PathVariable boolean status, @ApiIgnore UserVO loggedInUser) {
+	public UserVO updateStatus(@PathVariable Long id, @PathVariable boolean status, UserVO loggedInUser) {
 		UserVO userVO = new UserVO();
 		userVO.setId(id);
 		userVO.setIsValid(status);
@@ -113,7 +116,7 @@ public class UserController extends BaseController {
 	}
 
 	@DeleteMapping(path = "/{id}")
-	public ResponseBean<Object> deleteUser(@PathVariable Long id, @ApiIgnore UserVO loggedInUser) {
+	public ResponseBean<Object> deleteUser(@PathVariable Long id, UserVO loggedInUser) {
 
 		UserVO userVO = new UserVO();
 		userVO.setId(id);

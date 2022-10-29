@@ -27,7 +27,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import io.swagger.annotations.Api;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 
 /**
  * 
@@ -39,7 +41,7 @@ import io.swagger.annotations.Api;
  */
 @RestController
 @RequestMapping("/ofds/api/auth")
-@Api(value = "User Controller", consumes = "JSON", produces = "JSON")
+@Tag( name = "Authentication Controller", description = "API to manage user's authentication and session")
 public class AuthenticationController extends OfdsBaseController {
 
 	@Autowired
@@ -51,6 +53,7 @@ public class AuthenticationController extends OfdsBaseController {
 	}
 
 	@PostMapping("/login")
+	@Operation(summary = "Create a clone to fight in the clones war")
 	public ResponseBean<UserVO> login(@Valid @RequestBody UserCredentialsVO userVO, HttpServletResponse response) {
 
 		logger.debug("Login Requested");

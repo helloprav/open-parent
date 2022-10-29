@@ -15,11 +15,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import io.swagger.annotations.Api;
 
 @RestController
 @RequestMapping("/caching/api/caches")
-@Api(value = "Cache Controller", consumes = "JSON", produces = "JSON")
+//@Api(value = "Cache Controller", consumes = "JSON", produces = "JSON")
 public class CacheController {
 
 	@Inject

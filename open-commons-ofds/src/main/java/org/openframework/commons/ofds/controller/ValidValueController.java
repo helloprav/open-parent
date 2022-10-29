@@ -12,7 +12,6 @@ import org.openframework.commons.rest.controller.BaseController;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import io.swagger.annotations.Api;
 
 /**
  * 
@@ -24,7 +23,7 @@ import io.swagger.annotations.Api;
  */
 @RestController
 @RequestMapping("/ofds/api/validvalues")
-@Api(value = "User Controller", description = "REST APIs related to Valid Values in the System!!!!", consumes = "JSON", produces = "JSON")
+//@Api(value = "User Controller", description = "REST APIs related to Valid Values in the System!!!!", consumes = "JSON", produces = "JSON")
 public class ValidValueController extends BaseController {
 
 	/**

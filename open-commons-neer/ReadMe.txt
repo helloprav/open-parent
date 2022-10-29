@@ -102,8 +102,14 @@ https://howtodoinjava.com/spring-boot2/sb-multi-module-maven-project/
 	- Try replacing hard coded enums with generic solution so that app1 has RelationType.4 and app2 has RelationType.6 values
 - Create new module for Neer app's functionality... like eshop or catalogue
 =====================================================================
+2022-10-xx
+------------------------------------------------------------
+- Replace/Remove all deprecated API/Reference from the project (Few listed below)
+	- GlobalConfigApp.resourceBundleViewResolver
+=====================================================================
 2020-10-xx
 ------------------------------------------------------------
+- micro frontend for a common ui framework...?
 - ofds
 	- name of app=>ofds to be in single place for each of (app.js/AppConstants.java)
 	- ofds/app.js to be similar to gconfig/app.js
@@ -138,6 +144,44 @@ Caching and versioning of static resources
 ------------------------------------------------------------
 - UI Pagination for Users/Groups to work for all scenarios
 	- Create many users/groups and test the pagination & sorting on ui
+=====================================================================
+2023-01-XX
+------------------------------------------------------------
+- Design system for version & build no
+	- view using About menu
+	- rest api
+=====================================================================
+2023-01-XX
+------------------------------------------------------------
+- Spring boot stand-alone application similar to zipkin server
+	- https://www.slideshare.net/makingx/zipkin-components-zipkinjp
+	- Open the C:\Work\Apps\Demos\TracingDemo\zipkin-server-2.12.9-exec.jar in JD-GUI
+	- Console message in zipkin-server prints the
+		- Logo
+		- following example
+			2022-10-14 22:25:42.592  INFO 50024 --- [           main] c.l.a.c.u.SystemInfo                     : Hostname: praveenpf1413r1 (from 'hostname' command)
+			2022-10-14 22:25:43.434  INFO 50024 --- [oss-http-*:9411] c.l.a.s.Server                           : Serving HTTP at /0:0:0:0:0:0:0:0:9411 - http://127.0.0.1:9411/
+			2022-10-14 22:25:43.436  INFO 50024 --- [           main] c.l.a.s.ArmeriaAutoConfiguration         : Armeria server started at ports: {/0:0:0:0:0:0:0:0:9411=ServerPort(/0:0:0:0:0:0:0:0:9411, [http])}
+			2022-10-14 22:25:43.481  INFO 50024 --- [           main] c.d.d.core                               : DataStax Java driver 3.7.1 for Apache Cassandra
+			2022-10-14 22:25:43.496  INFO 50024 --- [           main] c.d.d.c.GuavaCompatibility               : Detected Guava >= 19 in the classpath, using modern compatibility layer
+			2022-10-14 22:25:43.645  INFO 50024 --- [           main] c.d.d.c.Native                           : Could not load JNR C Library, native system calls through this library will not be available (set this logger level to DEBUG to see the full stack trace).
+			2022-10-14 22:25:43.646  INFO 50024 --- [           main] c.d.d.c.ClockFactory                     : Using java.lang.System clock to generate timestamps.
+			2022-10-14 22:25:43.791  INFO 50024 --- [           main] z.s.ZipkinServer                         : Started ZipkinServer in 3.652 seconds (JVM running for 4.396)
+	- Execute db script similar to mysql.sql in [zipkin-server-2.12.9-exec.jar/BOOT-INF.lib.zipkin-storage-mysql-v1-2.23.9.jar/zipkin2.storage.mysql.v1]
+	- Actuator health check
+=====================================================================
+2022-10-XX
+------------------------------------------------------------
+- Spring boot upgraded from 2.4.2 to 2.5.14
+- Spring boot upgraded from 2.5.14 to 2.6.12
+- Spring boot upgrade to 2.6.12 also needed following changes
+	- java updated to openjdk17 from openjdk11
+	- Migration from Swagger 2 to OpenAPI 3
+		- https://stackoverflow.com/questions/70036953/spring-boot-2-6-0-spring-fox-3-failed-to-start-bean-documentationpluginsboo/70106133#70106133
+		- https://springdoc.org/#migrating-from-springfox
+		- https://dev.to/erwanlt/migration-from-swagger-2-to-openapi-3-1060
+		- https://reflectoring.io/spring-boot-openapi/
+	- 
 =====================================================================
 2022-10-05
 ------------------------------------------------------------

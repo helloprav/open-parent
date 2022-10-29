@@ -4,7 +4,6 @@ import java.util.Arrays;
 
 import org.openframework.commons.aop.CommonsLoggingAspect;
 import org.openframework.commons.cache.EnableCommonsCaching;
-import org.openframework.commons.cache.GlobalCacheApp;
 import org.openframework.commons.config.GlobalConfigApp;
 //import org.openframework.commons.email.EmailApplication;
 //import org.openframework.commons.email.service.DefaultEmailServiceImpl;
@@ -15,7 +14,7 @@ import org.openframework.commons.ofds.OfdsApp;
 import org.openframework.commons.rest.advice.RestResponseBodyAdvice;
 import org.openframework.commons.spring.utils.ApplicationContextProvider;
 import org.openframework.commons.spring.utils.SpringUtils;
-import org.openframework.commons.swagger.Swagger2UiConfiguration;
+import org.openframework.commons.swagger.OpenApiConfiguration;
 import org.openframework.commons.utils.SystemUtils;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -29,7 +28,7 @@ import org.springframework.context.ConfigurableApplicationContext;
 @EnableCommonsCaching
 @SpringBootApplication(scanBasePackageClasses = { NeerApplication.class, CommonsLoggingAspect.class,
 		GlobalConfigApp.class, EncryptionUtil.class, RestResponseBodyAdvice.class,
-		ApplicationContextProvider.class, Swagger2UiConfiguration.class, OfdsApp.class, GlobalCacheApp.class })
+		ApplicationContextProvider.class, OpenApiConfiguration.class, OfdsApp.class })
 public class NeerApplication {
 
 	private static final String SPRING_PROFILES_ACTIVE = "spring.profiles.active";

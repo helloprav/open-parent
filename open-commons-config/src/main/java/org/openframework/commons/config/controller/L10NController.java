@@ -23,11 +23,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.LocaleResolver;
 
-import io.swagger.annotations.Api;
+import io.swagger.v3.oas.annotations.tags.Tag;
+
+//import io.swagger.annotations.Api;
 
 @RestController
 @RequestMapping(ConfigAppConstants.CONFIG_API_L10N_PATH)
-@Api(value = "L10N Controller", description = "REST APIs related to Student Entity!!!!")
+@Tag( name = "L10N Controller", description = "REST APIs related to localization!!!!")
 public class L10NController {
 
 	/** Logger that is available to subclasses */

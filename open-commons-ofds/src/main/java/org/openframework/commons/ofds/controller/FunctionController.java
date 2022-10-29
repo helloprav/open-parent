@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import io.swagger.annotations.Api;
 
 /**
  * 
@@ -30,7 +29,7 @@ import io.swagger.annotations.Api;
  */
 @RestController
 @RequestMapping("/ofds/api/functions")
-@Api(value = "Function Controller", consumes = "JSON", produces = "JSON")
+//@Api(value = "Function Controller", consumes = "JSON", produces = "JSON")
 public class FunctionController extends BaseController {
 
 	@Inject
