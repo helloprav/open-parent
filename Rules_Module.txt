@@ -1,5 +1,5 @@
 ====================================================================================
-----------------------1. MODULES-------------------------------------------------------
+----------------------1. MODULES----------------------------------------------------
 ====================================================================================
 Types of module:
 1. Core Module without UI (open-commons-aop/jpa/rest/spring/swagger/encrypt)
@@ -9,16 +9,36 @@ Types of module:
 Module Names: open-commons-MODULENAME
 
 ====================================================================================
-----------------------2. DATABASE------------------------------------------------------
+----------------------2. DATABASE---------------------------------------------------
 ====================================================================================
 Tables Names
 - MODULENAME_TABLENAME i.e. OFDS_USER
 
 ====================================================================================
-----------------------3. Properties/YAML----------------------------------------------------------
+----------------------3. Properties/YAML--------------------------------------------
 ====================================================================================
 properties names for modules:
 commons:									#fixed
   swagger:									#MODULENAME
     title:  SpringDoc/OpenAPI Collection	#Item Name
+
+====================================================================================
+----------------------4. Project Version Upgrade -----------------------------------
+====================================================================================
+Update project version in following files:
+/open-parent/pom.xml: 							<revision>22.4.3.1</revision>	
+/open-commons-neer/src/bin/env.properties		appVersion=22.4.3.1
+Version num in format: YY.Q.MajorUpdateNoInQuarter.MinorUpdateNoInQuarter
+YY: Year
+Q: Quarter [1-4]
+MajorUpdateNoInQuarter: Major version no in this quarter... breaking changes/new feature
+MinorUpdateNoInQuarter: Minor version no in this quarter... patch/fixes/comments
+
+====================================================================================
+----------------------5. Spring Boot Version Upgrade -------------------------------
+====================================================================================
+Update Spring Boot version in following files:
+/open-parent/pom.xml: 		
+	<version.spring.boot>2.6.12</version.spring.boot>
+	<version.spring>5.3.23</version.spring>
 
