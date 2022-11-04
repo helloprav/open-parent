@@ -4,6 +4,8 @@ server:
     context-path: /neer
     #register-default-servlet: true
 spring:
+  banner:
+    location: classpath:/Banner.txt
   datasource:
     initialization-mode:  always
   cache:

@@ -157,7 +157,6 @@ Caching and versioning of static resources
 	- https://www.slideshare.net/makingx/zipkin-components-zipkinjp
 	- Open the C:\Work\Apps\Demos\TracingDemo\zipkin-server-2.12.9-exec.jar in JD-GUI
 	- Console message in zipkin-server prints the
-		- Logo
 		- following example
 			2022-10-14 22:25:42.592  INFO 50024 --- [           main] c.l.a.c.u.SystemInfo                     : Hostname: praveenpf1413r1 (from 'hostname' command)
 			2022-10-14 22:25:43.434  INFO 50024 --- [oss-http-*:9411] c.l.a.s.Server                           : Serving HTTP at /0:0:0:0:0:0:0:0:9411 - http://127.0.0.1:9411/
@@ -169,6 +168,14 @@ Caching and versioning of static resources
 			2022-10-14 22:25:43.791  INFO 50024 --- [           main] z.s.ZipkinServer                         : Started ZipkinServer in 3.652 seconds (JVM running for 4.396)
 	- Execute db script similar to mysql.sql in [zipkin-server-2.12.9-exec.jar/BOOT-INF.lib.zipkin-storage-mysql-v1-2.23.9.jar/zipkin2.storage.mysql.v1]
 	- Actuator health check
+=====================================================================
+2023-11-XX
+------------------------------------------------------------
+- Spring boot stand-alone application
+	- Banner Create & Display 
+		- https://mkyong.com/spring-boot/spring-boot-custom-banner-example/
+		- http://patorjk.com/software/taag
+	- App name & version under banner [https://zetcode.com/springboot/banner/]
 =====================================================================
 2022-10-29
 ------------------------------------------------------------
