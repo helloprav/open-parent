@@ -1,1 +1,0 @@
-mysql -uroot -hlocalhost -proot
