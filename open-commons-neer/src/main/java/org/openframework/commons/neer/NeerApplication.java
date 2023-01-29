@@ -36,10 +36,10 @@ public class NeerApplication {
 
 	public static void main(String[] args) {
 
-		System.out.println("Profile: " + System.getProperty(SPRING_PROFILES_ACTIVE));
-		System.out.println("LOG_LEVEL: " + System.getProperty(LOG_LEVEL));
+//		System.out.println("Profile: " + System.getProperty(SPRING_PROFILES_ACTIVE));
+//		System.out.println("LOG_LEVEL: " + System.getProperty(LOG_LEVEL));
 		ConfigurableApplicationContext obj = SpringApplication.run(NeerApplication.class, args);
-		System.out.println("Profile: " + System.getProperty(SPRING_PROFILES_ACTIVE));
+//		System.out.println("Profile: " + System.getProperty(SPRING_PROFILES_ACTIVE));
 		String printDetails = System.getProperty("printDetails");
 		if(null != printDetails) {
 

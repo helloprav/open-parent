@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{global-config/html/gconfig_layout}">
+<head>
+    <title>Welcome to Our Site</title>
+</head>
+<body>
+
+<div layout:fragment="content">
+    <section class="my-5">
+		<link rel="stylesheet" type="text/css"  th:href="@{/webjars/global-config/css/table.css}" />
+		
+		<script type="text/javascript">
+		    $('#iaasForm1').submit(function(e) {
+		        e.preventDefault();
+		        doSearch();
+		    });
+		    $(function() {
+		        //selectCheckBox();
+		    });
+		</script>
+		
+		
+		<div style="border: 0px">
+			<br> <label><b><span th:text="#{messageType}">( message Type ) </span> Messages</b></label>
+			<table class="table" align="center">
+		        <tr>
+		            <td>Select Language</td>
+		            <td><select id="selectLanguage" onchange="loadMessages()">
+		                    <option value="-1">--Select Language--</option>
+		                    <c:forEach items="${languages}" var="languageBean">
+		                        <option value="${languageBean.locale}">${languageBean.name}</option>
+		                    </c:forEach>
+		            </select></td>
+		            <br>
+		        </tr>
+		        <input type="hidden" id="messageType" name="messageType" value="${messageType}" />
+		    </table>
+		</div><br>
+		
+		<div id="messages"></div>
+    </section>
+</div>
+
+</body>
+</html>

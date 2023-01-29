@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<body>
+    <header th:fragment="header">
+        <h1>Welcome to My Blog</h1>
+    </header>
+    
+    <nav th:fragment="menu">
+        <a th:href="@{/}">Homepage</a>
+        <a th:href="@{/about}">About Me</a>
+        <a th:href="@{/blog}">Blog</a>
+        <a th:href="@{/contact}">Contact</a>
+    </nav>
+    
+    <footer th:fragment="footer">
+        <p>&copy; 2020 attacomsian.com</p>
+    </footer>
+</body>
+</html>

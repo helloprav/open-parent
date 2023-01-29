@@ -8,6 +8,8 @@ import javax.inject.Inject;
 import org.openframework.commons.cache.props.CommonsCacheProperties;
 import org.openframework.commons.cache.service.bo.CacheService;
 import org.openframework.commons.rest.beans.ResponseBean;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,6 +23,9 @@ import org.springframework.web.bind.annotation.RestController;
 //@Api(value = "Cache Controller", consumes = "JSON", produces = "JSON")
 public class CacheController {
 
+	/** Logger that is available to subclasses */
+	private final Logger logger = LoggerFactory.getLogger(getClass());
+
 	@Inject
 	private CacheService cacheService;
 
@@ -29,18 +34,19 @@ public class CacheController {
 
 	@GetMapping(path = { "", "/" })
 	public Map<String, Collection<String>> findCaches() {
-		System.out.println(commonsCacheProperties);
+		logger.debug("commonsCacheProperties: {}" , commonsCacheProperties);
 		return cacheService.findCaches();
 	}
 
 	@GetMapping(path = { "/{cacheManager}" })
 	public Collection<String> findCachesForCacheMgr(@PathVariable String cacheManager) {
-		System.out.println(commonsCacheProperties);
+		logger.debug("cacheManager: {}" , cacheManager);
 		return cacheService.findCachesByCacheManager(cacheManager);
 	}
 
 	@DeleteMapping(path = { "/{cacheManager}" })
 	public ResponseBean<Object> deleteCachesForCacheMgr(@PathVariable String cacheManager) {
+		logger.debug("cacheManager: {}" , cacheManager);
 		cacheService.evictCachesForCacheMgr(cacheManager);
 		return new ResponseBean<>(HttpStatus.OK.value(), String.format("CacheManager [%s] evicted successfully", cacheManager));
 	}

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title layout:title-pattern="$CONTENT_TITLE - $LAYOUT_TITLE"></title>
+
+	<link rel="stylesheet" type="text/css"  th:href="@{/webjars/global-config/css/layout.css}" />
+	<link rel="stylesheet" type="text/css"  th:href="@{/webjars/global-config/css/jquery.dialogbox.css}" />
+
+	<script type="text/javascript" th:src="@{/webjars/global-config/js/jquery-3.2.1.min.js}" ></script>
+	<script type="text/javascript" th:src="@{/webjars/global-config/js/app.js}" ></script>
+	<script type="text/javascript" th:src="@{/webjars/global-config/js/jquery.dialogBox.js}" ></script>
+</head>
+<body>
+
+<div>
+	<!-- Header / Main Navigation -->
+	<div id="header">
+		<link rel="stylesheet" type="text/css"  th:href="@{/webjars/global-config/css/header.css}" />
+		<div id="header">
+			<a id="logo" th:href="@{/gconfig}"><img
+				th:src="@{/webjars/global-config/images/logo.png}" height="50" width="50" /></a>
+			<div id="rightSide">
+				<p id="welcome">Welcome To App Config Page: ${userPrincipal}</p>
+			</div>
+		</div>
+		<div id="color_line"></div>
+
+	    <div id="timeoutDialog"></div>
+	    <div id="alertDialog"></div>
+	    <div id="confirrmDialog"></div>
+	</div>	<!-- end of header -->
+
+	<!-- Menu Section -->
+	<div id="menu">
+		<div id="leftmenu">
+
+			<link rel="stylesheet" type="text/css"  th:href="@{/webjars/global-config/css/menu.css}" />
+			<div class="menu" hidden="true">
+				<ul class="nav">
+					<p class="menuSection">Request Status</p>
+					<p>Requester Details:-</p>
+					<p>User Name : ${loggedInUser.firstName} ${loggedInUser.lastName}</p>
+					<p>Signum : ${loggedInUser.signum}</p>
+					<p>Cost Center : ${userdata.costcentre}</p>
+					<p>Approver : ${userdata.reportingmanager}</p>
+			</div>
+
+			<div class="menu">
+				<ul class="nav">
+					<p class="menuSection">Messages</p>
+					<th:block th:each="entry : ${messageResources.keySet()}">
+						<p>
+							<a onclick="return loadPage('/home/languages?messageType=dashboard');" >using </a>
+							<a th:href="@{/gconfig/home/languages(messageType=dashboard)}" >aaaa</a>
+							<a onclick="return loadPage('/languages?messageType=${entry.key}')" text="${entry.key} messages">${entry.key}
+								messages</a>
+						</p>
+					</th:block>
+			</div>
+
+			<div class="menu">
+				<ul class="nav">
+					<p class="menuSection">Env Properties</p>
+					<th:block th:each="configName : ${configNames}" >
+						<p>
+							<a onclick="return loadPage('/config/${configName}')">${configName}</a>
+						</p>
+					</th:block>
+				</ul>
+			</div>
+		
+			<div class="menu" style="display: none123;">
+				<ul class="nav">
+					<p class="menuSection">System Config</p>
+					<p><a onclick="return getSystemStatus('/system/status')"><s>system status</s></a></p>
+					<p><a onclick="return getSystemProperties('/system/properties')">system properties</a></p>
+					<p><a onclick="return getSystemProperties('/system/beans')">system beans</a></p>
+					<p><a onclick="return loadLogger('/logger')">change log level</a></p>
+					<p><a onclick="return getSystemProperties('/logger/logfiles')">Download Logs</a></p>
+			</div>
+		</div>
+	</div> <!-- End of Menu Section -->
+
+
+<!-- Content Section -->
+<section layout:fragment="content">
+    <p>This is filled by the content template.</p>
+</section>
+
+<!-- Footer -->
+<footer class="container py-5">
+    <div class="row">
+        <div class="col-md-12">
+            <p class="text-muted">&copy; 2020 Business Name. All rights reserved.</p>
+        </div>
+    </div>
+</footer>
+
+<!-- Optional Section -->
+<th:block layout:fragment="optional" />
+
+</body>
+</html>

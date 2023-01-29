@@ -1,0 +1,12 @@
+#Footer {
+	height: 20px;
+	display: block;
+	min-width: 1150px;
+	clear: both;
+	margin: 10px;
+	text-align: center;
+}
+
+#footerText {
+	background: transparent;
+}

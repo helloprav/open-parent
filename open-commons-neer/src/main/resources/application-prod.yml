@@ -1,9 +1,22 @@
-spring:
-  profiles:
-    include: prod-jdbc, prod-email, prod-actuator, prod-ofds-security, prod-caching
+commons:
+  swagger:
+    title:  SpringDoc/OpenAPI Collection
+    description: This is the collection of REST API for the main application and all included modules
+    version: ${appVersion}
 log4j:
    logger:
       org:
          hibernate:
-            SQL=error
-            type=trace
+            SQL: error
+            type: trace
+server:
+  port: "80"
+  tomcat:
+    accesslog:
+      enabled: true
+      prefix: access_log
+      file-date-format: .yyyy-MM-dd
+      suffix: .log
+      directory: logs
+    basedir: ${APP_HOME}
+            

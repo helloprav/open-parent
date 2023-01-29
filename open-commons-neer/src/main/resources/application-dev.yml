@@ -10,6 +10,7 @@ log4j:
             SQL: debug
             type: trace
 server:
+  port: "8090"
   tomcat:
     accesslog:
       enabled: true
