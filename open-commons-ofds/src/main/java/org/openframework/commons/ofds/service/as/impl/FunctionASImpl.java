@@ -4,7 +4,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import org.openframework.commons.ofds.entity.Function;
+import org.openframework.commons.jpa.entity.Function;
 import org.openframework.commons.ofds.service.as.FunctionAS;
 import org.openframework.commons.ofds.service.repository.FunctionRepository;
 import org.springframework.stereotype.Service;

@@ -1,8 +1,8 @@
 package org.openframework.commons.ofds.service.as;
 
 import org.openframework.commons.spring.Pagination;
-import org.openframework.commons.ofds.entity.User;
-import org.openframework.commons.ofds.entity.UserHistory;
+import org.openframework.commons.jpa.entity.User;
+import org.openframework.commons.jpa.entity.UserHistory;
 import org.springframework.data.domain.Page;
 
 public interface UserAS {

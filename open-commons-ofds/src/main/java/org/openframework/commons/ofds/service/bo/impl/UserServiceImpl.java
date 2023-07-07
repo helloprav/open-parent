@@ -9,7 +9,7 @@ import org.openframework.commons.rest.vo.UserHistoryVO;
 import org.openframework.commons.rest.vo.UserVO;
 import org.openframework.commons.spring.PageList;
 import org.openframework.commons.spring.Pagination;
-import org.openframework.commons.ofds.entity.User;
+import org.openframework.commons.jpa.entity.User;
 import org.openframework.commons.ofds.service.adaptor.UserAdaptor;
 import org.openframework.commons.ofds.service.as.UserAS;
 import org.openframework.commons.ofds.service.bo.UserService;

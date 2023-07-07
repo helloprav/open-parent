@@ -7,8 +7,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import org.openframework.commons.domain.exceptions.EntityNotFoundException;
-import org.openframework.commons.ofds.entity.Group;
-import org.openframework.commons.ofds.entity.User;
+import org.openframework.commons.jpa.entity.Group;
+import org.openframework.commons.jpa.entity.User;
 import org.openframework.commons.ofds.service.repository.GroupRepository;
 import org.openframework.commons.ofds.service.repository.UserRepository;
 import org.slf4j.Logger;

@@ -2,7 +2,7 @@ package org.openframework.commons.ofds.service.as;
 
 import java.util.List;
 
-import org.openframework.commons.ofds.entity.Function;
+import org.openframework.commons.jpa.entity.Function;
 
 
 public interface FunctionAS {

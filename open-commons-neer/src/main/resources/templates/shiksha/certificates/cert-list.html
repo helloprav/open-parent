@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="/layout :: layout(~{::title}, ~{::section})"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}"
+      >
+<head>
+    <title>Shiksha: Evaluations</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <script>
+
+		function startEvaluation(evaluationID) {
+			var url = '../exams/start-eval?evalId='+evaluationID;
+			//url =formatURL(url);
+			windowName = 'startEvaluation';
+			var width = 600;
+			var height = 410;
+			var left = (screen.width - width) / 2;
+			var top = (screen.height - height) / 2;
+			var params = 'width=' + width + ', height=' + height;
+			/*params += ', top=' + top + ', left=' + left;
+			params += ', location=no';
+			params += ', menubar=no';
+			params += ', resizable=no';
+			params += ', scrollbars=no';*/
+			var thePopup = window.open(url, windowName, params);
+			//openPopup(url, windowName, params)
+			//openPopupOnTop(url, height, width);
+			/* var IE  = (document.all) ? 1 : 0;
+				if(IE) {
+					var thePopup = window.open( url, windowName, params );
+				} else {
+					openPopupOnTop(url, height, width);
+				} */
+		}
+
+	</script>
+    <section>
+        <div th:switch="${items}" class="container my-5">
+            <div class="col-md-10">
+                <h2 th:case="null">No exams yet!</h2>
+                <div th:case="*">
+                    <table class="table table-striped table-responsive-md">
+						<thead th:replace="/shiksha/fragments/tables.html
+						              :: fields(~{ :: .myFields})">
+							<tr class="myFields">
+								<th>#</th>
+								<th>Date</th>
+								<th>Name</th>
+								<th>Passed</th>
+								<th>Result</th>
+								<th>Print</th>
+							</tr>
+						</thead>
+                        <tbody>
+                            <tr th:each="item, iter : ${items}">
+                                <td th:text="${iter.index+1}"></td>
+                                <td th:text="${item.endDateTime}"></td>
+                                <td th:text="${item.evalName}"></td>
+                                <td th:text="${item.passed}"></td>
+                                <td th:text="${item.result}"></td>
+                                <td><a th:onclick="startEvaluation([[${item.id}]])" class="btn btn-primary"><i class="fa fa-fighter-jet ml-2"></i></a></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <br/>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+</body>
+</html>

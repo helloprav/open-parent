@@ -1,8 +1,8 @@
 package org.openframework.commons.ofds.service.adaptor;
 
 import org.openframework.commons.rest.vo.BaseVO;
-import org.openframework.commons.ofds.entity.BaseEntity;
-import org.openframework.commons.ofds.entity.MainEntity;
+import org.openframework.commons.jpa.entity.BaseEntity;
+import org.openframework.commons.jpa.entity.MainEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

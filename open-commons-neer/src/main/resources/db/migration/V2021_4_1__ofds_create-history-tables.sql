@@ -37,7 +37,7 @@ CREATE TABLE `ofds_group_history` (
   PRIMARY KEY (`id`),
   KEY `FK8g7mpvxrymwevqdmb94v2upon` (`created_by`),
   KEY `FKnxxtjaoe1co1xvm8t2l1fsh75` (`modified_by`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -71,7 +71,7 @@ CREATE TABLE `ofds_user_history` (
   PRIMARY KEY (`id`),
   KEY `FK2q5xg8lymwntx50huh9u346fa` (`created_by`),
   KEY `FKe6tre12jl2jd1oc8cglk4u9xy` (`modified_by`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 

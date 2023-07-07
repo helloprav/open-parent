@@ -3,7 +3,7 @@ package org.openframework.commons.ofds.service.repository;
 import java.util.Date;
 import java.util.List;
 
-import org.openframework.commons.ofds.entity.Group;
+import org.openframework.commons.jpa.entity.Group;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -26,4 +26,7 @@ public interface GroupRepository extends JpaRepository<Group, Long> {
 	@Query("update Group p set p.isValid = :isValid, p.modifiedBy.id = :userId, p.modifiedDate = :modifiedDate where p.id=:id")
 	Integer updateStatus(@Param("id") Long id, @Param("isValid") Boolean isValid, @Param("userId") Long userId,
 			@Param("modifiedDate") Date modifiedDate);
+
+	@Query("SELECT g.groupName from Group g where g.groupName like :groupName")
+	List<String> findGroupNameByGroupNameStartsWith(String groupName);
 }

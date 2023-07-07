@@ -3,7 +3,7 @@
  */
 package org.openframework.commons.ofds.service.repository;
 
-import org.openframework.commons.ofds.entity.User;
+import org.openframework.commons.jpa.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;

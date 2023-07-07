@@ -51,4 +51,19 @@ public class RequestUtils {
 
 		return result;
 	}
+
+	public static Map<String, String[]> getRequestParamsInMap(HttpServletRequest request) {
+
+		Map<String, String[]> result = new HashMap<>();
+
+		Enumeration<?> paramNames = request.getParameterNames();
+		while (paramNames.hasMoreElements()) {
+			String key = (String) paramNames.nextElement();
+			String[] value = request.getParameterValues(key);
+			result.put(key, value);
+			System.out.println(key + ":" + value);
+		}
+
+		return result;
+	}
 }

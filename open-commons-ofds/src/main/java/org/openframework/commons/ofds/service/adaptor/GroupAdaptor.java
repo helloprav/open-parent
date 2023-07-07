@@ -6,10 +6,10 @@ import java.util.List;
 import java.util.ListIterator;
 
 import org.openframework.commons.enums.Action;
-import org.openframework.commons.ofds.entity.Function;
-import org.openframework.commons.ofds.entity.Group;
-import org.openframework.commons.ofds.entity.GroupFunction;
-import org.openframework.commons.ofds.entity.GroupHistory;
+import org.openframework.commons.jpa.entity.Function;
+import org.openframework.commons.jpa.entity.Group;
+import org.openframework.commons.jpa.entity.GroupFunction;
+import org.openframework.commons.jpa.entity.GroupHistory;
 import org.openframework.commons.ofds.utils.EnumUtility;
 import org.openframework.commons.ofds.vo.FunctionVO;
 import org.openframework.commons.ofds.vo.GroupHistoryVO;

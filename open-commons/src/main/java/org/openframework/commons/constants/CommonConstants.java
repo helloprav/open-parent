@@ -12,5 +12,6 @@ public interface CommonConstants {
 	public static final String STR_FORWARD_SLASH = "/";
 
 	//public static final String ENCODING_UTF8 = "UTF-8";
+	public static final String REPORT_EXCEL_SHEET_NAME_DEFAULT = "Excel Report";
 
 }

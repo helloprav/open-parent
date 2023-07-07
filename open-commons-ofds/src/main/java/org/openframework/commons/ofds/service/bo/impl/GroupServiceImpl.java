@@ -10,7 +10,7 @@ import javax.inject.Inject;
 import org.openframework.commons.spring.Pagination;
 import org.openframework.commons.cache.GlobalCacheApp;
 import org.openframework.commons.cache.props.CommonsCacheProperties;
-import org.openframework.commons.ofds.entity.Group;
+import org.openframework.commons.jpa.entity.Group;
 import org.openframework.commons.ofds.service.adaptor.GroupAdaptor;
 import org.openframework.commons.ofds.service.as.GroupAS;
 import org.openframework.commons.ofds.service.bo.GroupService;

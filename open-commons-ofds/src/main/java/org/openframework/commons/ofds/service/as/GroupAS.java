@@ -3,8 +3,8 @@ package org.openframework.commons.ofds.service.as;
 import java.util.List;
 
 import org.openframework.commons.spring.Pagination;
-import org.openframework.commons.ofds.entity.Group;
-import org.openframework.commons.ofds.entity.GroupHistory;
+import org.openframework.commons.jpa.entity.Group;
+import org.openframework.commons.jpa.entity.GroupHistory;
 
 public interface GroupAS {
 

@@ -46,10 +46,19 @@
 			<outputDirectory>config</outputDirectory>
 			<includes>
 				<include>cmnTemplate/**</include>
+				<include>static/**</include>
 				<include>*.properties</include>
 				<include>*.sql</include>
 				<include>*.xml</include>
 				<include>*.yml</include>
+			</includes>
+		</fileSet>
+		<fileSet>
+			<directory>src/main/resources/templates</directory>
+			<outputDirectory>static</outputDirectory>
+			<includes>
+				<include>shiksha/**</include>
+				<include>layout*.html</include>
 			</includes>
 		</fileSet>
 		<fileSet>

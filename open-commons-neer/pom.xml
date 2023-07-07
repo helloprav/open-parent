@@ -111,6 +111,10 @@
 		</dependency>
 		<dependency>
 			<groupId>org.openframework</groupId>
+			<artifactId>open-commons-shiksha</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.openframework</groupId>
 			<artifactId>open-commons-email</artifactId>
 		</dependency>
 		<dependency>
@@ -142,6 +146,10 @@
 			<scope>runtime</scope>
 		</dependency>
 
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-devtools</artifactId>
+		</dependency>
 	</dependencies>
 
 	<build><!-- <resources> <resource> <directory>src/main/resources</directory> 

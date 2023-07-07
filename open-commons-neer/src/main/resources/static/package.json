@@ -1,0 +1,16 @@
+{
+	"name": "gurukul",
+	"version": "1.0.0",
+	"description": "node dependencies for shiksha/pariksha module",
+	"main": "index.js",
+	"private": "true",
+	"devDependencies": {
+		"@fortawesome/fontawesome-free": "^v5.4.1",
+		"bootstrap": "4.1.3",
+		"jquery": "^3.6.0"
+	},
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"author": "praveen"
+}

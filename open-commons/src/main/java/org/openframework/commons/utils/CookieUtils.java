@@ -1,5 +1,8 @@
 package org.openframework.commons.utils;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.util.Collections;
 import java.util.List;
 import java.util.ListIterator;
 
@@ -27,6 +30,21 @@ public class CookieUtils {
 		return cookie;
 	}
 
+	public static Cookie createCookieEncoded(String name, String value) {
+
+		Cookie cookie;
+		try {
+			cookie = new Cookie(name, URLEncoder.encode( value, "UTF-8" ));
+		} catch (UnsupportedEncodingException e) {
+
+			e.printStackTrace();
+			throw new RuntimeException(e);
+		}
+		cookie.setPath(CookieConstants.COOKIE_PATH);
+		cookie.setMaxAge(CookieConstants.COOKIE_EXPIRY_TIME * 60);
+		return cookie;
+	}
+
 	public static void createLoginCookies(List<Cookie> loginCookieList, HttpServletResponse response) {
 
 		ListIterator<Cookie> iterator = loginCookieList.listIterator();
@@ -45,6 +63,24 @@ public class CookieUtils {
 				cookie.setPath("/");
 				cookie.setMaxAge(0);
 				resp.addCookie(cookie);
+			}
+		}
+	}
+
+	public static void deleteCookiesByName(HttpServletRequest req, HttpServletResponse resp, List<String> cookieName) {
+
+		if(null == cookieName) {
+			cookieName = Collections.<String>emptyList();
+		}
+		Cookie[] cookies = req.getCookies();
+		if (cookies != null) {
+			for (Cookie cookie : cookies) {
+				if(cookieName.contains(cookie.getName())) {
+					cookie.setValue("");
+					cookie.setPath("/");
+					cookie.setMaxAge(0);
+					resp.addCookie(cookie);
+				}
 			}
 		}
 	}

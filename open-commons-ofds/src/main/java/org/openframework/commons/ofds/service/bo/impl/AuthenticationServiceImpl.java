@@ -7,6 +7,7 @@ import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -24,8 +25,9 @@ import org.openframework.commons.rest.vo.UserVO;
 import org.openframework.commons.ofds.constant.OfdsConstants;
 import org.openframework.commons.ofds.constant.OfdsCookieConstants;
 import org.openframework.commons.ofds.email.LoginEmailServiceImpl;
-import org.openframework.commons.ofds.entity.Function;
-import org.openframework.commons.ofds.entity.User;
+import org.openframework.commons.jpa.entity.Function;
+import org.openframework.commons.jpa.entity.User;
+import org.openframework.commons.jpa.entity.UserGroup;
 import org.openframework.commons.ofds.service.as.FunctionAS;
 import org.openframework.commons.ofds.service.as.UserAS;
 import org.openframework.commons.ofds.service.bo.AuthenticationService;
@@ -118,6 +120,13 @@ public class AuthenticationServiceImpl extends BaseServiceImpl implements Authen
 		}
 		if (loginSuccess) {
 			userVO = userAdaptor.toVO(user);
+			List<String> groupNames = getGroupNames(user);
+			Map<String, Object> otherData = userVO.getOtherData();
+			if(null == otherData ) {
+				otherData = new HashMap<String, Object>();
+			}
+			otherData.put("groupNames", (Object)groupNames);
+			userVO.setOtherData(otherData);
 			if(userVO.getIsSuperAdmin()) {
 				// get all functions for super admin
 				List<Function> functionList = functionAS.findFunctions(true);
@@ -131,6 +140,17 @@ public class AuthenticationServiceImpl extends BaseServiceImpl implements Authen
 		}
 
 		return userVO;
+	}
+
+	private List<String> getGroupNames(User user) {
+
+		List<String> groupNames = new ArrayList<>();
+		Iterator<UserGroup> iterator = user.getUserGroups().listIterator();
+		while (iterator.hasNext()) {
+			UserGroup userGroup = iterator.next();
+			groupNames.add(userGroup.getGroup().getGroupName());
+		}
+		return groupNames;
 	}
 
 	/**

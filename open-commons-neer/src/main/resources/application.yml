@@ -1,4 +1,5 @@
 server:
+  max1-http1-header1-size1: 10MB
   servlet:
     context-path: /neer
     #register-default-servlet: true
@@ -12,5 +13,5 @@ spring:
     - 
   profiles:
     group:
-      dev: dev-jdbc, dev-email, dev-actuator, dev-ofds-security, dev-caching
-      prod: prod-jdbc, prod-email, prod-actuator, prod-ofds-security, prod-caching
+      dev: dev-jdbc, dev-email, dev-actuator, dev-ofds-security, dev-caching, prod-shiksha
+      prod: prod-jdbc, prod-email, prod-actuator, prod-ofds-security, prod-caching, prod-shiksha

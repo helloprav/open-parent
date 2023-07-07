@@ -1,6 +1,6 @@
 package org.openframework.commons.ofds.service.repository;
 
-import org.openframework.commons.ofds.entity.UserGroup;
+import org.openframework.commons.jpa.entity.UserGroup;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;

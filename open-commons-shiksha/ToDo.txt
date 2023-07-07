@@ -1,0 +1,18 @@
+PDF Certificates for download
+
+All types of validations in excel: qType, numbers
+Support questions to display to be less than total questions in eval
+Move code from controller to service
+Fill in the blank(s) question [exact match]
+
+Export eval
+update eval/question/answers
+Result to display:
+-Total Question
+-Passing Marks (Percentage)
+-Correct Answers (Percentage)
+-Wrong Answers (Percentage)
+-Row with false result to have light red background
+
+Create entity: Grade and Subject.
+Evaluation to be mapped to above Grade and Subject

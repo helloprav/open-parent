@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="/layout-popup :: layout(~{::title}, ~{::section})"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout-popup}"
+      >
+<head>
+    <title>Shiksha: Evaluations</title>
+</head>
+<body>
+<div layout:fragment="contentPopup">
+
+	<script type="text/javascript">
+	<!--
+	$(document).ready(function(){
+		setTimeout("loadQuestions()",200);
+
+		// prevent refresh (F5)
+		document.onkeydown = function(e){
+		    var event = (window.event || e);
+		    if(event.keyCode==116){
+		        event.preventDefault();
+		        alert("This action is not allowed");
+		    } else if(event.keyCode==13){
+		        event.preventDefault();
+		        $( "#Next" ).click();
+		    }
+		}
+	});
+
+	function loadQuestions() {
+
+		var evalId =[[${evalId}]];
+		// By default 1st question is loaded 
+		var url="./question/1?evalId="+evalId;
+		//url =formatURL(url);
+		$.post(url, {testRun: '[[${testRun}]]'}, function(data) {
+			  $('#question').html(data);
+		});
+	}
+
+	function submitQuestionOld(nextQuestionID) {
+	
+		var url="./"+nextQuestionID;
+		//url =formatURL(url);
+		$.ajax({
+			type: 'POST', 
+			url: url, 
+			data: $('#startEvaluationForm').serialize(), 
+			success: function(response) {
+				$('#question').html(response);
+	    	},
+			error : function(e) {
+				console.log("ERROR: ", e);
+			},
+			done : function(e) {
+				console.log("DONE");
+			}
+	    });
+	    return false;
+	}
+
+	function submitEvaluationOld(evaluationID) {
+		var status="";
+		var previousStatus="";
+		var courseName = "";
+		var parentId = "";
+		var groupId = "";
+		window.close();
+	    window.opener.evaluationCompleted(evaluationID);
+	}
+	
+	
+	//-->
+	</script>
+
+    <section>
+        <div class="container my-5">
+            <p class="my-5"><h2> <b>Eval Group:</b> [[${eval.evalGroup}]] | <b>Name:</b> [[${eval.name}]]</h2>
+            </p>
+            <div class="col-md-10">
+				<div id="question"></div>
+            </div>
+        </div>
+    </section>
+</div>
+</body>
+</html>

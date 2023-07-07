@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      th:replace="/layout-popup :: layout(~{::title}, ~{::section})"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout-popup}"
+      >
+<head>
+    <title>Shiksha: Evaluations</title>
+</head>
+<body>
+<div layout:fragment="contentPopup">
+
+	<script>
+		function closePopup() {
+			window.close();
+		}
+	</script>
+    <section>
+        <div class="container my-5" th:switch="${evalPassed}">
+            <h2 th:if="${evalPassed}">Congratulations! you have passed the exam.</h2>
+            <h2 th:if="${!evalPassed}">Sorry! you failed this time.</h2>
+            <div class="col-md-10">
+				You have scored [[${userEvaluation.correctAttempts}]] out of [[${userEvaluation.attemptedQuestions}]].<br/>
+				Total Questions: [[${userEvaluation.attemptedQuestions}]]<br/>
+				<i class="fa fa-check-circle" aria-hidden="true"></i>Correct Answers: [[${userEvaluation.correctAttempts}]]<br/>
+				<i class="fa fa-times-circle" aria-hidden="true"></i>Wrong/Missed Answers: [[${userEvaluation.attemptedQuestions - userEvaluation.correctAttempts}]]<br/>
+            </div><br/><br/>
+        </div>
+        <div><input type="button" onclick="closePopup();" value="Close"></div>
+        <div id="report" th:if="${report}">
+			Report
+			<table border="1">
+				<thead>
+					<tr>
+						<td>#</td>
+						<td>Question Text</td>
+						<td>Answers</td>
+						<td>Your answers</td>
+						<td>Result</td>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="quest, iStat : ${report}">
+						<td th:text="${iStat.index+1}" />
+						<td th:text="${quest.questionText}" />
+						<td><ul>
+							<li th:each="ans : ${quest.answers}" th:style="${ans.correctOption == true}? 'font-weight: bold;'">
+								<span>[[${ans.answerText}]] ([[${ans.id}]])
+							</span>
+						</td>
+						<td>
+							<ul th:each="userAns : ${quest.userAnswerList}">
+								<li th:text="${userAns}"></li>
+							</ul>
+						</td>
+						<td>[[${quest.isOk}]]</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+    </section>
+</div>
+</body>
+</html>

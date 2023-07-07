@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
-                                    
+                                        
+    
     
     
     
@@ -8,16 +9,8 @@
     
     
     <wb-module deploy-name="open-commons-neer">
-                                                                        
+                                                                                
         
-        
-        
-        
-        
-        
-        
-        <wb-resource deploy-path="/" source-path="/src/main/java"/>
-                                                                        
         
         
         
@@ -26,7 +19,8 @@
         
         
         <wb-resource deploy-path="/" source-path="/.apt_generated"/>
-                                                                        
+                                                                                
+        
         
         
         
@@ -35,8 +29,9 @@
         
         
         <wb-resource deploy-path="/" source-path="/src/main/resources"/>
-        <wb-resource deploy-path="/" source-path="/target/generated-sources/annotations"/>
-                                                                    
+        <wb-resource deploy-path="/" source-path="/src/main/java"/>
+                                                                            
+    
     
     
     
@@ -45,7 +40,8 @@
     
     
     </wb-module>
-                                
+                                    
+
 
 
 

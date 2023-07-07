@@ -23,10 +23,10 @@
 LOCK TABLES `ofds_function` WRITE;
 /*!40000 ALTER TABLE `ofds_function` DISABLE KEYS */;
 INSERT INTO `ofds_function` 
-	(`id`, `created_date`, `is_valid`, `modified_date`, `function_name`, `created_by`, `modified_by`) 
+	(`id`, `function_name`, `is_valid`, `created_by`, `created_date`, `modified_by`, `modified_date`) 
 VALUES 
-	(1,now(),1,NULL,'FIND USERS',1,NULL),
-	(2,now(),1,NULL,'CREATE USERS',1,NULL);
+	(1,'FIND USERS',1,1,now(),NULL,NULL),
+	(2,'CREATE USERS',1,1,now(),NULL,NULL);
 /*!40000 ALTER TABLE `ofds_function` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -38,10 +38,10 @@ UNLOCK TABLES;
 LOCK TABLES `ofds_group_function` WRITE;
 /*!40000 ALTER TABLE `ofds_group_function` DISABLE KEYS */;
 INSERT INTO `ofds_group_function` 
-	(`id`, `created_date`, `is_valid`, `modified_date`, `created_by`, `modified_by`, `function_id`, `group_id`) 
+	(`id`, `group_id`, `function_id`, `is_valid`, `created_by`, `created_date`, `modified_by`, `modified_date`) 
 VALUES 
-	(1,NULL,NULL,NULL,NULL,NULL,1,1),
-	(2,NULL,NULL,NULL,NULL,NULL,2,1);
+	(1,1,1,NULL,NULL,now(),NULL,NULL),
+	(2,1,2,NULL,NULL,now(),NULL,NULL);
 /*!40000 ALTER TABLE `ofds_group_function` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -53,9 +53,9 @@ UNLOCK TABLES;
 LOCK TABLES `ofds_group` WRITE;
 /*!40000 ALTER TABLE `ofds_group` DISABLE KEYS */;
 INSERT INTO `ofds_group` 
-	(`id`, `created_date`, `is_valid`, `modified_date`, `description`, `group_name`, `created_by`, `modified_by`) 
+	(`id`, `group_name`, `description`, `is_valid`, `created_by`, `created_date`, `modified_by`, `modified_date`) 
 VALUES 
-	(1,now(),1,'2020-09-27 21:28:22','This is user admin group','User Admin Group',1,1);
+	(1,'User Admin Group','This is user admin group',1,1,now(), NULL, NULL);
 /*!40000 ALTER TABLE `ofds_group` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -67,9 +67,25 @@ UNLOCK TABLES;
 LOCK TABLES `ofds_user` WRITE;
 /*!40000 ALTER TABLE `ofds_user` DISABLE KEYS */;
 INSERT INTO `ofds_user` 
-	(`id`, `created_date`, `is_valid`, `modified_date`, `description`, `email`, `first_name`, `gender`, `is_super_admin`, `last_name`, `mobile`, `password`, `phone`, `status`, `username`, `created_by`, `modified_by`) 
+	(`id`, `username`, `password`, `description`, `first_name`, `last_name`, `is_super_admin`, `gender`, `email`, `mobile`, `phone`, `status`, `is_valid`, `created_by`, `created_date`, `modified_by`, `modified_date`) 
 VALUES 
-	(1,now(),1,NULL,NULL,'praveenatwork2018@gmail.com','Admin','male',_binary '',NULL,NULL,'5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8',NULL,'active','admin',1,NULL);
+	(1,'admin','5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8', NULL, 'Admin', NULL,1,'male','praveenatwork2018@gmail.com', NULL, NULL, 'active',1,1, now(), NULL, NULL);
+INSERT INTO `ofds_user` 
+	(`id`, `username`, `password`, `description`, `first_name`, `last_name`, `is_super_admin`, `gender`, `email`, `mobile`, `phone`, `status`, `is_valid`, `created_by`, `created_date`, `modified_by`, `modified_date`) 
+VALUES 
+	(2,'praveen','5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8', NULL, 'Praveen Kumar', 'Mishra',0,'male','praveenatwork2018@gmail.com', NULL, NULL, 'active',1,1, now(), NULL, NULL);
+INSERT INTO `ofds_user` 
+	(`id`, `username`, `password`, `description`, `first_name`, `last_name`, `is_super_admin`, `gender`, `email`, `mobile`, `phone`, `status`, `is_valid`, `created_by`, `created_date`, `modified_by`, `modified_date`) 
+VALUES 
+	(3,'nandni','5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8', NULL, 'Nandni', 'Shree',0,'female','nandni@gmail.com', NULL, NULL, 'active',1,1, now(), NULL, NULL);
+INSERT INTO `ofds_user` 
+	(`id`, `username`, `password`, `description`, `first_name`, `last_name`, `is_super_admin`, `gender`, `email`, `mobile`, `phone`, `status`, `is_valid`, `created_by`, `created_date`, `modified_by`, `modified_date`) 
+VALUES 
+	(4,'yash','5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8', NULL, 'Yash', 'Mishra',0,'male','yash@gmail.com', NULL, NULL, 'active',1,1, now(), NULL, NULL);
+INSERT INTO `ofds_user` 
+	(`id`, `username`, `password`, `description`, `first_name`, `last_name`, `is_super_admin`, `gender`, `email`, `mobile`, `phone`, `status`, `is_valid`, `created_by`, `created_date`, `modified_by`, `modified_date`) 
+VALUES 
+	(5,'anshika','5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8', NULL, 'Anshika', 'Mishra',0,'female','anshika@gmail.com', NULL, NULL, 'active',1,1, now(), NULL, NULL);
 /*!40000 ALTER TABLE `ofds_user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -81,9 +97,9 @@ UNLOCK TABLES;
 LOCK TABLES `ofds_user_group` WRITE;
 /*!40000 ALTER TABLE `ofds_user_group` DISABLE KEYS */;
 INSERT INTO `ofds_user_group` 
-	(`id`, `created_date`, `is_valid`, `modified_date`, `created_by`, `modified_by`, `group_id`, `user_id`) 
+	(`id`, `group_id`, `user_id`, `is_valid`, `created_by`, `created_date`, `modified_by`, `modified_date`) 
 VALUES 
-	(1,NULL,NULL,NULL,NULL,NULL,1,2);
+	(1,1,2,NULL,NULL,NULL,NULL,NULL);
 /*!40000 ALTER TABLE `ofds_user_group` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;

@@ -3,7 +3,7 @@
  */
 package org.openframework.commons.ofds.service.repository;
 
-import org.openframework.commons.ofds.entity.UserHistory;
+import org.openframework.commons.jpa.entity.UserHistory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;

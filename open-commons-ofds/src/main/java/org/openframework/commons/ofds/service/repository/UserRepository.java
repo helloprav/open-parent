@@ -6,7 +6,7 @@ package org.openframework.commons.ofds.service.repository;
 import java.util.Date;
 import java.util.List;
 
-import org.openframework.commons.ofds.entity.User;
+import org.openframework.commons.jpa.entity.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;

@@ -7,7 +7,7 @@ import java.util.Date;
 
 import javax.inject.Inject;
 
-import org.openframework.commons.ofds.entity.BaseEntity;
+import org.openframework.commons.jpa.entity.BaseEntity;
 import org.openframework.commons.ofds.service.as.UserAS;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

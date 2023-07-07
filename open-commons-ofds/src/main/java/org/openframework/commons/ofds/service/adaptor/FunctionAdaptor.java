@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
 
-import org.openframework.commons.ofds.entity.Function;
+import org.openframework.commons.jpa.entity.Function;
 import org.openframework.commons.ofds.vo.FunctionVO;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Component;
