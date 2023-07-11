@@ -121,7 +121,7 @@
 			</dependency>
 			<dependency>
 				<groupId>org.openframework</groupId>
-				<artifactId>open-commons-shiksha</artifactId>
+				<artifactId>open-commons-pariksha</artifactId>
 				<version>${revision}</version>
 			</dependency>
 			<dependency>
@@ -531,7 +531,7 @@
 		<module>open-commons-reports</module>
 		<module>open-commons-ofds</module>
 		<module>open-commons-cache</module>
+		<module>open-commons-pariksha</module>
 		<module>open-commons-neer</module>
-		<module>open-commons-shiksha</module>
 	</modules>
 </project>

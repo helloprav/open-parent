@@ -111,7 +111,7 @@
 		</dependency>
 		<dependency>
 			<groupId>org.openframework</groupId>
-			<artifactId>open-commons-shiksha</artifactId>
+			<artifactId>open-commons-pariksha</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.openframework</groupId>

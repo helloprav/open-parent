@@ -57,7 +57,7 @@
 			<directory>src/main/resources/templates</directory>
 			<outputDirectory>static</outputDirectory>
 			<includes>
-				<include>shiksha/**</include>
+				<include>pariksha/**</include>
 				<include>layout*.html</include>
 			</includes>
 		</fileSet>
