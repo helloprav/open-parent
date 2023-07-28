@@ -102,12 +102,27 @@ public class EvaluationServiceImpl implements EvaluationService {
 		User loggedInUser = new User(userId);
 		String fileName = evalFile.getOriginalFilename();
 		if(StringUtils.isNotBlank(fileName)) {
+
+			// retrieve missing attributes from filename.
+			String nameParts[] = fileName.split("_");
+			if(StringUtils.isBlank(evaluation.getName())) {
+				String evalNameFromFileName = CourseUtils.getEvalNameFromFileName(fileName);
+				evaluation.setName(evalNameFromFileName);
+			}
+			if(StringUtils.isBlank(evaluation.getEvalGroup())) {
+				evaluation.setEvalGroup(getEvalGroup("Grade "+nameParts[0]));
+			}
+
 			long timeInMillis = System.currentTimeMillis();
 			try {
 				excelData = ExcelUtils.processExcel(evalFile.getInputStream());
 				Set<Question> questionSet = CourseUtils.populateQuestions(excelData, loggedInUser);
 				evaluation.setQuestions(questionSet);
 				evaluation.setQuestionsInEval(questionSet.size());
+				if(null == evaluation.getQuestionsToPass()) {
+					double pass = questionSet.size() * 0.6;
+					evaluation.setQuestionsToPass((int)pass);
+				}
 				if(StringUtils.isNotBlank(mediaFile.getOriginalFilename())) {
 					CourseUtils.processMediaFile(mediaFile, timeInMillis);
 				}
@@ -129,7 +144,7 @@ public class EvaluationServiceImpl implements EvaluationService {
 	private void renameEvalMediaDir(long timeInMillis, long evalId) {
 
 		String appHome = System.getProperty("APP_HOME");
-		String mediaDir = appHome.concat("/shiksha/media/");
+		String mediaDir = appHome.concat("/pariksha/media/");
 		System.out.println("mediaDir: "+mediaDir);
 		String tempDirFullName = mediaDir.concat(String.valueOf(timeInMillis));
 		File srcDir = new File(tempDirFullName);
@@ -204,6 +219,12 @@ public class EvaluationServiceImpl implements EvaluationService {
 	}
 
 	@Override
+	public String getEvalGroup(String evalGroupName) {
+
+		return groupRepository.findGroupNameByGroupName(evalGroupName);
+	}
+
+	@Override
 	public Evaluation updateStatusById(Evaluation eval) {
 
 		Integer count = evaluationRepository.updateStatusById(eval.getId(), eval.getIsValid(), eval.getModifiedBy().getId(), eval.getModifiedDate());
@@ -211,6 +232,12 @@ public class EvaluationServiceImpl implements EvaluationService {
 			throw new EntityNotFoundException(String.format("Requested entity %s not found", eval.getId()));
 		}
 		return eval;
+	}
+
+	@Override
+	public boolean isValidEvalCode(String evalCode) {
+
+		return null != getEvalGroup("Grade "+evalCode);
 	}
 
 }

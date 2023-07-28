@@ -15,8 +15,8 @@ import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
 
 @Configuration
 @EnableJpaRepositories(basePackages = "org.openframework.gurukul.pariksha")
-@EntityScan(basePackageClasses = ShikshaConfiguration.class)
-public class ShikshaConfiguration implements WebMvcConfigurer {
+@EntityScan(basePackageClasses = ParikshaConfiguration.class)
+public class ParikshaConfiguration implements WebMvcConfigurer {
 
 	@Value("${APP_HOME}")
 	private String appHome;
@@ -26,10 +26,10 @@ public class ShikshaConfiguration implements WebMvcConfigurer {
 
 	@Bean
     @Profile("!dev")
-	ClassLoaderTemplateResolver primaryShikshaThymeleafTemplateResolver() {
+	ClassLoaderTemplateResolver primaryParikshaThymeleafTemplateResolver() {
 		System.out.println("appHome: "+appHome);
 		ClassLoaderTemplateResolver secondaryTemplateResolver = new ClassLoaderTemplateResolver();
-		//secondaryTemplateResolver.setPrefix("META-INF/resources/webjars/shiksha/views/");
+		//secondaryTemplateResolver.setPrefix("META-INF/resources/webjars/pariksha/views/");
 //		secondaryTemplateResolver.setPrefix("classpath:/META-INF/resources/webjars/");
 		secondaryTemplateResolver.setPrefix("file:"+appHome+"/static/");
 		secondaryTemplateResolver.setSuffix(".html");
@@ -43,7 +43,7 @@ public class ShikshaConfiguration implements WebMvcConfigurer {
 
     @Bean
     @Profile("dev")
-	ClassLoaderTemplateResolver secondaryShikshaThymeleafTemplateResolver() {
+	ClassLoaderTemplateResolver secondaryParikshaThymeleafTemplateResolver() {
 		ClassLoaderTemplateResolver secondaryTemplateResolver = new ClassLoaderTemplateResolver();
 		secondaryTemplateResolver.setPrefix("file:src/main/resources/templates/");
 		secondaryTemplateResolver.setSuffix(".html");
@@ -60,7 +60,7 @@ public class ShikshaConfiguration implements WebMvcConfigurer {
 	public void addInterceptors(InterceptorRegistry registry) {
 
 		WebMvcConfigurer.super.addInterceptors(registry);
-		registry.addInterceptor(securityInterceptor).addPathPatterns("/shiksha/**");
+		registry.addInterceptor(securityInterceptor).addPathPatterns("/pariksha/**");
 	}
 
 }

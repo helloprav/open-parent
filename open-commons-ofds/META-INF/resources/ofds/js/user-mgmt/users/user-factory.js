@@ -23,7 +23,7 @@ angular.module('routerApp')
 
 			    // sorting properties
 			    sortColSelected: 'id', 					// Default sorting applied on column.
-			    sortOrder: 'asc', 						// Default sorting order
+			    sortOrder: 'desc', 						// Default sorting order
 
 			    // filters
 			    status: 'true',
@@ -45,7 +45,7 @@ angular.module('routerApp')
 	
 			    // sorting properties
 			    sortColSelected: 'id', 					// Default sorting applied on column.
-			    sortOrder: 'asc', 						// Default sorting order
+			    sortOrder: 'desc', 						// Default sorting order
 	
 			    // filters
 			    status: 'true',
@@ -294,19 +294,22 @@ angular.module('routerApp')
 		}
 		
 		o.delete = function(id) {
+			var url = window.ofds.ofdsApiCtx+'/users/'+id
+			console.log("Delete URL: "+url);
 			var confirmed = window.confirm("Are you sure you want to delete?");
-			console.log("Deleting config "+id+" confirmed = "+confirmed);
+			console.log("Deleting user "+id+" confirmed = "+confirmed);
 			
 			if(confirmed) {
-				$http.delete('/config/'+id).success(function(data) {
+				$http.delete(url).then(function(response) {
 					console.log("deleted");
-					o.setAlert("success", "Successfully deleted config!");
-
-				})
-				.error(function(data, status) {
-					console.log("Error deleting! status = "+status+", data = "+data);
-					o.setAlert("danger", "Error deleting config!");
-
+					if(response.data) {
+						o.setAlert("success", "Data Deleted Successfully!");
+					}
+					//console.log(JSON.stringify(response));
+					//o.setAlert("success", "Successfully deleted config!");
+				}, function (response) {
+					console.log("delete ERROR");
+					console.log(JSON.stringify(response));
 				});
 			}
 			$state.go('user-mgmt.list');

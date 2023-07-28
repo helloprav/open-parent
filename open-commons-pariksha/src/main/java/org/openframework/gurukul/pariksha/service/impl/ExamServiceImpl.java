@@ -12,7 +12,7 @@ import java.util.Optional;
 import org.openframework.commons.domain.exceptions.EntityNotFoundException;
 import org.openframework.commons.jpa.entity.User;
 import org.openframework.commons.rest.vo.UserVO;
-import org.openframework.gurukul.pariksha.ShikshaConstants;
+import org.openframework.gurukul.pariksha.ParikshaConstants;
 import org.openframework.gurukul.pariksha.entity.EvalStats;
 import org.openframework.gurukul.pariksha.entity.Evaluation;
 import org.openframework.gurukul.pariksha.entity.Question;
@@ -139,7 +139,7 @@ public class ExamServiceImpl implements ExamService {
 				if(!userQuestionVO.getUserAnswerList().isEmpty()) {
 					++questAttemptCount;
 				}
-				if(questionVO2.getQuestionType().equalsIgnoreCase(ShikshaConstants.Q_TYPE_FILL_WORD)) {
+				if(questionVO2.getQuestionType().equalsIgnoreCase(ParikshaConstants.Q_TYPE_FILL_WORD)) {
 					if (isCorrectFillGapsAnswer(userQuestionVO, questionVO2)) {
 						marks++;
 						questionVO2.setIsOk(true);
@@ -252,7 +252,7 @@ public class ExamServiceImpl implements ExamService {
 		if(questionOpt.isPresent()) {
 			Question question = questionOpt.get();
 			QuestionVO questionVOInDB = QuestionAdapter.toVO(question);
-			if(question.getQuestionType().equalsIgnoreCase(ShikshaConstants.Q_TYPE_FILL_WORD)) {
+			if(question.getQuestionType().equalsIgnoreCase(ParikshaConstants.Q_TYPE_FILL_WORD)) {
 				if (isCorrectFillGapsAnswer(questionVO, questionVOInDB)) {
 					correctAnswer = true;
 					System.out.printf("Q %d. correctAnswer: TRUE, %s %n", questionVO.getId(), questionVO.getUserAnswerList());

@@ -101,21 +101,21 @@
             <li class="active"><a href="#">Home</a></li>
             <li><a href="#/user-mgmt/users/list/">Users1</a></li>
             <li><a href="#/group-mgmt/groups/list/">Groups2</a></li>
-	        <li class="dropdown">
+	        <li class="dropdown" id="GlobalConfigurationsMenu">
 	          <a href12="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Manage Relations <span class="caret"></span></a>
 	          <ul class="dropdown-menu">
-	          	<li><a href="#/user-mgmt/users/list/">Users</a></li>
-	          	<li><a href="#/group-mgmt/groups/list/">Groups</a></li>
+	          	<li><a id="ManageUsers" href="#/user-mgmt/users/list/">Users</a></li>
+	          	<li><a id="ManageGroups" href="#/group-mgmt/groups/list/">Groups</a></li>
 	            <li role="separator" class="divider"></li>
 	            <li><a href="#/home">Separated link</a></li>
 	            <li role="separator" class="divider"></li>
-	            <li><a target="_blank" href="/neer/swagger-ui.html">Swagger UI</a></li>
-	            <li><a target="_blank" href="/neer/v2/api-docs">API Docs</a></li>
+	            <li><a target="_blank" id="SwaggerUI" href="/neer/swagger-ui.html">Swagger UI</a></li>
+	            <li><a target="_blank" id="SwaggerAPIDocs" href="/neer/v2/api-docs">API Docs</a></li>
 	            <li role="separator" class="divider"></li>
-	            <li><a target="_blank" href="/neer/actuator" target="_blank">Actuator</a></li>
-				<li><a class="dropdown-item" target="_blank" href="/neer/gconfig/app" translate="header.config.app"></a></li>
-				<li><a class="dropdown-item" target="_blank" href="/neer/gconfig/home" translate="header.config.app"></a></li>
-				<li><a class="dropdown-item" target="_blank" href="/neer/shiksha" >Shiksha</a></li>
+	            <li><a target="_blank" id="Actuator" href="/neer/actuator" target="_blank">Actuator</a></li>
+				<li><a class="dropdown-item" id="gconfigAppJsp" target="_blank" href="/neer/gconfig/app" translate="header.config.app"></a></li>
+				<li><a class="dropdown-item" id="gconfigApp" target="_blank" href="/neer/gconfig/home" translate="header.config.app"></a></li>
+				<li><a class="dropdown-item" id="GurukulPariksha" target="_self" href="/neer/pariksha" >Pariksha</a></li>
 	          </ul>
 	        </li>
 	        <li class="dropdown">

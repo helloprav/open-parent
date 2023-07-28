@@ -19,7 +19,7 @@
 
 	    // sorting properties
 		$scope.columnName = 'id';				// Default sorting applied on column.
-		$scope.reverse = false;					// Default sorting order
+		$scope.reverse = true;					// Default sorting order
 
 	    // filters
 		$scope.isValid = 'true';
@@ -150,6 +150,12 @@
 	    $scope.changePageSize = function () {
 	        $scope.pageIndex = 1;
 	        $scope.getEmployeeList();
+	    };
+
+	    //Delete an user by userId
+	    $scope.deleteUser = function (userId) {
+			userFactory.delete(userId);
+	    	console.log("Delete Triggered");
 	    };
 
 		$scope.sortBy = function(columnName) {

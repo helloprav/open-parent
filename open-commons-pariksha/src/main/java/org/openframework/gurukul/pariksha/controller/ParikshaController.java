@@ -6,13 +6,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/shiksha")
-public class ShikshaController {
+@RequestMapping("/pariksha")
+public class ParikshaController {
 
 	@GetMapping({"", "/"})
 	public String findEvaluations(Model model) {
 
-		return "redirect:/shiksha/exams";
+		return "redirect:/pariksha/exams";
 	}
 
 }

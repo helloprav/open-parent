@@ -24,7 +24,7 @@ import org.openframework.commons.jpa.entity.MainEntity;
  */
 @Entity
 @DynamicUpdate
-@Table(name = "Shiksha_Evaluation")
+@Table(name = "Pariksha_Evaluation")
 public class Evaluation extends MainEntity implements java.io.Serializable {
 
 	/**
@@ -33,18 +33,18 @@ public class Evaluation extends MainEntity implements java.io.Serializable {
 	private static final long serialVersionUID = 3384334370202133339L;
 
 	@Column(name = "eval_group", length = 50)
-	@Size(min = 3, max = 50, message = "eval group is required")
+	//@Size(min = 3, max = 50, message = "eval group is required")
 	private String evalGroup;
 
 	@Column(name = "eval_env", length = 20)
-	@Size(min = 4, max = 20, message = "evaluation environment is required")
+	//@Size(min = 4, max = 20, message = "evaluation environment is required")
 	private String evalEnv;
 
-	@Column(name = "name", length = 20)
-	@NotBlank(message = "Name is mandatory")
+	@Column(name = "name", length = 127)
+	//@NotBlank(message = "Name is mandatory")
 	private String name;
 
-	@Column(name = "description", length = 50)
+	@Column(name = "description", length = 256)
 	private String description;
 
 	@Min(1)

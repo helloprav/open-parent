@@ -13,5 +13,5 @@ spring:
     - 
   profiles:
     group:
-      dev: dev-jdbc, dev-email, dev-actuator, dev-ofds-security, dev-caching, prod-shiksha
-      prod: prod-jdbc, prod-email, prod-actuator, prod-ofds-security, prod-caching, prod-shiksha
+      dev: dev-jdbc, dev-email, dev-actuator, dev-ofds-security, dev-caching, prod-pariksha
+      prod: prod-jdbc, prod-email, prod-actuator, prod-ofds-security, prod-caching, prod-pariksha

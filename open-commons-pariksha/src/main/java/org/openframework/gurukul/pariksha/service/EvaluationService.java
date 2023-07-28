@@ -28,5 +28,9 @@ public interface EvaluationService {
 
 	public List<String> getEvalGroups();
 
+	public String getEvalGroup(String evalGroupName);
+
 	public Evaluation updateStatusById(Evaluation eval);
+
+	public boolean isValidEvalCode(String string);
 }

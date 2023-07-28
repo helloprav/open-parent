@@ -45,7 +45,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Controller
-@RequestMapping("/shiksha/exams")
+@RequestMapping("/pariksha/exams")
 public class ExamController {
 
 	@Inject
@@ -62,14 +62,14 @@ public class ExamController {
 
 	@GetMapping()
 	public String init() {
-		return "redirect:/shiksha/exams/list";
+		return "redirect:/pariksha/exams/list";
 	}
 
 	@GetMapping({ "/", "/list" })
 	public String findEvaluations(Model model, UserVO loggedInUser) {
 		List<Evaluation> evaluations = evaluationService.findEvaluationsByGroups(loggedInUser);
 		model.addAttribute("items", evaluations);
-		return "shiksha/exams/exam-list";
+		return "pariksha/exams/exam-list";
 	}
 
 	@SuppressWarnings("unchecked")
@@ -85,7 +85,7 @@ public class ExamController {
 		model.addAttribute("evalId", evalId);
 		model.addAttribute("testRun", testRun);
 
-		return "/shiksha/exams/exam-start";
+		return "/pariksha/exams/exam-start";
 	}
 
 	private void createUserEvalCookie(Long evalId, List<Long> list) {
@@ -160,7 +160,7 @@ public class ExamController {
 		model.addAttribute("userQuestion", questionVO);
 
 		// return "evaluationStartAjaxTiles";
-		return "/shiksha/exams/evaluateQuestionAjax";
+		return "/pariksha/exams/evaluateQuestionAjax";
 	}
 
 	@PostMapping("/checkAnswer/{questionSeq}")
@@ -268,14 +268,14 @@ public class ExamController {
 		model.addAttribute("evalPassed", evalStats.getEvaluationStatPassed());
 		model.addAttribute("userEvaluation", userEvaluation);
 		model.addAttribute("report", report);
-		return "/shiksha/exams/exam-completed";
+		return "/pariksha/exams/exam-completed";
 	}
 
 	@GetMapping(value = "/image/{evalId}/{imageName}", produces = MediaType.IMAGE_JPEG_VALUE)
 	public void getImage(HttpServletResponse response, @PathVariable String evalId, @PathVariable String imageName)
 			throws IOException {
 
-		String mediaDirName = CourseUtils.getShikshaMediaDir();
+		String mediaDirName = CourseUtils.getParikshaMediaDir();
 		String imageFileName = mediaDirName.concat(evalId).concat(File.separator).concat(imageName);
 		File imageFile = new File(imageFileName);
 		InputStream inputStream = new FileInputStream(imageFile);

@@ -23,7 +23,7 @@ import org.openframework.commons.jpa.entity.User;
 import org.openframework.commons.jpa.utils.WebUtils;
 import org.openframework.commons.spring.utils.ApplicationContextProvider;
 import org.openframework.commons.utils.StringUtil;
-import org.openframework.gurukul.pariksha.ShikshaConstants;
+import org.openframework.gurukul.pariksha.ParikshaConstants;
 import org.openframework.gurukul.pariksha.entity.Answer;
 import org.openframework.gurukul.pariksha.entity.Question;
 import org.openframework.gurukul.pariksha.entity.QuestionType;
@@ -41,6 +41,7 @@ public class CourseUtils {
 
 	private static Logger logger = LoggerFactory.getLogger(CourseUtils.class);
 	private static final String MEDIA_DIR;
+	private static final byte ANSWER_START_INDEX = 5;
 
 	static {
 
@@ -49,20 +50,20 @@ public class CourseUtils {
 		if(!dir.exists()) {
 			throw new RuntimeException("APP_HOME dir["+dir+" is not already present");
 		}
-		String shikshaHomeDir = appHome.concat("/shiksha");
-		dir = new File(shikshaHomeDir);
+		String parikshaHomeDir = appHome.concat("/pariksha");
+		dir = new File(parikshaHomeDir);
 		if(!dir.exists()) {
 			dir.mkdir();
 		}
-		String shikshaMediaDir = shikshaHomeDir.concat("/media");
-		dir = new File(shikshaMediaDir);
+		String parikshaMediaDir = parikshaHomeDir.concat("/media");
+		dir = new File(parikshaMediaDir);
 		if(!dir.exists()) {
 			dir.mkdir();
 		}
 		if(!dir.exists()) {
-			throw new RuntimeException("Shiksha module could not be initialized. Media dir creation failed: "+shikshaMediaDir);
+			throw new RuntimeException("Pariksha module could not be initialized. Media dir creation failed: "+parikshaMediaDir);
 		}
-		MEDIA_DIR = shikshaMediaDir.concat(File.separator);
+		MEDIA_DIR = parikshaMediaDir.concat(File.separator);
 	}
 
 	public static Set<Question> populateQuestions(List<List<String>> recordList, User loggedInUser) {
@@ -99,7 +100,7 @@ public class CourseUtils {
 	private static Question validateAndPopulateQuestion(
 			List<String> questionRecord, User loggedInUser) {
 
-		byte answerIndex = 4;
+		byte answerIndex = ANSWER_START_INDEX;
 		Question question = new Question();
 
 		// Validate & save Group
@@ -110,7 +111,7 @@ public class CourseUtils {
 
 		// Validate & Save question text
 		String questionText = questionRecord.get(2);
-		if(ShikshaConstants.FUNC_JUMBLE.equalsIgnoreCase(questionText)) {
+		if(ParikshaConstants.FUNC_JUMBLE.equalsIgnoreCase(questionText)) {
 			questionText = shuffleWord(questionRecord.get(5));
 		}
 		question.setQuestionText(questionText);
@@ -139,15 +140,15 @@ public class CourseUtils {
 	private static Set<Answer> populateCorrectAnswers(List<String> questionRecord, List<Answer> answerList) {
 
 		int dataType = 0;
-		String correctAnswers = questionRecord.get(4);
+		String correctAnswers = questionRecord.get(ANSWER_START_INDEX);
 		if(null == correctAnswers) {
 			correctAnswers = StringConstants.EMPTY_STRING;
 		}
 
-		if(correctAnswers.toLowerCase().startsWith(ShikshaConstants.STRING_VALUE_INT_COLON)) {
+		if(correctAnswers.toLowerCase().startsWith(ParikshaConstants.STRING_VALUE_INT_COLON)) {
 			dataType = 1;
-			correctAnswers = correctAnswers.substring(ShikshaConstants.STRING_VALUE_INT_COLON.length());
-		} else if(correctAnswers.equalsIgnoreCase(ShikshaConstants.STRING_VALUE_ANY)) {
+			correctAnswers = correctAnswers.substring(ParikshaConstants.STRING_VALUE_INT_COLON.length());
+		} else if(correctAnswers.equalsIgnoreCase(ParikshaConstants.STRING_VALUE_ANY)) {
 			dataType = 999;
 		} else {
 			throw new IllegalArgumentException("Correct Answers has not supported value of ["+correctAnswers+"]");
@@ -186,8 +187,8 @@ public class CourseUtils {
 	private static Answer validateAndPopulateAnswer(String answerText, RecordInfo recordInfo) {
 
 		Answer answer = new Answer();
-		if(answerText.toLowerCase().startsWith(ShikshaConstants.STRING_VALUE_INT_COLON)) {
-			answerText = answerText.substring(ShikshaConstants.STRING_VALUE_INT_COLON.length());
+		if(answerText.toLowerCase().startsWith(ParikshaConstants.STRING_VALUE_INT_COLON)) {
+			answerText = answerText.substring(ParikshaConstants.STRING_VALUE_INT_COLON.length());
 		}
 		answer.setAnswerText(answerText.trim().replaceAll("\\s+"," "));
 		answer.setCorrectOption(false);
@@ -222,14 +223,14 @@ public class CourseUtils {
 		}
 
 		long mediaFileSize = mediaFile.getSize();
-		Long maxSizeSupported = appCtx.getEnvironment().getProperty("shiksha.eval.mediaFile.max-size", Long.class);
+		Long maxSizeSupported = appCtx.getEnvironment().getProperty("pariksha.eval.mediaFile.max-size", Long.class);
 		if(null == maxSizeSupported) {
 			maxSizeSupported = 1024 * 1024 * 10l;
 		}
 		if(mediaFileSize>maxSizeSupported) {
 			throw new IllegalArgumentException("Exceeds supported file size: "+maxSizeSupported);
 		}
-		String mediaDir = getShikshaMediaDir();
+		String mediaDir = getParikshaMediaDir();
 		System.out.println("mediaDir: "+mediaDir);
 		String tempDirFullName = mediaDir.concat(String.valueOf(timeInMillis));
 		File tempDir = new File(tempDirFullName);
@@ -252,7 +253,7 @@ public class CourseUtils {
 		targetMediaFile.delete();
 	}
 
-	public static String getShikshaMediaDir() {
+	public static String getParikshaMediaDir() {
 
 		return MEDIA_DIR;
 	}
@@ -297,6 +298,13 @@ public class CourseUtils {
 	private static String shuffleWord(String questionText) {
 
 		return StringUtil.getShuffledWord(questionText);
+	}
+
+	public static String getEvalNameFromFileName(String fileName) {
+		int underscoreIdx = fileName.indexOf("_");
+		underscoreIdx = fileName.indexOf("_", underscoreIdx+1);
+		String evalName = fileName.substring(underscoreIdx+1);
+		return evalName;
 	}
 
 }

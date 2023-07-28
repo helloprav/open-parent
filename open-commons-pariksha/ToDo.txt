@@ -1,3 +1,6 @@
+Automation to quickly test all changes
+	-ScreenShot if any error occurs
+Logout Button on UI
 Create an app called Gurukul (instead of re-using Neer app). Gurukul to be another spring boot project out of open-parent.
 Create entity: Grade and Subject. Evaluations to be mapped to above Grade and Subject during creation.
 Result to display:
@@ -12,7 +15,10 @@ Move artifacts from Neer app to respective modules:
 	-/open-commons-neer/src/main/resources/templates/gconfig
 Support questions to display to be less than total questions in eval
 Move code from controller to service
-
+Module wise list all supported features:
+-OFDS
+	-login,logout, user create,edit/view/delete
+	-rest api,ui,swagger,postman, unit test, automation test... etc
 Export eval
 Update eval/question/answers
 PDF Certificates for download

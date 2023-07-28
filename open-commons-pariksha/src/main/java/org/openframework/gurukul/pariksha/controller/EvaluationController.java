@@ -8,6 +8,7 @@ import javax.validation.Valid;
 import org.apache.commons.lang3.StringUtils;
 import org.openframework.commons.jpa.entity.User;
 import org.openframework.commons.rest.vo.UserVO;
+import org.openframework.commons.utils.StringUtil;
 import org.openframework.gurukul.pariksha.entity.Evaluation;
 import org.openframework.gurukul.pariksha.service.EvaluationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +24,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 @Controller
-@RequestMapping("/shiksha/evaluations")
+@RequestMapping("/pariksha/evaluations")
 public class EvaluationController {
 
 	@Autowired
@@ -31,14 +32,14 @@ public class EvaluationController {
 
 	@GetMapping()
 	public String init() {
-		return "redirect:/shiksha/evaluations/list";
+		return "redirect:/pariksha/evaluations/list";
 	}
 
 	@GetMapping({ "/", "/list" })
 	public String findEvaluations(Model model) {
 		List<Evaluation> evaluations = evaluationService.findEvaluations();
 		model.addAttribute("items", evaluations);
-		return "shiksha/evaluations/index";
+		return "pariksha/evaluations/index";
 	}
 
 	@GetMapping("/add")
@@ -46,25 +47,60 @@ public class EvaluationController {
 
 		evaluation.setIsValid(true);
 		model.addAttribute("evalGroups", evaluationService.getEvalGroups());
-		return "/shiksha/evaluations/add-evaluation";
+		return "/pariksha/evaluations/add-evaluation";
 	}
 
 	@PostMapping("save")
 	public String saveEvaluation(@Valid Evaluation evaluation, BindingResult result, Model model, @RequestParam("evalFile") MultipartFile evalFile, @RequestParam("mediaFile") MultipartFile mediaFile, UserVO loggedInUser) {
+
+		// apply @Valid detected validation
 		if (result.hasErrors()) {
 			model.addAttribute("evalGroups", evaluationService.getEvalGroups());
-			return "/shiksha/evaluations/add-evaluation";
+			return "/pariksha/evaluations/add-evaluation";
 		}
 
+		ObjectError missingEvalFileError = null;
+		// apply custom validation
 		if(null == evaluation.getId()) {
+			// apply validation for create scenario.
 			if(StringUtils.isBlank(evalFile.getOriginalFilename())) {
-				ObjectError missingEvalFileError = new ObjectError("globalError", "Evaluation File is required.");
-				result.addError(missingEvalFileError);
-				model.addAttribute("evalGroups", evaluationService.getEvalGroups());
-				return "/shiksha/evaluations/add-evaluation";
+				// file is not uploaded as fileName is missing
+				missingEvalFileError = new ObjectError("globalError", "Evaluation File is required.");
+				//result.addError(missingEvalFileError);
+				//model.addAttribute("evalGroups", evaluationService.getEvalGroups());
+				//return "/pariksha/evaluations/add-evaluation";
 			} else {
-				evaluationService.saveEvaluationFile(loggedInUser.getId(), evaluation, evalFile, mediaFile);
+				// apply validation from filename.
+				String fileName = evalFile.getOriginalFilename();
+				String nameParts[] = fileName.split("_");
+				if(StringUtils.isBlank(evaluation.getName())) {
+					if(nameParts.length<2 || StringUtils.isBlank(nameParts[2])) {
+						missingEvalFileError = new ObjectError("globalError", "Evaluation Name is required.");
+					}
+				}
+				if(StringUtils.isBlank(evaluation.getEvalGroup())) {
+					if(!evaluationService.isValidEvalCode(nameParts[0])) {
+						missingEvalFileError = new ObjectError("globalError", "Evaluation Group is required.");
+						//result.addError(missingEvalFileError);
+						//model.addAttribute("evalGroups", evaluationService.getEvalGroups());
+						//return "/pariksha/evaluations/add-evaluation";
+					}
+				}
 			}
+		} else {
+			// apply validation for update scenario.
+			// nothing to validate as of now.
+		}
+
+		if(null != missingEvalFileError) {
+			result.addError(missingEvalFileError);
+			model.addAttribute("evalGroups", evaluationService.getEvalGroups());
+			return "/pariksha/evaluations/add-evaluation";
+		}
+
+		// Save the data
+		if(null == evaluation.getId()) {
+			evaluationService.saveEvaluationFile(loggedInUser.getId(), evaluation, evalFile, mediaFile);
 		} else {
 			evaluationService.saveEvaluation(loggedInUser.getId(), evaluation);
 		}
@@ -77,7 +113,7 @@ public class EvaluationController {
 		model.addAttribute("evaluation", evaluation);
 		model.addAttribute("evalId", id);
 		model.addAttribute("evalGroups", evaluationService.getEvalGroups());
-		return "/shiksha/evaluations/add-evaluation";
+		return "/pariksha/evaluations/add-evaluation";
 	}
 
 	@GetMapping(path = "disable")
@@ -98,6 +134,6 @@ public class EvaluationController {
 
 		evaluationService.deleteEvaluationById(id);
 //		return findEvaluations(model);
-		return "redirect:/shiksha/evaluations";
+		return "redirect:/pariksha/evaluations";
 	}
 }

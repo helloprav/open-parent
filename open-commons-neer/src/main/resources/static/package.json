@@ -1,7 +1,7 @@
 {
 	"name": "gurukul",
 	"version": "1.0.0",
-	"description": "node dependencies for shiksha/pariksha module",
+	"description": "node dependencies for pariksha module",
 	"main": "index.js",
 	"private": "true",
 	"devDependencies": {

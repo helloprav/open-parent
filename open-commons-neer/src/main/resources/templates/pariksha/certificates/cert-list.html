@@ -5,7 +5,7 @@
       layout:decorate="~{layout}"
       >
 <head>
-    <title>Shiksha: Evaluations</title>
+    <title>Pariksha: Evaluations</title>
 </head>
 <body>
 <div layout:fragment="content">
@@ -43,7 +43,7 @@
                 <h2 th:case="null">No exams yet!</h2>
                 <div th:case="*">
                     <table class="table table-striped table-responsive-md">
-						<thead th:replace="/shiksha/fragments/tables.html
+						<thead th:replace="/pariksha/fragments/tables.html
 						              :: fields(~{ :: .myFields})">
 							<tr class="myFields">
 								<th>#</th>

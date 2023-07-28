@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/shiksha/certificates")
+@RequestMapping("/pariksha/certificates")
 public class CertificatesController {
 
 	@Autowired
@@ -22,7 +22,7 @@ public class CertificatesController {
 	public String findEvaluations(Model model, UserVO loggedInUser) {
 		List<EvalStatsVO> evaluationStats = examService.findEvaluationStatsByUserId(loggedInUser.getId());
 		model.addAttribute("items", evaluationStats);
-		return "shiksha/certificates/cert-list";
+		return "pariksha/certificates/cert-list";
 	}
 
 }

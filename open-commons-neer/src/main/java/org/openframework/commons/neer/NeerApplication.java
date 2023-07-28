@@ -17,7 +17,7 @@ import org.openframework.commons.spring.utils.ApplicationContextProvider;
 import org.openframework.commons.spring.utils.SpringUtils;
 import org.openframework.commons.swagger.OpenApiConfiguration;
 import org.openframework.commons.utils.SystemUtils;
-import org.openframework.gurukul.pariksha.ShikshaConfiguration;
+import org.openframework.gurukul.pariksha.ParikshaConfiguration;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cache.Cache;
@@ -30,7 +30,7 @@ import org.springframework.context.ConfigurableApplicationContext;
 @EnableCommonsCaching
 @SpringBootApplication(scanBasePackageClasses = { NeerApplication.class, CommonsLoggingAspect.class,
 		GlobalConfigApp.class, EncryptionUtil.class, RestResponseBodyAdvice.class,
-		ApplicationContextProvider.class, OpenApiConfiguration.class, OfdsApp.class, ShikshaConfiguration.class, JpaConfig.class })
+		ApplicationContextProvider.class, OpenApiConfiguration.class, OfdsApp.class, ParikshaConfiguration.class, JpaConfig.class })
 public class NeerApplication {
 
 	private static final String SPRING_PROFILES_ACTIVE = "spring.profiles.active";

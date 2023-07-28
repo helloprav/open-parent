@@ -29,4 +29,7 @@ public interface GroupRepository extends JpaRepository<Group, Long> {
 
 	@Query("SELECT g.groupName from Group g where g.groupName like :groupName")
 	List<String> findGroupNameByGroupNameStartsWith(String groupName);
+
+	@Query("SELECT g.groupName from Group g where g.groupName = :groupName")
+	String findGroupNameByGroupName(String groupName);
 }

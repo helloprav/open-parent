@@ -1,6 +1,6 @@
 package org.openframework.gurukul.pariksha;
 
-public class ShikshaConstants {
+public class ParikshaConstants {
 
 	public static final String STRING_VALUE_ANY = "ANY";
 	public static final String STRING_VALUE_YES = "Y";
