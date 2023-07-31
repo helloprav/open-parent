@@ -169,11 +169,25 @@ Caching and versioning of static resources
 	- Execute db script similar to mysql.sql in [zipkin-server-2.12.9-exec.jar/BOOT-INF.lib.zipkin-storage-mysql-v1-2.23.9.jar/zipkin2.storage.mysql.v1]
 	- Actuator health check
 =====================================================================
-2023-01-29
+2023-07-31
 ------------------------------------------------------------
-- Spring boot upgraded from 2.6.12 to 2.7.8
+-Revision: 23.2.0.0
+-Logout Button on UI (ofds+Pariksha)
+-Pass marks on the result page
+=====================================================================
+2023-07-29
+------------------------------------------------------------
+- Spring boot upgraded from 2.7.8 to 2.7.14
 	- Added thymeleaf for gconfig/homeController
 	- For dev environment, thymeleaf source is: Neer/file:src/main/resources/templates/
+=====================================================================
+2023-07-29
+------------------------------------------------------------
+- Spring boot upgraded from 2.7.8 to 2.7.14
+=====================================================================
+2023-01-29
+------------------------------------------------------------
+- Renamed Shiksha module to Pariksha
 =====================================================================
 2022-11-04
 ------------------------------------------------------------

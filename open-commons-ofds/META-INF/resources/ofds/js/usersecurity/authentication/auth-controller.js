@@ -15,6 +15,7 @@
             } else {
             	console.log("logout failed");
             }
+            $rootScope.username = ''
             $state.go('login');
 		}, function errorCallback(response) {
 
@@ -64,6 +65,7 @@
                     $scope.login.password = ''
                     loginJson = {}
                     $state.go('home');
+                    $rootScope.username = $scope.userProfile.username
                     //var currentloc = $location.absUrl();
                     //$window.location.href = "./index.html";
                 } else if(statusCode == 400){

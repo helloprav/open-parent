@@ -96,9 +96,10 @@
           </button>
           <a class="navbar-brand" href="#" translate="header.app.name">Project name</a>
         </div>
-        <div id="navbar" class="navbar-collapse collapse">
+        <ul id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
-            <li class="active"><a href="#">Home</a></li>
+            <!--<li class="active"><a href="#/home">Home</a></li>-->
+            <li><a href="#/home">Home</a></li>
             <li><a href="#/user-mgmt/users/list/">Users1</a></li>
             <li><a href="#/group-mgmt/groups/list/">Groups2</a></li>
 	        <li class="dropdown" id="GlobalConfigurationsMenu">
@@ -125,12 +126,21 @@
 	          </ul>
 	        </li>
           </ul>
-          <ul class="nav navbar-nav navbar-right">
-            <li><a href="../navbar/">Default</a></li>
-            <li><a href="../navbar-static-top/">Static top</a></li>
-            <li class="active"><a href="./">Fixed top <span class="sr-only">(current)</span></a></li>
-          </ul>
-
+			<ul class="nav navbar-nav navbar-right">
+				<li><a href="../navbar/">Default</a></li>
+				<li><a href="../navbar-static-top/">Static top</a></li>
+				<li><a href="./">Fixed top</a></li>
+				<li class="dropdown nav-item" id="GlobalSettingsMenu" ng-controller="LoginCtrl">
+					<a href12="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+						aria-expanded="false" id="navbarDropdown">{{$root.username || 'Guest'}} <em class="fa fa-cog"></em></a>
+					<ul class="dropdown-menu">
+						<li><a class="dropdown-item" ui-sref="user-mgmt.list" translate="header.profile.myProfile"></a>
+						<li><a class="dropdown-item" ui-sref="group-mgmt.list" translate="header.profile.changepassword"></a>
+						<li role="separator" class="divider"></li>
+						<li><a class="dropdown-item" ui-sref="auth-logout()" translate="header.profile.logout"></a>
+					</ul>
+				</li>
+			</ul>
         </div>
       </div>
     </nav>

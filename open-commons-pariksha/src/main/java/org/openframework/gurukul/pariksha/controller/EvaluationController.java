@@ -8,7 +8,6 @@ import javax.validation.Valid;
 import org.apache.commons.lang3.StringUtils;
 import org.openframework.commons.jpa.entity.User;
 import org.openframework.commons.rest.vo.UserVO;
-import org.openframework.commons.utils.StringUtil;
 import org.openframework.gurukul.pariksha.entity.Evaluation;
 import org.openframework.gurukul.pariksha.service.EvaluationService;
 import org.springframework.beans.factory.annotation.Autowired;

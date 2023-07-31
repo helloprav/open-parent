@@ -1,6 +1,8 @@
+Remove deprecated code
+Upgrade to Spring Boot 3
+Convert the structure into proper web jar for web modules (ofds,gconfig,pariksha)
 Automation to quickly test all changes
 	-ScreenShot if any error occurs
-Logout Button on UI
 Create an app called Gurukul (instead of re-using Neer app). Gurukul to be another spring boot project out of open-parent.
 Create entity: Grade and Subject. Evaluations to be mapped to above Grade and Subject during creation.
 Result to display:
@@ -26,3 +28,6 @@ PDF Certificates for download
 Remove console logs(SOP). Use proper debug/info/error logs
 -----------------------DONE-------------------------------------------------
 Rename Shiksha -> Pariksha (All files, db, tables etc)
+Logout Button on UI
+Pass marks on the result page
+Check Q&A for: Grade 3 | Grammar_4_Genders.xls

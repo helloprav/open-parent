@@ -178,6 +178,7 @@ public class ExamServiceImpl implements ExamService {
 		evalStats.setEvalQuestCount(evaluationForReference.getQuestionsInEval());
 
 		result.put("evalStats", evalStats);
+		result.put("passMarks", evaluationForReference.getQuestionsToPass());
 		result.put("report", questionSet);
 		return result;
 		//return evaluationForReference.getQuestionsToPass() <= marks;

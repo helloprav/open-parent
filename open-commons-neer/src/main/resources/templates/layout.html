@@ -15,6 +15,31 @@
     <link rel="stylesheet" th:href="@{/node_modules/@fortawesome/fontawesome-free/css/all.min.css}" crossorigin="anonymous">
     <script th:src="@{/node_modules/jquery/dist/jquery.min.js}"></script>
     <script th:src="@{/node_modules/bootstrap/dist/js/bootstrap.min.js}"></script>
+    <script lang="javascript">
+
+		window.onload = function() {
+			console.log('Loading thymeleaf html');
+			let userProfile1 = localStorage.getItem('userProfile1');
+			let userProfileJson = JSON.parse(userProfile1);
+			document.getElementById("uname").innerHTML +=  userProfileJson.username;
+			console.log('Loading thymeleaf html:: '+userProfileJson.username);
+		};
+
+		function authLogout() {
+			let logoutUrl = "[[${@environment.getProperty('server.servlet.context-path')}]]/ofds/api/auth/logout";
+			let loginUrl = "[[${@environment.getProperty('server.servlet.context-path')}]]/ofds";
+			$.ajax({
+				type : 'DELETE',
+				url : logoutUrl,
+				success : function(response) {
+					console.log("Logout Success");
+					// similar behavior as an HTTP redirect
+					window.location.replace(loginUrl);
+				}
+			});
+		}
+
+	</script>
 </head>
 
 <body>
@@ -46,6 +71,16 @@
 	            <li class="nav-item">
 	                <a class="nav-link" th:href="@{/about}">About Us</a>
 	            </li>
+				<li class="dropdown nav-item" id="GlobalSettingsMenu" ng-controller="LoginCtrl">
+					<a href12="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+						aria-expanded="false" id="navbarDropdown"><span id="uname"></span><em class="fa fa-cog"></em></a>
+					<ul class="dropdown-menu" align="left">
+						<li><a class="dropdown-item" >My Profile</a>
+						<li><a class="dropdown-item" >Change Password</a>
+						<li role="separator" class="divider"></li>
+						<li><a class="dropdown-item" onclick="return authLogout()">Logout</a>
+					</ul>
+				</li>
 	        </ul>
 	    </div>
 	</nav>

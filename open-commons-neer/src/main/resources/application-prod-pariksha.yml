@@ -1,4 +1,4 @@
 pariksha:
   eval:
     mediaFile:
-      max-size: 1024*1024
+      max-size: 1048576

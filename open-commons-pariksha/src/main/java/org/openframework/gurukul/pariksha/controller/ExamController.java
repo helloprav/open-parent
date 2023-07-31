@@ -266,6 +266,7 @@ public class ExamController {
 			CookieUtils.deleteCookiesByName(request, response, List.of("userEval", "questionSet"));
 		}
 		model.addAttribute("evalPassed", evalStats.getEvaluationStatPassed());
+		model.addAttribute("passMarks", result.get("passMarks"));
 		model.addAttribute("userEvaluation", userEvaluation);
 		model.addAttribute("report", report);
 		return "/pariksha/exams/exam-completed";

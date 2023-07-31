@@ -129,7 +129,11 @@ public class UserASImpl extends BaseASImpl implements UserAS {
 
 		// don't update password, so take the latest password from db and set in current inputUser
 		if(null != inputUser.getId()) {
-			inputUser.setPassword(userRepository.getOne(inputUser.getId()).getPassword());
+			Optional<User> savedUserOption = userRepository.findById(inputUser.getId());
+			if(savedUserOption.isPresent()) {
+				User savedUser = savedUserOption.get();
+				inputUser.setPassword(savedUser.getPassword());
+			}
 		}
 		User savedUser = userRepository.save(inputUser);
 		List<UserGroup> userGroupsList = inputUser.getUserGroups();

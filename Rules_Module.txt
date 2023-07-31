@@ -39,6 +39,11 @@ MinorUpdateNoInQuarter: Minor version no in this quarter... patch/fixes/comments
 ====================================================================================
 Update Spring Boot version in following files:
 /open-parent/pom.xml: 		
-	<version.spring.boot>2.6.12</version.spring.boot>
-	<version.spring>5.3.23</version.spring>
+	<parent>
+		<version>2.7.14</version>
+	</parent>
+	<properties>
+		<version.spring>5.3.25</version.spring>
+		<version.spring.boot>2.7.14</version.spring.boot>
+	</properties>
 
