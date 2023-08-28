@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{gconfig/html/gconfig_layout}">
+<head>
+    <title>Welcome to Our Site</title>
+</head>
+<body>
+
+<div layout:fragment="content">
+    <section class="my-5">
+		<link rel="stylesheet" type="text/css"  th:href="@{/webjars/global-config/css/table.css}" />
+
+		<script type="text/javascript">
+		    $('#iaasForm1').submit(function(e) {
+		        e.preventDefault();
+		        doSearch();
+		    });
+		    $(function() {
+		        //selectCheckBox();
+		    });
+		</script>
+
+		<div id="messages"><br>
+			<label>&nbsp;&nbsp;&nbsp;<b>[[${configName}]] properties</b></label>
+			<input type="hidden" id="configName" name="configName"
+				th:value="${configName}" />
+
+			<table class="table" border="0px">
+				<tr>
+					<td></td>
+					<td><b>Key</b></td>
+					<td><b>Value</b></td>
+					<td><b>Action</b></td>
+				</tr>
+
+				<tr>
+					<td>NEW</td>
+					<td><input id="key0" type="text" value="" /></td>
+					<td><textarea id="textArea0" cols="70"></textarea></td>
+					<td><input type="button" onclick="saveConfig(0, 'create')"
+						value="CREATE"></td>
+				</tr>
+
+                <tr th:each="entry : ${config}">
+						<td th:text="${entryStat.index+1}"></td>
+						<td><input th:id="'key'+${entryStat.index+1}" type="text"
+							th:value="${entry.key}" readonly="readonly" /></td>
+						<td><textarea th:id="'textArea'+${entryStat.index+1}" cols="70">[[${entry.value}]]</textarea></td>
+						<td><input type="button"
+							th:onclick="saveConfig([[${entryStat.index+1}]], 'update')" value="SAVE"></td>
+				</tr>
+			</table>
+		</div>
+    </section>
+</div>
+
+</body>
+</html>

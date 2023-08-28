@@ -1,9 +1,16 @@
 Remove deprecated code
-Upgrade to Spring Boot 3
-Convert the structure into proper web jar for web modules (ofds,gconfig,pariksha)
 Automation to quickly test all changes
 	-ScreenShot if any error occurs
+Upgrade to Spring Boot 3
+Remove console logs(SOP). Use proper debug/info/error logs
+Convert the structure into proper web jar for web modules (ofds,gconfig,pariksha)
+	-Move artifacts from Neer app to respective modules:
+		-/open-commons-neer/src/main/resources/db/migration/V2023_1_0__pariksha_create-main-tables.sql
+		-/open-commons-neer/src/main/resources/templates/shiksha
+		-/open-commons-neer/src/main/resources/templates/gconfig
 Create an app called Gurukul (instead of re-using Neer app). Gurukul to be another spring boot project out of open-parent.
+
+Exams: Show last EvalStats for respective exams.
 Create entity: Grade and Subject. Evaluations to be mapped to above Grade and Subject during creation.
 Result to display:
 	-Total Question
@@ -11,21 +18,25 @@ Result to display:
 	-Correct Answers (Percentage)
 	-Wrong Answers (Percentage)
 	-Row with false result to have light red background
-Move artifacts from Neer app to respective modules:
-	-/open-commons-neer/src/main/resources/db/migration/V2023_1_0__pariksha_create-main-tables.sql
-	-/open-commons-neer/src/main/resources/templates/shiksha
-	-/open-commons-neer/src/main/resources/templates/gconfig
 Support questions to display to be less than total questions in eval
 Move code from controller to service
+PDF Certificates for download
+
 Module wise list all supported features:
 -OFDS
 	-login,logout, user create,edit/view/delete
 	-rest api,ui,swagger,postman, unit test, automation test... etc
+-GConfig
+	-Manage dashboard/errors properties
+	-Manage config properties
+-Pariksha
+	-Manage Evaluations
+	-Conduct Exams
+-Gurukul Administration
+	-Manage Grades
+	-Manage Subjects
 Export eval
 Update eval/question/answers
-PDF Certificates for download
-
-Remove console logs(SOP). Use proper debug/info/error logs
 -----------------------DONE-------------------------------------------------
 Rename Shiksha -> Pariksha (All files, db, tables etc)
 Logout Button on UI

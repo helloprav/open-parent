@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{gconfig/html/gconfig_layout}">
+<head>
+    <title>Welcome to Our Site</title>
+</head>
+<body>
+
+<div layout:fragment="content">
+    <section class="my-5">
+		<link rel="stylesheet" type="text/css"  th:href="@{/webjars/global-config/css/table.css}" />
+
+		<div id="messages"><br>
+			<label>&nbsp;&nbsp;&nbsp;<b>Change Log Levels</b></label><br><br>
+
+			<fieldset>
+			    <legend>Select Log Level</legend>
+			    <select name="levels" id="levels" size="7">
+			        <option value="OFF">OFF</option>
+			        <option value="ERROR">ERROR</option>
+			        <option value="WARN">WARN</option>
+			        <option value="INFO">INFO</option>
+			        <option value="DEBUG">DEBUG</option>
+			        <option value="TRACE">TRACE</option>
+			        <option value="ALL">ALL</option>
+			    </select>
+			</fieldset>
+			<br />
+			<fieldset>
+			    <legend>Select Logger Name</legend>
+			    <select name="logger" id="logger">
+					<option value="-1">--Select Logger--</option>
+                    <option th:each="item: ${items}" th:value="${item.name}" th:text="${item.name + ':' + item.level}" ></option>
+			    </select>
+			</fieldset>
+			<br />
+			<div align="center">
+				<input type="button" value="SUBMIT" onclick="setLogLevel()">
+			</div>
+		</div>
+    </section>
+</div>
+
+</body>
+</html>

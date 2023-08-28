@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{gconfig/html/gconfig_layout}">
+<head>
+    <title>Welcome to Our Site</title>
+</head>
+<body>
+
+<div layout:fragment="content">
+    <section class="my-5">
+		<link rel="stylesheet" type="text/css"  th:href="@{/webjars/global-config/css/table.css}" />
+
+		<div id="contentHead"><br>
+			<label>&nbsp;&nbsp;&nbsp;<b>Change Log Levels</b></label><br><br>
+
+			<table class="table" align="center">
+		        <tr>
+		            <td>Select Log File</td>
+		            <td>
+					    <select name="selectLogFile" id="selectLogFile" onchange="loadLogs()">
+							<option value="-1">--Select Log File--</option>
+		                    <option th:each="item: ${items}" th:value="${item}" th:text="${item}" ></option>
+					    </select>
+		            </td>
+					<td><a href="#" onclick="return downloadFile()">Download as Zip</a></td>            <br>
+		        </tr>
+		    </table>
+		</div>
+
+		<div id="contentBody"></div>
+
+    </section>
+</div>
+
+</body>
+</html>

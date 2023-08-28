@@ -16,7 +16,7 @@ let contextName = getContextName(gconfigModuleName);
 window.gconfig = {
 	contextName: contextName, 
 	moduleName: gconfigModuleName,
-	moduleAppPath: contextName + gconfigModuleName + "/app",
+	moduleAppPath: contextName + gconfigModuleName + "/home",
 	moduleApiPrefix: contextName + gconfigModuleName + "/api",
 }
 
@@ -29,6 +29,10 @@ function onAppLoad() {
 			});
 		});
 	});
+}
+
+function loadMessagePage(url) {
+	loadPage('/languages?messageType=' + url);
 }
 
 function loadPage(url) {
@@ -104,24 +108,24 @@ function setLogLevel() {
 	var levels = $("#levels").val();
 	var logger = $("#logger").val();
 
-	if (levels != undefined && levels.length > 0) {
+	if ( (levels != undefined && levels.length > 0) && (logger != -1 && logger.length > 0) )  {
 
-		var url = gconfig.moduleAppPath +'/logger?levels=' + levels + '&logger=' + logger;
+		var url = gconfig.moduleApiPrefix +'/logger?levels=' + levels + '&logger=' + logger;
 		$
 				.ajax({
 					type : "POST",
 					url : url,
-					contentType : "text/html; charset=utf-8",
 					dataType : "text",
-					success : function(data) {
-						 $("#levels").val('');
+					success : function() {
 						showTimeoutDialog('Log level changed to <b><font color="green">'
 								+ levels + '</font></b>');
-						loadLogger(url);
+						setTimeout(function(){
+							location.reload();
+						}, 1500);
 					}
 				});
 	} else {
-		showAlertDialog("Please select any one log level.");
+		showAlertDialog("Please select any one log level and logger.");
 	}
 
 }
@@ -131,7 +135,7 @@ function loadLogs() {
 	if (-1 == fileName) {
 		return false;
 	}
-	var url = gconfig.moduleAppPath +'/logger/logfiles/getLogs';
+	var url = gconfig.moduleAppPath +'/logfiles/getLogs';
 	$.ajax({
 		type : 'GET',
 		url : url,
@@ -144,7 +148,7 @@ function loadLogs() {
 			"fileName" : fileName
 		},
 		success : function(response) {
-			$('#messages').html(response);
+			$('#contentBody').html(response);
 		}
 	});
 }
@@ -154,7 +158,7 @@ function downloadFile() {
 	if (-1 == fileName) {
 		return false;
 	}
-	var url = gconfig.moduleAppPath +'/logger/logfiles/downloadLogs?fileName='+fileName;
+	var url = gconfig.moduleAppPath +'/logfiles/downloadLogs?fileName='+fileName;
 	$.ajax({
 		type : 'GET',
 		xhrFields: {
@@ -184,46 +188,92 @@ function loadMessages() {
 		return false;
 	}
 	var messageType = $("#messageType").val();
-	var url = gconfig.moduleAppPath +'/messages/'+messageType+'/'+selectedLanguage;
+	var url = gconfig.moduleApiPrefix +'/l10n/messages/'+messageType+'?language='+selectedLanguage;
 	$.ajax({
 		type : 'GET',
 		url : url,
 		headers : {
-			Accept : "text/plain; charset=utf-8",
-			"Content-Type" : "text/plain; charset=utf-8"
+			//Accept : "text/plain; charset=utf-8",
+			"Content-Type" : "application/json"
 		},
 		// contentType: 'application/json',
 		data : {
 			"paramName" : "paramValue"
 		},
 		success : function(response) {
-			$('#messages').html(response);
+
+			updateMessageTable(response);
 		}
+	});
+}
+
+function updateMessageTable(response) {
+    $('#messages').hide();
+    $('#messages').show();
+    tableBody = $("#messages table tbody");
+    tableBody.empty();
+	let	markup = "<tr id='new'><td>NEW</td><td><input id='key0' type='text' value='' /></td>"+
+            "<td><textarea id='textArea0' cols='70'></textarea></td>"+
+            "<td><input type='button' onclick='saveMessage(0, \"create\")' value='CREATE'></td></tr>";
+    tableBody.append(markup);
+    let idx = 1;
+	const sortedResponse = Object.keys(response).sort().reduce((accumulator, key) => { accumulator[key] = response[key]; return accumulator; }, {});
+	$.each(sortedResponse, function(key, value) {
+		markup = 
+				"<tr><td>"+idx+"</td><td>" + 
+				"<input id='key"+idx+"' type='text' value='"+key+"' readonly='readonly'/></td>"+
+				"<td><textarea id='textArea"+idx+"' cols='70'>"+value+"</textarea></td>"+
+				"<td><input type='button' onclick='saveMessage("+idx+", \"update\")' value='SAVE'></td></tr>";
+        tableBody.append(markup);
+        ++idx;
+	});
+}
+
+function updateConfigTable(response) {
+    $('#messages').hide();
+    $('#messages').show();
+    tableBody = $("#messages table tbody");
+    tableBody.empty();
+	let	markup = "<tr id='new'><td>NEW</td><td><input id='key0' type='text' value='' /></td>"+
+            "<td><textarea id='textArea0' cols='70'></textarea></td>"+
+            "<td><input type=\"button\" onclick=\"saveConfig(0, 'create')\" value=\"CREATE\"></td></tr>";
+    console.log(markup);
+    tableBody.append(markup);
+    let idx = 1;
+	const sortedResponse = Object.keys(response).sort().reduce((accumulator, key) => { accumulator[key] = response[key]; return accumulator; }, {});
+	$.each(sortedResponse, function(key, value) {
+		markup = 
+				"<tr><td>"+idx+"</td><td>" + 
+				"<input id='key"+idx+"' type='text' value='"+key+"' readonly='readonly'/></td>"+
+				"<td><textarea id='textArea"+idx+"' cols='70'>"+value+"</textarea></td>"+
+				"<td><input type='button' onclick='saveConfig("+idx+", \"update\")' value='SAVE'></td></tr>";
+        tableBody.append(markup);
+        ++idx;
 	});
 }
 
 function saveMessage(index, action) {
 	var selectedLanguage = $("#selectLanguage").find( "option:selected" ).prop("value");
 	var messageType = $("#messageType").val();
-	var url = gconfig.moduleAppPath +'/messages/'+messageType+'/'+selectedLanguage;
+	var url = gconfig.moduleApiPrefix +'/l10n/messages/'+messageType+'/'+selectedLanguage;
 	var key1 = $("#key"+index).val();
 	var value1 = $("#textArea"+index).val();
 
-	saveMessageAndConfig(index, action, url, key1, value1);
+	saveMessageAndConfig(action, url, key1, value1, 'msg');
 }
 
 
 function saveConfig(index, action) {
 
 	var configName = $("#configName").val();
-	var url = gconfig.moduleAppPath +'/config/'+configName;
+	var url = gconfig.moduleApiPrefix +'/l10n/config/'+configName;
 	var key1 = $("#key"+index).val();
 	var value1 = $("#textArea"+index).val();
 
-	saveMessageAndConfig(index, action, url, key1, value1);
+	saveMessageAndConfig(action, url, key1, value1, 'config');
 }
 
-function saveMessageAndConfig(index, action, url, key1, value1) {
+function saveMessageAndConfig(action, url, key1, value1, type) {
 
 	if (key1.length == 0) {
 		$('#confirrmDialog').dialogBox({
@@ -247,7 +297,11 @@ function saveMessageAndConfig(index, action, url, key1, value1) {
 					+ ' value has been created.'
 		}
 		showTimeoutDialog(msg);
-		$('#messages').html(response);
+		if(type === 'msg') {
+			updateMessageTable(response);
+		} else {
+			updateConfigTable(response);
+		}
 	});
 }
 

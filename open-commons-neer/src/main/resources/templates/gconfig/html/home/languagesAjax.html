@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{global-config/html/gconfig_layout}">
+      layout:decorate="~{gconfig/html/gconfig_layout}">
 <head>
     <title>Welcome to Our Site</title>
 </head>
@@ -18,28 +18,46 @@
 		    });
 		    $(function() {
 		        //selectCheckBox();
+		        $('#messages').css('display', 'none');
 		    });
 		</script>
 		
 		
 		<div style="border: 0px">
-			<br> <label><b><span th:text="#{messageType}">( message Type ) </span> Messages</b></label>
+			<br> <label><b><span th:utext="${messageType}">( message Type ) </span> Messages</b></label>
 			<table class="table" align="center">
 		        <tr>
 		            <td>Select Language</td>
 		            <td><select id="selectLanguage" onchange="loadMessages()">
 		                    <option value="-1">--Select Language--</option>
-		                    <c:forEach items="${languages}" var="languageBean">
-		                        <option value="${languageBean.locale}">${languageBean.name}</option>
-		                    </c:forEach>
+		                    <option th:each="language: ${languages}" var="languageBean" th:value="${language.locale}" th:text="${language.name}" items="${languages}"></option>
 		            </select></td>
 		            <br>
 		        </tr>
-		        <input type="hidden" id="messageType" name="messageType" value="${messageType}" />
+		        <input type="hidden" id="messageType" name="messageType" th:value="${messageType}" />
 		    </table>
 		</div><br>
 		
-		<div id="messages"></div>
+		<div id="messages">
+			<label><b></b></label>
+		
+			<table class="table" border="0px"><thead>
+				<tr>
+					<td></td>
+					<td><b>Key</b></td>
+					<td><b>Value</b></td>
+					<td><b>Action</b></td>
+				</tr></thead><tbody id="mtbody">
+		
+		        <tr id="new">
+		            <td>NEW</td>
+		            <td><input id="key0" type="text"
+		                value="${entry.key}" /></td>
+		            <td><textarea id="textArea0" cols="70">${entry.value}</textarea></td>
+		            <td><input type="button" onclick="saveMessage(0, 'create')" value="CREATE"></td>
+		        </tr></tbody>
+			</table>
+		</div>
     </section>
 </div>
 

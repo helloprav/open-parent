@@ -88,7 +88,7 @@ public class GlobalConfigApp implements WebMvcConfigurer {
 		return secondaryTemplateResolver;
 	}
 
-	@Bean
+	//@Bean
 	public ViewResolver resourceBundleViewResolver() {
 	    ResourceBundleViewResolver bean = new ResourceBundleViewResolver();
 	    bean.setBasename("views");

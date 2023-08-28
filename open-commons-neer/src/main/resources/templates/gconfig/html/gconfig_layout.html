@@ -48,15 +48,13 @@
 					<p>Approver : ${userdata.reportingmanager}</p>
 			</div>
 
-			<div class="menu">
+			<div class="menu" id="menuMessages">
 				<ul class="nav">
 					<p class="menuSection">Messages</p>
-					<th:block th:each="entry : ${messageResources.keySet()}">
+					<th:block th:each="entry : ${messageResources}" th:with="messageResourceLocale=${entry.value}">
 						<p>
-							<a onclick="return loadPage('/home/languages?messageType=dashboard');" >using </a>
-							<a th:href="@{/gconfig/home/languages(messageType=dashboard)}" >aaaa</a>
-							<a onclick="return loadPage('/languages?messageType=${entry.key}')" text="${entry.key} messages">${entry.key}
-								messages</a>
+							<!--<a th:attr="onclick=|loadMessagePage('${entry.key}')|" >[[${entry.key}]]</a>-->
+							<a th:href="@{/gconfig/home/languages(messageType=${entry.key})}" th:text="${entry.key}" th:id="${entry.key}"></a>
 						</p>
 					</th:block>
 			</div>
@@ -66,29 +64,32 @@
 					<p class="menuSection">Env Properties</p>
 					<th:block th:each="configName : ${configNames}" >
 						<p>
-							<a onclick="return loadPage('/config/${configName}')">${configName}</a>
+							<!--<a onclick="return loadPage('/config/${configName}')">${configName}</a>-->
+							<a th:href="@{/gconfig/home/config/{configName}(configName=${configName})}" th:text="${configName}" ></a>
 						</p>
 					</th:block>
 				</ul>
 			</div>
 		
-			<div class="menu" style="display: none123;">
+			<div class="menu">
 				<ul class="nav">
-					<p class="menuSection">System Config</p>
+					<p class="menuSection" id="menuSectionSystemConfig">System Config</p>
 					<p><a onclick="return getSystemStatus('/system/status')"><s>system status</s></a></p>
-					<p><a onclick="return getSystemProperties('/system/properties')">system properties</a></p>
-					<p><a onclick="return getSystemProperties('/system/beans')">system beans</a></p>
-					<p><a onclick="return loadLogger('/logger')">change log level</a></p>
-					<p><a onclick="return getSystemProperties('/logger/logfiles')">Download Logs</a></p>
+					<p><a th:href="@{/gconfig/home/system/properties}" >System Properties</a></p>
+					<p><a th:href="@{/gconfig/home/system/beans}" >System Beans</a></p>
+					<p><a th:href="@{/gconfig/home/logs/form}" >Change Log Level</a></p>
+					<p><a th:href="@{/gconfig/home/logs/view}" >View / Download Logs</a></p>
 			</div>
 		</div>
 	</div> <!-- End of Menu Section -->
 
 
 <!-- Content Section -->
-<section layout:fragment="content">
-    <p>This is filled by the content template.</p>
-</section>
+	<div id="content">
+		<section layout:fragment="content">
+		    <p>This is filled by the content template.</p>
+		</section>
+	</div>
 
 <!-- Footer -->
 <footer class="container py-5">

@@ -25,4 +25,16 @@
 		<nature>org.eclipse.jdt.core.javanature</nature>
 		<nature>org.eclipse.m2e.core.maven2Nature</nature>
 	</natures>
+	<linkedResources>
+		<link>
+			<name>ToDo-Neer.txt</name>
+			<type>1</type>
+			<location>C:/Users/praveenm/Documents/GitHub/open-parent/open-commons-neer/ReadMe.txt</location>
+		</link>
+		<link>
+			<name>Todo-Automation.txt</name>
+			<type>1</type>
+			<location>C:/Users/praveenm/Documents/workspace-spring-tool-suite-4-4.19.0.RELEASE/auto-parent/Todo.txt</location>
+		</link>
+	</linkedResources>
 </projectDescription>

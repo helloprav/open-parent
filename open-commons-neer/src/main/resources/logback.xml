@@ -78,7 +78,7 @@
         <appender-ref ref="NEER-OTHERS" />
     </logger>
 
-    <logger name="org.hibernate.type.descriptor.sql " level="${LOG_LEVEL}" additivity="false">
+    <logger name="org.hibernate.type.descriptor.sql" level="${LOG_LEVEL}" additivity="false">
         <appender-ref ref="NEER-OTHERS" />
     </logger>
 

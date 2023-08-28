@@ -1,0 +1,17 @@
+<div style="border: 0px">
+	<br> <label><b>Logs</b></label>
+	<table class="table" cellpadding="10">
+		<tr>
+			<td><b>Logs: </b><span><a onclick="return downloadFile()">Download
+						as Zip <img
+						th:src="@{/webjars/global-config/images/file_download.png}"
+						height="50" width="50">
+				</a></span></td>
+		</tr>
+		<tr>
+			<td> <span th:each="message : ${messages}">[[${message}]]<br></span></td>
+		</tr>
+	</table>
+</div>
+<br>
+

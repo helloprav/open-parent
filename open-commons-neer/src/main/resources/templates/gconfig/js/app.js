@@ -32,6 +32,10 @@ function onAppLoad() {
 	});
 }
 
+function loadMessagePage(url) {
+	loadPage('/languages?messageType=' + url);
+}
+
 function loadPage(url) {
 	url = gconfig.moduleAppPath + url;
 	$.ajax({
