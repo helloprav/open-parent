@@ -35,7 +35,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/gconfig/home")
+@RequestMapping("/gconfig")
 public class HomeController {
 
 	private static final String LOG_MAX_LINE_COUNT = "logs.lines.maxCount";
@@ -56,60 +56,6 @@ public class HomeController {
 		model.addAttribute("messageResources", messageResources);
 		model.addAttribute("configNames", i18nService.getAppConfigsMap().keySet());
 		return "gconfig/html/home/index";
-	}
-
-	@GetMapping("/contact")
-	public String contactUs(Model model) {
-
-		Map<String, MessageResourceLocale> messageResources = i18nService.getMessageResourceMap();
-		request.setAttribute("messageResources", messageResources);
-
-		request.setAttribute("configNames", i18nService.getAppConfigsMap().keySet());
-		return "gconfig/html/home/contact";
-	}
-
-	@GetMapping("/about")
-	public String about() {
-
-		System.out.println("CONFIG_APP_NAME:: "+ request.getServletContext().getAttribute(ConfigAppConstants.CONFIG_APP_NAME));
-		Map<String, MessageResourceLocale> messageResources = i18nService.getMessageResourceMap();
-		request.setAttribute("messageResources", messageResources);
-
-		request.setAttribute("configNames", i18nService.getAppConfigsMap().keySet());
-		return "gconfig/html/home/about";
-	}
-
-	@GetMapping("/index1")
-	public String init1() {
-
-		System.out.println("CONFIG_APP_NAME:: "+ request.getServletContext().getAttribute(ConfigAppConstants.CONFIG_APP_NAME));
-		Map<String, MessageResourceLocale> messageResources = i18nService.getMessageResourceMap();
-		request.setAttribute("messageResources", messageResources);
-
-		request.setAttribute("configNames", i18nService.getAppConfigsMap().keySet());
-		return "index1";
-	}
-
-	@GetMapping("/contact1")
-	public String contact1() {
-
-		System.out.println("CONFIG_APP_NAME:: "+ request.getServletContext().getAttribute(ConfigAppConstants.CONFIG_APP_NAME));
-		Map<String, MessageResourceLocale> messageResources = i18nService.getMessageResourceMap();
-		request.setAttribute("messageResources", messageResources);
-
-		request.setAttribute("configNames", i18nService.getAppConfigsMap().keySet());
-		return "contact1";
-	}
-
-	@GetMapping("/about1")
-	public String about1() {
-
-		System.out.println("CONFIG_APP_NAME:: "+ request.getServletContext().getAttribute(ConfigAppConstants.CONFIG_APP_NAME));
-		Map<String, MessageResourceLocale> messageResources = i18nService.getMessageResourceMap();
-		request.setAttribute("messageResources", messageResources);
-
-		request.setAttribute("configNames", i18nService.getAppConfigsMap().keySet());
-		return "about1";
 	}
 
 	@GetMapping("/languages")

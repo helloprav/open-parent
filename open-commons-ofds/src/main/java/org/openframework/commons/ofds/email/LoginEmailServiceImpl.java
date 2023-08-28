@@ -5,7 +5,7 @@ import org.openframework.commons.email.vo.EmailVO;
 import org.openframework.commons.rest.vo.UserVO;
 import org.openframework.commons.utils.StringUtil;
 import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Component;
+//import org.springframework.stereotype.Component;
 
 //@Component
 @Scope("prototype")

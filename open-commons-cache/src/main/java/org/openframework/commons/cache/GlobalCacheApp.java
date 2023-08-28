@@ -70,10 +70,10 @@ public class GlobalCacheApp {
 		cacheManagerNameMap.put(cacheManagerName, cacheNames);
 	}
 
-	@Lazy
-	@Primary
-	@Bean(name = simpleCacheManager)
-	public CacheManager simpleCacheManager() {
+    @Lazy
+    @Primary
+    @Bean(name = simpleCacheManager)
+    CacheManager simpleCacheManager() {
 
 		Set<String> simpleCacheNames = getSimpleCacheNames();
 		SimpleCacheManager cacheManager = new SimpleCacheManager();
@@ -108,9 +108,9 @@ public class GlobalCacheApp {
 		return simpleCacheNames;
 	}
 
-	@Lazy
-	@Bean(caffeineCacheManager)
-	public CacheManager caffeineCacheManager() {
+    @Lazy
+    @Bean(caffeineCacheManager)
+    CacheManager caffeineCacheManager() {
 
 		Set<String> caffeineCacheNames = getCaffeineCacheNames();
 		CaffeineCacheManager caffeineCacheManager = new CaffeineCacheManager();

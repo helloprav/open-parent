@@ -16,7 +16,7 @@ import javax.servlet.http.Cookie;
 
 import org.apache.commons.lang3.StringUtils;
 import org.openframework.commons.domain.exceptions.ApplicationValidationException;
-import org.openframework.commons.email.EmailApplication;
+//import org.openframework.commons.email.EmailApplication;
 import org.openframework.commons.email.service.EmailService;
 import org.openframework.commons.email.vo.EmailEvent;
 import org.openframework.commons.encrypt.EncryptionUtil;
@@ -87,7 +87,7 @@ public class AuthenticationServiceImpl extends BaseServiceImpl implements Authen
 		getPublisher().publishEvent(map);
 	}
 
-	private void sendEmailForLoginSuccess(UserVO userVO) {
+	public void sendEmailForLoginSuccess(UserVO userVO) {
 
 		EmailService emailService = appContext.getBean(LoginEmailServiceImpl.class);
 		emailService.init(org.openframework.commons.ofds.constant.EmailConstants.TEMPLATE_LOGIN_SUCCESS, userVO, userVO.getEmail());

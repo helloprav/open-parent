@@ -52,6 +52,9 @@
 				<include>*.xml</include>
 				<include>*.yml</include>
 			</includes>
+			<excludes>
+				<exclude>static/ofds/**</exclude>
+			</excludes>
 		</fileSet>
 		<fileSet>
 			<directory>src/main/resources/templates</directory>

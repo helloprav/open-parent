@@ -1,17 +1,10 @@
 package org.openframework.commons.config.controller;
 
-import java.io.BufferedInputStream;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.URLConnection;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.openframework.commons.config.constants.ConfigAppConstants;
 import org.openframework.commons.config.service.as.MessageResourceAS;
@@ -19,7 +12,6 @@ import org.openframework.commons.utils.FileFolderUtils;
 import org.openframework.commons.utils.LogbackUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.ui.Model;
-import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,9 +25,6 @@ public class LoggerConfigController {
 
 	@Inject
 	private HttpServletRequest request;
-
-	@Inject
-	private HttpServletResponse response;
 
 	@Inject
 	MessageResourceAS messageResourceAS;

@@ -16,7 +16,7 @@ let contextName = getContextName(gconfigModuleName);
 window.gconfig = {
 	contextName: contextName, 
 	moduleName: gconfigModuleName,
-	moduleAppPath: contextName + gconfigModuleName + "/home",
+	moduleAppPath: contextName + gconfigModuleName,
 	moduleApiPrefix: contextName + gconfigModuleName + "/api",
 }
 

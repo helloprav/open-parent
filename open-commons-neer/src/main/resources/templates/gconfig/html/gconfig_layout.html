@@ -54,7 +54,7 @@
 					<th:block th:each="entry : ${messageResources}" th:with="messageResourceLocale=${entry.value}">
 						<p>
 							<!--<a th:attr="onclick=|loadMessagePage('${entry.key}')|" >[[${entry.key}]]</a>-->
-							<a th:href="@{/gconfig/home/languages(messageType=${entry.key})}" th:text="${entry.key}" th:id="${entry.key}"></a>
+							<a th:href="@{/gconfig/languages(messageType=${entry.key})}" th:text="${entry.key}" th:id="${entry.key}"></a>
 						</p>
 					</th:block>
 			</div>
@@ -65,7 +65,7 @@
 					<th:block th:each="configName : ${configNames}" >
 						<p>
 							<!--<a onclick="return loadPage('/config/${configName}')">${configName}</a>-->
-							<a th:href="@{/gconfig/home/config/{configName}(configName=${configName})}" th:text="${configName}" ></a>
+							<a th:href="@{/gconfig/config/{configName}(configName=${configName})}" th:text="${configName}" ></a>
 						</p>
 					</th:block>
 				</ul>
@@ -75,10 +75,10 @@
 				<ul class="nav">
 					<p class="menuSection" id="menuSectionSystemConfig">System Config</p>
 					<p><a onclick="return getSystemStatus('/system/status')"><s>system status</s></a></p>
-					<p><a th:href="@{/gconfig/home/system/properties}" >System Properties</a></p>
-					<p><a th:href="@{/gconfig/home/system/beans}" >System Beans</a></p>
-					<p><a th:href="@{/gconfig/home/logs/form}" >Change Log Level</a></p>
-					<p><a th:href="@{/gconfig/home/logs/view}" >View / Download Logs</a></p>
+					<p><a th:href="@{/gconfig/system/properties}" >System Properties</a></p>
+					<p><a th:href="@{/gconfig/system/beans}" >System Beans</a></p>
+					<p><a th:href="@{/gconfig/logs/form}" >Change Log Level</a></p>
+					<p><a th:href="@{/gconfig/logs/view}" >View / Download Logs</a></p>
 			</div>
 		</div>
 	</div> <!-- End of Menu Section -->

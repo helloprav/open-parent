@@ -5,7 +5,7 @@ import static org.springframework.http.HttpStatus.NOT_FOUND;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 
 /**
  * Created by lcsontos on 5/10/17. This DefaultController is not OK if any non
@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 //@Controller
 public class DefaultController {
 
-	@RequestMapping
+	@GetMapping
 	public ResponseEntity<RestErrorResponse> handleUnmappedRequest(final HttpServletRequest request) {
 		return ResponseEntity.status(NOT_FOUND).body(RestErrorResponse.of(NOT_FOUND));
 	}

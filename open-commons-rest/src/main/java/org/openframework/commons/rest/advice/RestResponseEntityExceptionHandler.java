@@ -86,7 +86,7 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
 
 	/**
 	 * The below @ModelAttribute annotated method is not required in case of REST
-	 * service. It may be useful in case there is a view/jsp associated.
+	 * service. It may be useful in case there is a view/jsp/thymeleaf associated.
 	 * 
 	 * 2q 1 * @param model
 	 */

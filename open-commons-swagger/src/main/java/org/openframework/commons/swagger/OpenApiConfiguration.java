@@ -21,8 +21,8 @@ public class OpenApiConfiguration {
 	@Value("${commons.swagger.version:}")
 	private String version;
 
-	@Bean
-    public OpenAPI customOpenAPI() {
+    @Bean
+    OpenAPI customOpenAPI() {
         return new OpenAPI().info(apiInfo());
     }
 

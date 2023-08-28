@@ -70,9 +70,6 @@ public abstract class AbstractMessageResourceASImpl implements MessageResourceAS
 				for (File innerFile : listFiles) {
 					saveProperies(file, innerFile, messageResourceLocale, newSupportedLanguages);
 				}
-				/*if (ApplicationConstants.MESSAGE_TYPE_DASHBOARD.equalsIgnoreCase(file.getName())) {
-					supportedLanguages.addAll(newSupportedLanguages);
-				}*/
 				messageResourceMapTemp.put(file.getName(), messageResourceLocale);
 			}
 		}
@@ -86,20 +83,6 @@ public abstract class AbstractMessageResourceASImpl implements MessageResourceAS
 		Properties props = FileFolderUtils.loadPropFromFile(innerFile);
 		String localeCode = getLocale(innerFile.getName())[1];
 		messageResourceLocale.getPropertiesMap().put(localeCode, props);
-		/*if (!ApplicationConstants.DEFAULT.equals(localeCode)
-				&& ApplicationConstants.MESSAGE_TYPE_DASHBOARD.equalsIgnoreCase(file.getName())) {
-
-			// add above supported language/localeCode in a list
-			String languageName = props.getProperty("languageName");
-			String nameAsImgProperty = props.getProperty("languageImg");
-			Boolean nameAsImg = false;
-			if (nameAsImgProperty != null && !nameAsImgProperty.equalsIgnoreCase("no")) {
-				nameAsImg = true;
-			}
-			Locale languageLocale = new Locale(localeCode);
-			LanguageBean toAdd = new LanguageBean(languageName, languageLocale.getLanguage(), nameAsImg);
-			newSupportedLanguages.add(toAdd);
-		}*/
 	}
 
 	private void initAppConfig() {
@@ -110,7 +93,7 @@ public abstract class AbstractMessageResourceASImpl implements MessageResourceAS
 
 		for (File file : globalPropertyFileList) {
 			final String fileName = file.getName();
-			StringBuilder filePath = new StringBuilder();
+//			StringBuilder filePath = new StringBuilder();
 			//filePath.append(getSharedLocation()).append(fileName);
 			yaml.setResources(new FileSystemResource(new File(file.getPath())));
 			final Properties props = yaml.getObject();
@@ -120,27 +103,11 @@ public abstract class AbstractMessageResourceASImpl implements MessageResourceAS
 
 	private void validateLanguageProperties() {
 
-		List<String> languageList = getLocaleList();
 		Iterator<Entry<String, MessageResourceLocale>> messageEntrySetIterator = getMessageResourceMap().entrySet()
 				.iterator();
 		while (messageEntrySetIterator.hasNext()) {
-			Entry<String, MessageResourceLocale> messageEntry = messageEntrySetIterator.next();
-			/*if (!ApplicationConstants.MESSAGE_TYPE_DASHBOARD.equals(messageEntry.getKey())) {
-
-				Map<String, Properties> propertiesMap = messageEntry.getValue().getPropertiesMap();
-				Iterator<String> propertiesMapIterator = propertiesMap.keySet().iterator();
-				while (propertiesMapIterator.hasNext()) {
-					String propertiesMapLanguage = propertiesMapIterator.next();
-					if (languageList.contains(propertiesMapLanguage)) {
-						languageList.remove(propertiesMapLanguage);
-					} else {
-						logger.error("The Properties of type {} is NOT supported for language {}",
-								messageEntry.getKey(), propertiesMapLanguage);
-					}
-				}
-				logger.error("No properties of languages {} found for the type {}", languageList,
-						messageEntry.getKey());
-			}*/
+			//Entry<String, MessageResourceLocale> messageEntry = messageEntrySetIterator.next();
+			messageEntrySetIterator.next();
 		}
 	}
 
@@ -207,7 +174,7 @@ public abstract class AbstractMessageResourceASImpl implements MessageResourceAS
 		}
 	}
 
-	private List<String> getLocaleList() {
+	public List<String> getLocaleList() {
 
 		List<String> localeList = new ArrayList<>();
 		ListIterator<LanguageBean> iterator = supportedLanguages.listIterator();

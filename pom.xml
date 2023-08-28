@@ -6,7 +6,7 @@
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<!-- <version>2.3.5.RELEASE</version> -->
-		<version>2.7.14</version>
+		<version>2.7.15</version>
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 
@@ -22,7 +22,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.plugin.version>3.3</maven.compiler.plugin.version>
 		<java.version>17</java.version>
-		<revision>23.2.0.0</revision>
+		<revision>23.3.0.0</revision>
 		<javax.servlet-api>4.0.1</javax.servlet-api>
 		<javax.jsp-api>2.3.3</javax.jsp-api>
 		<javax.jstl>1.2</javax.jstl>
@@ -31,7 +31,7 @@
 		<javax.el.version>3.0.0</javax.el.version>
 		<javax.validation-api>2.0.1.Final</javax.validation-api>
 		<version.spring>5.3.25</version.spring>
-		<version.spring.boot>2.7.14</version.spring.boot>
+		<version.spring.boot>2.7.15</version.spring.boot>
 		<version.spring-data-jpa>2.6.7</version.spring-data-jpa>
 		<flyway-version>8.5.13</flyway-version>
 		<version.spring-data-jpa-commons-core>1.4.1.RELEASE</version.spring-data-jpa-commons-core>

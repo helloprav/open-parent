@@ -23,16 +23,16 @@ public abstract class AbstractTransactionManagementConfig {
 	@Autowired
 	private Environment env;
 
-	@Bean
-	public PlatformTransactionManager transactionManager() {
+    @Bean
+    PlatformTransactionManager transactionManager() {
 		System.out.println("AbstractTransactionManagementConfig.transactionManager");
 		JpaTransactionManager transactionManager = new JpaTransactionManager();
 		transactionManager.setEntityManagerFactory(entityManagerFactory().getObject());
 		return transactionManager;
 	}
 
-	@Bean
-	public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
+    @Bean
+    LocalContainerEntityManagerFactoryBean entityManagerFactory() {
 
 		System.out.println("AbstractTransactionManagementConfig.entityManagerFactory");
 		LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
@@ -69,12 +69,12 @@ public abstract class AbstractTransactionManagementConfig {
 
 	public abstract String getHbm2ddlAuto();
 
-	/**
-	 * 
-	 * @return
-	 */
-	@Bean
-	public HibernateJpaVendorAdapter getJpaVendorAdapter() {
+    /**
+     * 
+     * @return
+     */
+    @Bean
+    HibernateJpaVendorAdapter getJpaVendorAdapter() {
 
 		System.out.println("AbstractTransactionManagementConfig.getJpaVendorAdapter");
 		HibernateJpaVendorAdapter vendor = new HibernateJpaVendorAdapter();
@@ -84,8 +84,8 @@ public abstract class AbstractTransactionManagementConfig {
 		return vendor;
 	}
 
-	@Bean
-	public DataSource dataSource() {
+    @Bean
+    DataSource dataSource() {
 
 		System.out.println("AbstractTransactionManagementConfig.dataSource");
 		ComboPooledDataSource ds = new ComboPooledDataSource();

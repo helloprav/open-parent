@@ -1,4 +1,4 @@
-Remove deprecated code
+Remove deprecated code (@Deprecated, JSP)
 Automation to quickly test all changes
 	-ScreenShot if any error occurs
 Upgrade to Spring Boot 3
@@ -18,6 +18,12 @@ Result to display:
 	-Correct Answers (Percentage)
 	-Wrong Answers (Percentage)
 	-Row with false result to have light red background
+Standard Features of Online Exam: (https://www.epravesh.com/blog/how-to-design-online-exam/)
+	-Total Time for Exam/30 seconds per question
+	-Question Navigation
+	-Negative Marking
+	-Difficulty Level of Questions
+	-Instant Result View for each question
 Support questions to display to be less than total questions in eval
 Move code from controller to service
 PDF Certificates for download

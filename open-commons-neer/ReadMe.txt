@@ -169,6 +169,15 @@ Caching and versioning of static resources
 	- Execute db script similar to mysql.sql in [zipkin-server-2.12.9-exec.jar/BOOT-INF.lib.zipkin-storage-mysql-v1-2.23.9.jar/zipkin2.storage.mysql.v1]
 	- Actuator health check
 =====================================================================
+2023-08-28
+------------------------------------------------------------
+-Revision: 23.3.0.0
+-Spring Boot 2.7.15
+-Removed Security Servlet for config
+-Removed Deprecated code
+-Removed JSP
+-Removed unused imports
+=====================================================================
 2023-07-31
 ------------------------------------------------------------
 -Revision: 23.2.0.0
