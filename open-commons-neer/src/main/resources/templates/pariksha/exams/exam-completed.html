@@ -27,7 +27,7 @@
 				<i class="fa fa-times-circle" aria-hidden="true"></i>Wrong/Missed Answers: [[${userEvaluation.attemptedQuestions - userEvaluation.correctAttempts}]]<br/>
             </div><br/><br/>
         </div>
-        <div><input type="button" onclick="closePopup();" value="Close"></div>
+        <div><input type="button" id="closeExamPopup" onclick="closePopup();" value="Close"></div>
         <div id="report" th:if="${report}">
 			Report
 			<table border="1">

@@ -1,50 +1,50 @@
-Remove deprecated code (@Deprecated, JSP)
-Automation to quickly test all changes
-	-ScreenShot if any error occurs
-Upgrade to Spring Boot 3
-Remove console logs(SOP). Use proper debug/info/error logs
-Convert the structure into proper web jar for web modules (ofds,gconfig,pariksha)
-	-Move artifacts from Neer app to respective modules:
-		-/open-commons-neer/src/main/resources/db/migration/V2023_1_0__pariksha_create-main-tables.sql
-		-/open-commons-neer/src/main/resources/templates/shiksha
-		-/open-commons-neer/src/main/resources/templates/gconfig
-Create an app called Gurukul (instead of re-using Neer app). Gurukul to be another spring boot project out of open-parent.
-
-Exams: Show last EvalStats for respective exams.
-Create entity: Grade and Subject. Evaluations to be mapped to above Grade and Subject during creation.
-Result to display:
-	-Total Question
-	-Passing Marks (Percentage)
-	-Correct Answers (Percentage)
-	-Wrong Answers (Percentage)
-	-Row with false result to have light red background
-Standard Features of Online Exam: (https://www.epravesh.com/blog/how-to-design-online-exam/)
-	-Total Time for Exam/30 seconds per question
-	-Question Navigation
-	-Negative Marking
-	-Difficulty Level of Questions
-	-Instant Result View for each question
-Support questions to display to be less than total questions in eval
-Move code from controller to service
-PDF Certificates for download
-
-Module wise list all supported features:
--OFDS
-	-login,logout, user create,edit/view/delete
-	-rest api,ui,swagger,postman, unit test, automation test... etc
--GConfig
-	-Manage dashboard/errors properties
-	-Manage config properties
--Pariksha
-	-Manage Evaluations
-	-Conduct Exams
--Gurukul Administration
-	-Manage Grades
-	-Manage Subjects
-Export eval
-Update eval/question/answers
+Module Evaluation:
+	-Move code from controller to service
+	-Grade, Subject, Topic, Sub-Topic masters. Evaluations to be mapped to above Grade and Subject during creation.
+	-questionsToAttempt: remove the property from db, entity class, pojo & html
+	-Print all questions of an evaluation in single pdf
+	-Export eval
+	-Update eval/question/answers
+	-Standard Features of evaluation/exam: (https://www.epravesh.com/blog/how-to-design-online-exam/)
+		-Instant answer view for each question
+		-Show instant result
+		-Exam life span (exam is available between the date-time)
+		-Marking & Negative Marking
+			-Negative Marking (boolean)
+			-Negative Marks (eg 0.25/wrong answer)
+		-Difficulty Level of Questions
+		-Duration of exam in minutes
+		-Timer for each question (boolean)
+		-Duration of question in seconds
+		-Allow question navigation
+		-Enable remote proctoring (future)
+----------------------------------------------------------------------------------------------------------------------------------
+Module Exam:
+	-Pariksha_*.png images for reference
+	-Show last EvalStats for respective exams.
+	-Result to display:
+		-Total Question
+		-Passing Marks (Percentage)
+		-Correct Answers (Percentage)
+		-Wrong Answers (Percentage)
+		-Row with false result to have light red background
+	-Standard Features of Online Exam: (https://www.epravesh.com/blog/how-to-design-online-exam/)
+		-Allow candidates to review exam
+----------------------------------------------------------------------------------------------------------------------------------
+Module Certificates:
+	-PDF Certificates for download
+----------------------------------------------------------------------------------------------------------------------------------
+Module Question Bank:
+	-Create Question Bank using two db tables ...
+	-https://www.youtube.com/watch?v=9uXjPnTSnQ4 for reference
+	-Send Exam mobile app for reference.
 -----------------------DONE-------------------------------------------------
 Rename Shiksha -> Pariksha (All files, db, tables etc)
 Logout Button on UI
 Pass marks on the result page
 Check Q&A for: Grade 3 | Grammar_4_Genders.xls
+Remove deprecated code (@Deprecated, JSP)
+Automation to quickly test all changes
+	-Create Evaluation and Manage it.
+	-Perform Admin's eval test
+	-Delete Eval

@@ -169,6 +169,34 @@ Caching and versioning of static resources
 	- Execute db script similar to mysql.sql in [zipkin-server-2.12.9-exec.jar/BOOT-INF.lib.zipkin-storage-mysql-v1-2.23.9.jar/zipkin2.storage.mysql.v1]
 	- Actuator health check
 =====================================================================
+2023-09-xx
+------------------------------------------------------------
+Gurukul Framework
+-Upgrade to Spring Boot 3
+-Create an app called Gurukul (instead of re-using Neer app). Gurukul to be another spring boot project out of open-parent.
+-Remove console logs(SOP). Use proper debug/info/error logs
+-Authorization (student can't see Manage Evauation)
+-Common thymeleaf template across modules
+-Convert the structure into proper web jar for web modules (ofds,gconfig,pariksha)
+	-Move artifacts from Neer app to respective modules:
+		-/open-commons-neer/src/main/resources/db/migration/V2023_1_0__pariksha_create-main-tables.sql
+		-/open-commons-neer/src/main/resources/templates/shiksha
+		-/open-commons-neer/src/main/resources/templates/gconfig
+-Module wise list all supported features:
+	-OFDS
+		-login,logout, user create,edit/view/delete
+		-rest api,ui,swagger,postman, unit test, automation test... etc
+	-GConfig
+		-Manage dashboard/errors properties
+		-Manage config properties
+	-Pariksha
+		-Manage Evaluations
+		-Conduct Exams
+	-Gurukul Administration
+		-Manage Grades
+		-Manage Subjects
+----------------------------------------------------------------------------------------------------------------------------------
+=====================================================================
 2023-08-28
 ------------------------------------------------------------
 -Revision: 23.3.0.0

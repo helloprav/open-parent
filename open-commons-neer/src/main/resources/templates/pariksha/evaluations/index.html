@@ -37,7 +37,7 @@
     <section>
         <div th:switch="${items}" class="container my-5">
             <p class="my-5">
-                <a th:href="@{/pariksha/evaluations/add}" class="btn btn-primary"><i class="fas fa-user-plus ml-2"> Add Evaluation</i></a>
+                <a th:href="@{/pariksha/evaluations/add}" class="btn btn-primary" id="addEval"><i class="fas fa-user-plus ml-2"> Add Evaluation</i></a>
             </p>
             <div class="col-md-10">
                 <h2 th:case="null">No exams yet!</h2>
@@ -57,13 +57,13 @@
 						</thead>
                         <tbody>
                             <tr th:each="item : ${items}">
-                                <td th:text="${item.name}"></td>
-                                <td th:text="${item.evalGroup}"></td>
-                                <td th:text="${item.evalEnv}"></td>
-                                <td><a th:onclick="startEvaluation([[${item.id}]])" class="btn btn-primary"><i class="fa fa-fighter-jet ml-2"></i></a></td>
-                                <td><a th:href="@{/pariksha/evaluations/edit/{id}(id=${item.id})}" class="btn btn-primary"><i class="fas fa-user-edit ml-2"></i></a></td>
-                                <td><a th:href="@{/pariksha/evaluations/disable?id={id}(id=${item.id})}" class="btn btn-primary"><i class="fas fa-user-times ml-2"></i></a></td>
-                                <td><a th:href="@{/pariksha/evaluations/delete/{id}(id=${item.id})}" class="btn btn-primary"><i class="fas fa-user-times ml-2"></i></a></td>
+                                <td th:id="${item.id}" th:text="${item.name}"></td>
+                                <td th:id="'evalGroup_' + ${item.id}" th:text="${item.evalGroup}"></td>
+                                <td th:id="'evalEnv_' + ${item.id}" th:text="${item.evalEnv}"></td>
+                                <td th:id="'startEval_' + ${item.id}" ><a th:onclick="startEvaluation([[${item.id}]])" class="btn btn-primary"><i class="fa fa-fighter-jet ml-2"></i></a></td>
+                                <td th:id="'editEvalTd_' + ${item.id}" ><a th:id="'editAction_' + ${item.id}" th:href="@{/pariksha/evaluations/edit/{id}(id=${item.id})}" class="btn btn-primary"><i class="fas fa-user-edit ml-2"></i></a></td>
+                                <td><a th:id="'hideAction_' + ${item.id}" th:href="@{/pariksha/evaluations/disable?id={id}(id=${item.id})}" class="btn btn-primary"><i class="fas fa-user-times ml-2"></i></a></td>
+                                <td><a th:id="'deleteAction_' + ${item.id}" th:href="@{/pariksha/evaluations/delete/{id}(id=${item.id})}" class="btn btn-primary"><i class="fas fa-user-times ml-2"></i></a></td>
                             </tr>
                         </tbody>
                     </table>

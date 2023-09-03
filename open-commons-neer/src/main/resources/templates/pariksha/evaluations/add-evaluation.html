@@ -24,14 +24,14 @@
 							<span th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span></td></tr>
 						<tr><td>
 							<label for="evalGroup">Evaluation Group</label></td><td>
-							<select th:field="*{evalGroup}" class="form-control" id="dropDownList">
+							<select th:field="*{evalGroup}" class="form-control" id="evalGroup">
 								<option value="">select option</option>
 								<option th:each="option : ${evalGroups}" th:value="${option}" th:text="${option}"></option>
 							</select>
 							<span th:if="${#fields.hasErrors('evalGroup')}" th:errors="*{evalGroup}"></span></td></tr>
 						<tr><td>
 							<label for="evalGroup">Evaluation Environment</label></td><td>
-							<select th:field="*{evalEnv}" class="form-control">
+							<select th:field="*{evalEnv}" class="form-control" id="evalEnv">
 								<option th:value="'Test'" th:text="Test"></option>
 								<option th:value="'Prod'" th:text="Prod"></option>
 							</select>
@@ -51,8 +51,8 @@
 							<label for="mediaFile">Upload Media File</label></td><td>
 							<input id="mediaFile" type="file" name="mediaFile" /></td></tr>
 						<tr><td colspan="2"><div th:switch="${evalId}">
-							<input type="submit" value="Create" th:case="null">
-							<input type="submit" value="Update" th:case="*">
+							<input type="submit" id="saveEval" value="Create" th:case="null">
+							<input type="submit" id="saveEval" value="Update" th:case="*">
 							</div><br>
 							<div th:if="${#fields.hasErrors('global')}">
 								<h3>Global errors:</h3>

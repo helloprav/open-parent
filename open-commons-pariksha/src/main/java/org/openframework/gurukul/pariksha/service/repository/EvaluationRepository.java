@@ -11,7 +11,7 @@ import org.springframework.data.repository.query.Param;
 
 public interface EvaluationRepository extends JpaRepository<Evaluation, Long> {
 
-	@Query("SELECT e FROM Evaluation e WHERE e.isValid=true")
+	@Query("SELECT e FROM Evaluation e WHERE e.isValid=true order by e.id desc")
 	public List<Evaluation> findAllActive();
 
 	@Query("SELECT e FROM Evaluation e JOIN FETCH e.questions WHERE e.id = (:id)")
@@ -22,7 +22,7 @@ public interface EvaluationRepository extends JpaRepository<Evaluation, Long> {
 	Integer updateStatusById(@Param("id") Long id, @Param("isValid") Boolean isValid, @Param("userId") Long userId,
 			@Param("modifiedDate") Date modifiedDate);
 
-	@Query("SELECT e FROM Evaluation e WHERE e.isValid=true and e.evalGroup IN (:evalGroups)")
+	@Query("SELECT e FROM Evaluation e WHERE e.isValid=true and e.evalGroup IN (:evalGroups) order by e.id desc")
 	public List<Evaluation> findEvaluationsByGroups(@Param("evalGroups") List<String> evalGroups);
 
 }

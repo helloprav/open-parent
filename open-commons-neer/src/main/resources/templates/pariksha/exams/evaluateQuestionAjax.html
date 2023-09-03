@@ -100,9 +100,8 @@
 				</thead>
 				<tbody>
 					<tr height="80%">
-						<td>
-							Q <span th:text="${nextQuestionSeq}"></span>. <span th:text="${question.questionText}"></span><span
-								id="okPlace"></span><br><br>
+						<td><span th:id="qText">
+							Q [[${nextQuestionSeq}]]. [[${question.questionText}]]</span>
 							<div th:switch="${question.imageName}">
 								<span th:case="null"></span>
 								<span th:case="*">
@@ -114,19 +113,18 @@
 							<div th:switch="${question.questionType}">
 								<div th:case="MULTI_CORRECT">
 									<div th:each="answer,iterStat : ${question.answers}">
-										<input type="checkbox" th:value="${answer.id}" th:field="*{userAnswerList}"
+										<input type="checkbox" th:itemtype="checkbox" th:value="${answer.id}" th:field="*{userAnswerList}"
 											name="answers" />&nbsp;&nbsp;<span
 											th:text="${answer.answerText}"></span>&nbsp;<br /><br />
 									</div>
 								</div>
 								<div th:case="SINGLE_CORRECT">
 									<div th:each="answer : ${answers}">
-										<input type="radio" th:value="${answer.id}" th:field="*{userAnswerList}" />&nbsp;&nbsp;<span
-											th:text="${answer.answerText}"></span>&nbsp; <br><br>
+										<input type="radio" th:itemtype="radio" th:value="${answer.id}" th:field="*{userAnswerList}" /> [[${answer.answerText}]] <br><br>
 									</div>
 								</div>
 								<div th:case="FILL_WORD">
-									<input type="text" th:field="*{userAnswerList}" id="userAnswerList" size="60">&nbsp; <br><br>
+									<input type="text" th:itemtype="text" th:field="*{userAnswerList}" id="userAnswerList" size="60">&nbsp; <br><br>
 									<script>
 										$(function () {
 											$("#userAnswerList").focus();
@@ -141,10 +139,10 @@
 								<input type="hidden" name="testRun" th:value="${testRun}">
 								<input type="hidden" name="id" th:value="${question.id}">
 								<input type="hidden" name="questionSize" th:value="${questionSize}">
-								<input type="button" value="Previous" th:if="${nextQuestionSeq > 1 }"
+								<input type="button" value="Previous" th:id="previous" th:if="${nextQuestionSeq > 1 }"
 									th:attr="onclick=|submitQuestion('${nextQuestionSeq-1}')|">
 								<span th:if="true == ${testRun}">
-									<input type="button" value="Check" th:attr="onclick=|checkAnswer('${nextQuestionSeq}')|">
+									<input type="button" th:id="check" value="Check" th:attr="onclick=|checkAnswer('${nextQuestionSeq}')|">
 								</span>
 								<input type="button" id="Next" value="Next"
 									th:attr="onclick=|submitQuestion('${nextQuestionSeq+1}')|">
@@ -156,8 +154,8 @@
 		</div>
 		<div th:case="*">
 			Evaluation Completed. Click the <b>Finish</b> button to save the evaluation or click the <b>Previous</b> button to re-visit questions.<br><br>
-			<input type="button" value="Previous" th:attr="onclick=|submitQuestion('${nextQuestionSeq-1}')|">
-			<input type="button" value="Finish" th:attr="onclick=|submitEvaluation('${evalId}')|">
+			<input type="button" value="Previous" th:id="previous" th:attr="onclick=|submitQuestion('${nextQuestionSeq-1}')|">
+			<input type="button" value="Finish" th:id="finish" th:attr="onclick=|submitEvaluation('${evalId}')|">
 			<input type="hidden" name="evalId" th:value="${evalId}">
 			<input type="hidden" name="testRun" th:value="${testRun}">
 			<input type="hidden" name="id" th:value="${question.id}">
