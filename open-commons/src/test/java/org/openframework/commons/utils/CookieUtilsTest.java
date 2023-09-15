@@ -2,8 +2,8 @@ package org.openframework.commons.utils;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
 
 import org.junit.jupiter.api.Test;
 import org.openframework.commons.constants.CookieConstants;

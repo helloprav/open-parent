@@ -173,6 +173,10 @@ Caching and versioning of static resources
 ------------------------------------------------------------
 Gurukul Framework
 -Upgrade to Spring Boot 3
+-Correct support for swagger/open-api (https://springdoc.org/#migrating-from-springdoc-v1)
+-Add actuator Url (sub-menu) in actuator main menu: http://localhost/neer/actuator/env
+-Check & Enable email feature
+-Remove AbstractTransactionManagementConfig.java
 -Create an app called Gurukul (instead of re-using Neer app). Gurukul to be another spring boot project out of open-parent.
 -Remove console logs(SOP). Use proper debug/info/error logs
 -Authorization (student can't see Manage Evauation)

@@ -3,8 +3,8 @@ package org.openframework.commons.config.controller;
 import java.io.File;
 import java.util.List;
 
-import javax.inject.Inject;
-import javax.servlet.http.HttpServletRequest;
+import jakarta.inject.Inject;
+import jakarta.servlet.http.HttpServletRequest;
 
 import org.openframework.commons.config.constants.ConfigAppConstants;
 import org.openframework.commons.config.service.as.MessageResourceAS;

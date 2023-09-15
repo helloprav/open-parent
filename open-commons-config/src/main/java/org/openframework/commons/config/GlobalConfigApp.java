@@ -1,5 +1,6 @@
 package org.openframework.commons.config;
 
+import java.time.Duration;
 import java.util.Locale;
 
 import org.openframework.commons.config.interceptor.AppConfigSecurityInterceptor;
@@ -15,7 +16,6 @@ import org.springframework.web.servlet.i18n.CookieLocaleResolver;
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 import org.thymeleaf.templatemode.TemplateMode;
 import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
-
 
 @Configuration
 @ServletComponentScan(basePackageClasses = { GlobalConfigApp.class })
@@ -38,10 +38,9 @@ public class GlobalConfigApp implements WebMvcConfigurer {
     @Bean(name = "localeResolver")
     LocaleResolver localeResolver() {
 
-		CookieLocaleResolver localeResolver = new CookieLocaleResolver();
+		CookieLocaleResolver localeResolver = new CookieLocaleResolver("localeInfo");
 		localeResolver.setDefaultLocale(new Locale("en"));
-		localeResolver.setCookieName("localeInfo");
-		localeResolver.setCookieMaxAge(24*60*60);
+		localeResolver.setCookieMaxAge(Duration.ofHours(24));
 		return localeResolver;
 	}
 

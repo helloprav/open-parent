@@ -3,7 +3,7 @@ package org.openframework.commons.encrypt;
 import java.util.Properties;
 
 import javax.annotation.PostConstruct;
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 
 import org.springframework.beans.factory.annotation.Value;
 

@@ -1,6 +1,6 @@
 package org.openframework.commons.jpa.entity;
 
-import javax.persistence.MappedSuperclass;
+import jakarta.persistence.MappedSuperclass;
 
 import org.apache.commons.lang3.StringUtils;
 

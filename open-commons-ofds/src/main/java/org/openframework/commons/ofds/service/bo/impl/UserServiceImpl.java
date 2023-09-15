@@ -3,7 +3,7 @@
  */
 package org.openframework.commons.ofds.service.bo.impl;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 
 import org.openframework.commons.rest.vo.UserHistoryVO;
 import org.openframework.commons.rest.vo.UserVO;

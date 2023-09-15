@@ -3,7 +3,7 @@ package org.openframework.commons.cache.controller;
 import java.util.Collection;
 import java.util.Map;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 
 import org.openframework.commons.cache.props.CommonsCacheProperties;
 import org.openframework.commons.cache.service.bo.CacheService;

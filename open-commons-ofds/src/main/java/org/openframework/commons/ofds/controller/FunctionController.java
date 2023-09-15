@@ -5,7 +5,7 @@ package org.openframework.commons.ofds.controller;
 
 import java.util.List;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 
 import org.openframework.commons.domain.exceptions.ApplicationRuntimeException;
 import org.openframework.commons.rest.controller.BaseController;

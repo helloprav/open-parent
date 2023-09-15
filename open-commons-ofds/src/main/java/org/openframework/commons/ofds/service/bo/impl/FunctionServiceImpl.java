@@ -5,7 +5,7 @@ package org.openframework.commons.ofds.service.bo.impl;
 
 import java.util.List;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 
 import org.openframework.commons.ofds.service.adaptor.FunctionAdaptor;
 import org.openframework.commons.ofds.service.as.FunctionAS;

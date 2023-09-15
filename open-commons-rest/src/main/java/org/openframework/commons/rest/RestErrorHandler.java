@@ -68,7 +68,7 @@ public class RestErrorHandler extends ResponseEntityExceptionHandler {
 		return handleExceptionInternal(ex, NOT_IMPLEMENTED);
 	}
 
-	@Override
+//	@Override
 	protected ResponseEntity<Object> handleExceptionInternal(Exception ex, Object body, HttpHeaders headers,
 			HttpStatus status, WebRequest request) {
 

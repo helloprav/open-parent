@@ -9,9 +9,9 @@ import java.util.Locale;
 import java.util.Optional;
 import java.util.Properties;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 import javax.management.ServiceNotFoundException;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletResponse;
 
 import org.openframework.commons.config.service.as.MessageResourceAS;
 import org.openframework.commons.domain.exceptions.ApplicationRuntimeException;
@@ -206,7 +206,6 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
 	 * {@inheritDoc}
 	 * 
 	 */
-	@Override
 	protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
 			HttpHeaders headers, HttpStatus status, WebRequest request) {
 		List<String> errors = new ArrayList<>();
@@ -307,7 +306,7 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
 	 * <p>
 	 * {@inheritDoc}
 	 */
-	@Override
+//	@Override
 	protected ResponseEntity<Object> handleExceptionInternal(Exception ex, Object body, HttpHeaders headers,
 			HttpStatus status, WebRequest request) {
 		log.warn(ex.getMessage(), ex);

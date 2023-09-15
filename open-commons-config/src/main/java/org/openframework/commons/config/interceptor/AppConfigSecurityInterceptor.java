@@ -1,7 +1,7 @@
 package org.openframework.commons.config.interceptor;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 import org.openframework.commons.config.constants.ConfigAppConstants;
 import org.slf4j.Logger;

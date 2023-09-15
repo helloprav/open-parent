@@ -6,7 +6,7 @@ package org.openframework.commons.ofds.controller;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 import javax.management.ServiceNotFoundException;
 import javax.validation.Valid;
 

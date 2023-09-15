@@ -2,7 +2,7 @@ package org.openframework.commons.rest;
 
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;

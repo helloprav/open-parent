@@ -2,7 +2,7 @@ package org.openframework.commons.config.controller;
 
 import java.util.TreeMap;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 
 import org.openframework.commons.spring.utils.SpringUtils;
 import org.springframework.stereotype.Controller;

@@ -38,8 +38,8 @@
 		<!-- Persistence API -->
 		<!-- this maven dependency is used for jpa 2.2 -->
 		<dependency>
-			<groupId>javax.persistence</groupId>
-			<artifactId>javax.persistence-api</artifactId>
+			<groupId>jakarta.persistence</groupId>
+			<artifactId>jakarta.persistence-api</artifactId>
 		</dependency>
 		<!-- Spring Transactions -->
 		<dependency>
@@ -60,7 +60,7 @@
 
 		<!-- hibernate -->
 		<dependency>
-			<groupId>org.hibernate</groupId>
+			<groupId>org.hibernate.orm</groupId>
 			<artifactId>hibernate-core</artifactId>
 		</dependency>
 	</dependencies>

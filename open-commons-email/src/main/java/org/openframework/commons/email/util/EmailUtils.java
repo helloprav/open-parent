@@ -2,7 +2,7 @@ package org.openframework.commons.email.util;
 
 import java.util.UUID;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 
 import org.openframework.commons.email.vo.EmailVO;
 import org.slf4j.Logger;

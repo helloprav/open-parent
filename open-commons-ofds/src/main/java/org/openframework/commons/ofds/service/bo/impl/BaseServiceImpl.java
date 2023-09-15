@@ -5,7 +5,7 @@ package org.openframework.commons.ofds.service.bo.impl;
 
 import java.util.Date;
 
-import javax.inject.Inject;
+import jakarta.inject.Inject;
 
 import org.openframework.commons.jpa.entity.BaseEntity;
 import org.openframework.commons.ofds.service.as.UserAS;
