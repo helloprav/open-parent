@@ -130,7 +130,7 @@ public class GroupController extends BaseController {
 	}
 
 	@PutMapping(path = "/{id}")
-	public GroupVO updateGroup(@PathVariable Long id, @Valid @RequestBody GroupVO groupVO, UserVO loggedInUser) {
+	public GroupVO updateGroup(@PathVariable Long id, @Valid @RequestBody GroupVO groupVO, @Parameter(hidden = true) UserVO loggedInUser) {
 
 		groupVO.setId(id);
 		groupVO.setLoggedInUserId(loggedInUser.getId());
@@ -138,7 +138,7 @@ public class GroupController extends BaseController {
 	}
 
 	@PatchMapping(path = "/{id}/status/{status}")
-	public GroupVO updateStatus(@PathVariable Long id, @PathVariable Boolean status, UserVO loggedInUser) {
+	public GroupVO updateStatus(@PathVariable Long id, @PathVariable Boolean status, @Parameter(hidden = true) UserVO loggedInUser) {
 
 		GroupVO groupVO = new GroupVO();
 		groupVO.setId(id);
@@ -148,7 +148,7 @@ public class GroupController extends BaseController {
 	}
 
 	@DeleteMapping(path = "/{id}")
-	public ResponseBean<Object> deleteGroup(@PathVariable Long id, UserVO loggedInUser) {
+	public ResponseBean<Object> deleteGroup(@PathVariable Long id, @Parameter(hidden = true) UserVO loggedInUser) {
 
 		GroupVO groupVO = new GroupVO();
 		groupVO.setId(id);

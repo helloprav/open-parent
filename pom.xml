@@ -21,7 +21,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.plugin.version>3.3</maven.compiler.plugin.version>
 		<java.version>17</java.version>
-		<revision>23.4.0</revision>
+		<revision>23.4.1</revision>
 		<javax.servlet-api>6.0.0</javax.servlet-api>
 		<javax.jsp-api>2.3.3</javax.jsp-api>
 		<javax.jstl>1.2</javax.jstl>
@@ -45,7 +45,7 @@
 		<version.fasterxml.jackson>2.13.4</version.fasterxml.jackson>
 		<version.modelmapper>0.7.5</version.modelmapper>
 		<version.json-path>2.2.0</version.json-path>
-		<springdoc-openapi.version>1.6.12</springdoc-openapi.version>
+		<springdoc-openapi.version>2.2.0</springdoc-openapi.version>
 		<spring-plugin-core.verion>1.2.0.RELEASE</spring-plugin-core.verion>
 		<version.json-path>2.2.0</version.json-path>
 		<version.java-mail>2.1.2</version.java-mail>
@@ -393,7 +393,7 @@
 			<!-- Swagger API -->
 			<dependency>
 				<groupId>org.springdoc</groupId>
-				<artifactId>springdoc-openapi-ui</artifactId>
+				<artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
 				<version>${springdoc-openapi.version}</version>
 			</dependency>
 			<!-- <dependency>

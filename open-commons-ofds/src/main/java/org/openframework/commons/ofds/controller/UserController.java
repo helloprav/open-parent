@@ -27,6 +27,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.Parameter;
 //import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -63,7 +64,7 @@ public class UserController extends BaseController {
 	 */
 	//@SecuredPermissions("student")
 	@GetMappingProduces("")
-	public PageList<UserVO> findUsers(UserVO userProfile, Pagination pagingDetails) {
+	public PageList<UserVO> findUsers(@Parameter(hidden = true) UserVO userProfile, @Parameter(hidden = true) Pagination pagingDetails) {
 		return userService.findUsers(pagingDetails);
 	}
 
@@ -100,14 +101,14 @@ public class UserController extends BaseController {
 	}
 
 	@PutMapping(path = "/{id}")
-	public UserVO updateUser(@PathVariable Long id, @Valid @RequestBody UserVO userVO, UserVO loggedInUser) {
+	public UserVO updateUser(@PathVariable Long id, @Valid @RequestBody UserVO userVO, @Parameter(hidden = true) UserVO loggedInUser) {
 		userVO.setId(id);
 		userVO.setLoggedInUserId(loggedInUser.getId());
 		return userService.updateUser(userVO);
 	}
 
 	@PatchMapping(path = "/{id}/status/{status}")
-	public UserVO updateStatus(@PathVariable Long id, @PathVariable boolean status, UserVO loggedInUser) {
+	public UserVO updateStatus(@PathVariable Long id, @PathVariable boolean status, @Parameter(hidden = true) UserVO loggedInUser) {
 		UserVO userVO = new UserVO();
 		userVO.setId(id);
 		userVO.setIsValid(status);
@@ -116,7 +117,7 @@ public class UserController extends BaseController {
 	}
 
 	@DeleteMapping(path = "/{id}")
-	public ResponseBean<Object> deleteUser(@PathVariable Long id, UserVO loggedInUser) {
+	public ResponseBean<Object> deleteUser(@PathVariable Long id, @Parameter(hidden = true) UserVO loggedInUser) {
 
 		UserVO userVO = new UserVO();
 		userVO.setId(id);
