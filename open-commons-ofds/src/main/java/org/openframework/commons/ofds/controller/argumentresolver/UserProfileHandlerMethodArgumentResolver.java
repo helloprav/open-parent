@@ -1,7 +1,7 @@
 package org.openframework.commons.ofds.controller.argumentresolver;
 
 import org.openframework.commons.rest.vo.UserVO;
-import org.openframework.commons.ofds.controller.interceptor.OfdsSecurityInterceptor;
+import org.openframework.commons.ofds.controller.interceptor.OfdsApiSecurityInterceptor;
 import org.springframework.core.MethodParameter;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.support.WebDataBinderFactory;
@@ -25,7 +25,7 @@ public class UserProfileHandlerMethodArgumentResolver implements HandlerMethodAr
 	public Object resolveArgument(MethodParameter arg0, ModelAndViewContainer arg1, NativeWebRequest nativeWebRequest,
 			WebDataBinderFactory webDataBinderFactory) throws Exception {
 
-		return OfdsSecurityInterceptor.getUserProfile();
+		return OfdsApiSecurityInterceptor.getUserProfile();
 	}
 
 }

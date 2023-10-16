@@ -123,11 +123,11 @@ public class AuthenticationServiceImpl extends BaseServiceImpl implements Authen
 			List<String> groupNames = getGroupNames(user);
 			Map<String, Object> otherData = userVO.getOtherData();
 			if(null == otherData ) {
-				otherData = new HashMap<String, Object>();
+				otherData = new HashMap<>();
 			}
-			otherData.put("groupNames", (Object)groupNames);
+			otherData.put("groupNames", groupNames);
 			userVO.setOtherData(otherData);
-			if(userVO.getIsSuperAdmin()) {
+			if(Boolean.TRUE.equals(userVO.getIsSuperAdmin())) {
 				// get all functions for super admin
 				List<Function> functionList = functionAS.findFunctions(true);
 				userAdaptor.populateUserAccess(functionList, userVO);

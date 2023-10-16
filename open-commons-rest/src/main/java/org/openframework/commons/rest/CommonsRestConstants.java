@@ -1,6 +1,8 @@
 package org.openframework.commons.rest;
 
-public class Constants {
+public class CommonsRestConstants {
+
+	private CommonsRestConstants() {}
 
 	public static final String CONFIG_PATH_PROPERTY_NAME = "config";
 	public static final String APPLICATION_CONFIG_DIR = CONFIG_PATH_PROPERTY_NAME;
@@ -16,4 +18,10 @@ public class Constants {
 	public static final String FORWARD_SLASH = "/";
 	public static final String URL_CONTEXT_ROOT = FORWARD_SLASH;
 	public static final String URL_REST_API = "/api/*";
+
+	public static final String URL = "url";
+	public static final String CLIENT_IP = "cip";
+
+	public static final String STR_UID = "uid";
+	public static final String STR_LIU = "liu";
 }

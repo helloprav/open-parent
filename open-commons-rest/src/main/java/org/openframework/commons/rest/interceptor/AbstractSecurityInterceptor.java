@@ -1,19 +1,13 @@
-package org.openframework.commons.ofds.controller.interceptor;
+package org.openframework.commons.rest.interceptor;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
-import jakarta.servlet.http.Cookie;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-
-import org.apache.commons.lang3.StringUtils;
 import org.openframework.commons.constants.EnvironmentEnum;
 import org.openframework.commons.encrypt.EncryptionUtil;
-import org.openframework.commons.ofds.constant.LoggingConstants;
-import org.openframework.commons.ofds.constant.OfdsConstants;
-import org.openframework.commons.ofds.constant.OfdsCookieConstants;
-import org.openframework.commons.ofds.props.MasterDataProps;
-import org.openframework.commons.ofds.props.OfdsSecurityProps;
+import org.openframework.commons.rest.CommonsRestConstants;
 import org.openframework.commons.rest.vo.UserVO;
 import org.openframework.commons.spring.utils.SpringUtils;
 import org.openframework.commons.utils.CookieUtils;
@@ -27,20 +21,21 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+
 public abstract class AbstractSecurityInterceptor implements HandlerInterceptor {
 
-	final Logger logger = LoggerFactory.getLogger(OfdsSecurityInterceptor.class);
+	public static final String GROUP_LIST = "groupList";
+	public static final String FUNCTION_LIST = "functionList";
+
+	protected final Logger logger = LoggerFactory.getLogger(getClass());
 
 	private static ThreadLocal<UserVO> userProfileHolder = new ThreadLocal<>();
+	private static ThreadLocal<List<String>> userAccessHolder = new ThreadLocal<>();
 
 	@Autowired
 	private Environment environment;
-
-	@Autowired
-	private OfdsSecurityProps ofdsSecurityProps;
-
-	@Autowired
-	private MasterDataProps masterDataProps;
 
 	@Autowired
 	private EncryptionUtil encryptionUtil;
@@ -57,6 +52,18 @@ public abstract class AbstractSecurityInterceptor implements HandlerInterceptor 
 		userProfileHolder.remove();
 	}
 
+	public static List<String> getUserAccess() {
+		return userAccessHolder.get();
+	}
+
+	protected void setUserAccess(List<String> accessList) {
+		userAccessHolder.set(accessList);
+	}
+
+	protected void removeUserAccess() {
+		userAccessHolder.remove();
+	}
+
 	public static ThreadLocal<UserVO> getUserProfileHolder() {
 		return userProfileHolder;
 	}
@@ -65,34 +72,8 @@ public abstract class AbstractSecurityInterceptor implements HandlerInterceptor 
 		return environment;
 	}
 
-	public OfdsSecurityProps getOfdsSecurityProps() {
-		return ofdsSecurityProps;
-	}
-
-	public MasterDataProps getMasterDataProps() {
-		return masterDataProps;
-	}
-
 	public EncryptionUtil getEncryptionUtil() {
 		return encryptionUtil;
-	}
-
-	protected boolean isUnprotectedRequest(HttpServletRequest request, String path) {
-
-		logger.debug("Request Path: {}", path);
-		CookieUtils.printRequestDetails(request);
-		for(String url: ofdsSecurityProps.getUnprotectedUrls()) {
-			if(path.startsWith(url)) {
-				return true;
-			}
-		}
-		for(String urlPattern: ofdsSecurityProps.getUnprotectedUris()) {
-			String url = StringUtils.removeEnd(urlPattern, OfdsConstants.SLASH_ASTRIX);
-			if(path.startsWith(url)) {
-				return true;
-			}
-		}
-		return false;
 	}
 
 	protected String getRequestUrl(HttpServletRequest request) {
@@ -106,14 +87,15 @@ public abstract class AbstractSecurityInterceptor implements HandlerInterceptor 
 		} else {
 			path = request.getServletPath();
 		}
-		MDC.put(LoggingConstants.URL, path);
+		MDC.put(CommonsRestConstants.URL, path);
 		return path;
 	}
 
-	protected UserVO initUserProfile(HttpServletRequest request) throws IOException {
+	@SuppressWarnings("unchecked")
+	protected UserVO getUserProfileFromCookie(HttpServletRequest request) throws IOException {
 
 		UserVO userProfile = null;
-		String encryptedCookieValue = AbstractSecurityInterceptor.getCookieValue(request);
+		String encryptedCookieValue = CookieUtils.getCookieValue(request, CommonsRestConstants.STR_LIU);
 		if(isValidAuthString(encryptedCookieValue)) {
 
 			String plainText = encryptionUtil.decrypt(encryptedCookieValue);
@@ -122,7 +104,17 @@ public abstract class AbstractSecurityInterceptor implements HandlerInterceptor 
 				ObjectMapper objectMapper = new ObjectMapper();
 				userProfile = objectMapper.readValue(plainText, UserVO.class);
 				setUserProfile(userProfile);
-				MDC.put(LoggingConstants.USER_ID, Long.toString(userProfile.getId()));
+				List<String> accessList = new ArrayList<>();
+				Map<String, Object> otherData = userProfile.getOtherData();
+				if(otherData.containsKey(FUNCTION_LIST)) {
+					accessList = (List<String>) otherData.get(FUNCTION_LIST);
+				}
+				if(null == accessList) {
+					accessList = new ArrayList<>();
+				}
+				//accessList.add(userProfile.getRole());
+				setUserAccess(accessList);
+				MDC.put(CommonsRestConstants.STR_UID, Long.toString(userProfile.getId()));
 			}
 		}
 		return userProfile;
@@ -144,19 +136,5 @@ public abstract class AbstractSecurityInterceptor implements HandlerInterceptor 
 	}
 
 	public abstract boolean isValidAuthString(String authString);
-
-	private static String getCookieValue(HttpServletRequest request) {
-
-		String cookieValue = null;
-		Cookie[] cookies = request.getCookies();
-		if (null != cookies) {
-			for (Cookie cookie : cookies) {
-				if (cookie.getName().equals(OfdsCookieConstants.COOKIE_LIU)) {
-					cookieValue = cookie.getValue();
-				}
-			}
-		}
-		return cookieValue;
-	}
 
 }

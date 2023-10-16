@@ -13,6 +13,7 @@ import org.openframework.commons.encrypt.EncryptionUtil;
 import org.openframework.commons.jpa.JpaConfig;
 import org.openframework.commons.ofds.OfdsApp;
 import org.openframework.commons.rest.advice.RestResponseBodyAdvice;
+import org.openframework.commons.rest.auth.permission.AuthorizationAspect;
 import org.openframework.commons.spring.utils.ApplicationContextProvider;
 import org.openframework.commons.spring.utils.SpringUtils;
 import org.openframework.commons.swagger.OpenApiConfiguration;
@@ -29,7 +30,7 @@ import org.springframework.context.ConfigurableApplicationContext;
  */
 @EnableCommonsCaching
 @SpringBootApplication(scanBasePackageClasses = { NeerApplication.class, CommonsLoggingAspect.class,
-		GlobalConfigApp.class, EncryptionUtil.class, RestResponseBodyAdvice.class,
+		GlobalConfigApp.class, EncryptionUtil.class, RestResponseBodyAdvice.class, AuthorizationAspect.class,
 		ApplicationContextProvider.class, OpenApiConfiguration.class, OfdsApp.class, ParikshaConfiguration.class, JpaConfig.class })
 public class NeerApplication {
 
@@ -40,6 +41,7 @@ public class NeerApplication {
 
 //		System.out.println("Profile: " + System.getProperty(SPRING_PROFILES_ACTIVE));
 //		System.out.println("LOG_LEVEL: " + System.getProperty(LOG_LEVEL));
+//		System.setProperty("spring.devtools.restart.enabled", "false");
 		ConfigurableApplicationContext obj = SpringApplication.run(NeerApplication.class, args);
 //		System.out.println("Profile: " + System.getProperty(SPRING_PROFILES_ACTIVE));
 		String printDetails = System.getProperty("printDetails");

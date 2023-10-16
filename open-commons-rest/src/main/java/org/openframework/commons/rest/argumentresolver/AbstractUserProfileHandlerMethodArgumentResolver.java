@@ -24,6 +24,7 @@ import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.method.support.ModelAndViewContainer;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 public abstract class AbstractUserProfileHandlerMethodArgumentResolver implements HandlerMethodArgumentResolver {
@@ -37,7 +38,7 @@ public abstract class AbstractUserProfileHandlerMethodArgumentResolver implement
 	private static ThreadLocal<UserVO> userProfileHolder = new ThreadLocal<>();
 	private static ThreadLocal<List<String>> userAccessHolder = new ThreadLocal<>();
 
-	public AbstractUserProfileHandlerMethodArgumentResolver() {
+	protected AbstractUserProfileHandlerMethodArgumentResolver() {
 		super();
 		System.out.println("AbstractUserProfileHandlerMethodArgumentResolver.constructor()");
 	}
@@ -52,6 +53,12 @@ public abstract class AbstractUserProfileHandlerMethodArgumentResolver implement
 			userVO.setId(1l);
 			return userVO;
 		}
+		//AbstractUserProfileHandlerMethodArgumentResolver.setUserAccess(userProfile.getOtherData());
+		return getUserProfileFromCookie(request);
+	}
+
+	private Object getUserProfileFromCookie(HttpServletRequest request) {
+
 		UserVO userProfile = null;
 
 		String encryptedCookieValue = CookieUtils.getCookieValue(request, COOKIE_LIU);
@@ -61,13 +68,16 @@ public abstract class AbstractUserProfileHandlerMethodArgumentResolver implement
 		validateAuthString(plainText);
 
 		ObjectMapper objectMapper = new ObjectMapper();
-		userProfile = objectMapper.readValue(plainText, UserVO.class);
+		try {
+			userProfile = objectMapper.readValue(plainText, UserVO.class);
+		} catch (JsonProcessingException e) {
+			userProfile = new UserVO();
+		}
 
 		AbstractUserProfileHandlerMethodArgumentResolver.setUserProfile(userProfile);
 		List<String> accessList = new ArrayList<>();
 		//accessList.add(userProfile.getRole());
 		AbstractUserProfileHandlerMethodArgumentResolver.userAccessHolder.set(accessList);
-		//AbstractUserProfileHandlerMethodArgumentResolver.setUserAccess(userProfile.getOtherData());
 		return userProfile;
 	}
 

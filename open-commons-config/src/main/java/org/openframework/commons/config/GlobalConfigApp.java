@@ -3,8 +3,6 @@ package org.openframework.commons.config;
 import java.time.Duration;
 import java.util.Locale;
 
-import org.openframework.commons.config.interceptor.AppConfigSecurityInterceptor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -21,8 +19,8 @@ import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
 @ServletComponentScan(basePackageClasses = { GlobalConfigApp.class })
 public class GlobalConfigApp implements WebMvcConfigurer {
 
-	@Autowired
-	private AppConfigSecurityInterceptor appConfigSecurityInterceptor;
+	//@Autowired
+	//private AppConfigSecurityInterceptor appConfigSecurityInterceptor;
 
     @Bean
     LocaleChangeInterceptor localeChangeInterceptor() {
@@ -46,7 +44,7 @@ public class GlobalConfigApp implements WebMvcConfigurer {
 
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
-		registry.addInterceptor(appConfigSecurityInterceptor).addPathPatterns("/secure/**");
+		//registry.addInterceptor(appConfigSecurityInterceptor).addPathPatterns("/secure/**");
 		registry.addInterceptor(localeChangeInterceptor());
 	}
 

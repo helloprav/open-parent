@@ -7,7 +7,7 @@ import java.util.concurrent.TimeUnit;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-import org.openframework.commons.rest.Constants;
+import org.openframework.commons.rest.CommonsRestConstants;
 import org.openframework.commons.rest.beans.ErrorBean;
 import org.openframework.commons.rest.beans.ResponseBean;
 import org.openframework.commons.rest.vo.BaseVO;
@@ -47,16 +47,16 @@ public class RestResponseBodyAdvice implements ResponseBodyAdvice<Object> {
 		Object responseBody;
 		HttpServletRequest servletRequest = ((ServletServerHttpRequest) request).getServletRequest();
 		HttpServletResponse servletResponse = ((ServletServerHttpResponse) response).getServletResponse();
-		if(null == servletRequest.getAttribute(Constants.START_TIME)) {
+		if(null == servletRequest.getAttribute(CommonsRestConstants.START_TIME)) {
 			servletRequest.setAttribute("startTime", System.nanoTime());
 		}
-		Long durationInNano = System.nanoTime() - (Long) servletRequest.getAttribute(Constants.START_TIME);
+		Long durationInNano = System.nanoTime() - (Long) servletRequest.getAttribute(CommonsRestConstants.START_TIME);
 		long durationInMillis = TimeUnit.NANOSECONDS.toMillis(durationInNano);  //Total execution time in nano seconds
 		if (body instanceof List) {
 			ResponseBean<List<BaseVO>> responseBean = new ResponseBean<>();
 			responseBean.setData((List<BaseVO>) body);
 			responseBean.setResponseTime(durationInMillis);
-			responseBean.setSuccessMessage(Constants.STRING_OK);
+			responseBean.setSuccessMessage(CommonsRestConstants.STRING_OK);
 			responseBean.setStatusCode(servletResponse.getStatus());
 			logger.info("responseBean: {}", responseBean);
 			return responseBean;
@@ -65,7 +65,7 @@ public class RestResponseBodyAdvice implements ResponseBodyAdvice<Object> {
 			responseBean.setData(((PageList<BaseVO>) body).getData());
 			responseBean.setPagination(((PageList<BaseVO>) body).getPagination());
 			responseBean.setResponseTime(durationInMillis);
-			responseBean.setSuccessMessage(Constants.STRING_OK);
+			responseBean.setSuccessMessage(CommonsRestConstants.STRING_OK);
 			responseBean.setStatusCode(servletResponse.getStatus());
 			logger.info("responseBean: {}", responseBean);
 			return responseBean;
@@ -79,7 +79,7 @@ public class RestResponseBodyAdvice implements ResponseBodyAdvice<Object> {
 			voList.add((BaseVO)body);
 			responseBean.setData(voList);
 			responseBean.setResponseTime(durationInMillis);
-			responseBean.setSuccessMessage(Constants.STRING_OK);
+			responseBean.setSuccessMessage(CommonsRestConstants.STRING_OK);
 			responseBean.setStatusCode(servletResponse.getStatus());
 			logger.info("responseBean: {}", responseBean);
 			return responseBean;
@@ -87,7 +87,7 @@ public class RestResponseBodyAdvice implements ResponseBodyAdvice<Object> {
 			ResponseBean<Object> responseBean = new ResponseBean<>();
 			responseBean.setData(body);
 			responseBean.setResponseTime(durationInMillis);
-			responseBean.setSuccessMessage(Constants.STRING_OK);
+			responseBean.setSuccessMessage(CommonsRestConstants.STRING_OK);
 			responseBean.setStatusCode(servletResponse.getStatus());
 			logger.info("responseBean: {}", responseBean);
 			return responseBean;

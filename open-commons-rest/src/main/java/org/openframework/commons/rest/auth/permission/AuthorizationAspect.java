@@ -8,7 +8,7 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.openframework.commons.domain.exceptions.PermissionDeniedException;
-import org.openframework.commons.rest.argumentresolver.AbstractUserProfileHandlerMethodArgumentResolver;
+import org.openframework.commons.rest.interceptor.AbstractSecurityInterceptor;
 import org.openframework.commons.rest.vo.UserVO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,9 +31,7 @@ public class AuthorizationAspect {
 	@Around("useAdviceOnThisMethodAnnotation() && @annotation(securedPermissions)")
 	public Object manageAnnotation(ProceedingJoinPoint pjp, SecuredPermissions securedPermissions) throws Throwable {
 
-		System.out.println("securedPermissions.value(): "+securedPermissions.value());
-
-        final Object details = AbstractUserProfileHandlerMethodArgumentResolver.getUserProfile();
+        final Object details = AbstractSecurityInterceptor.getUserProfile();
         if ( !( details instanceof UserVO ) ) {
             return pjp.proceed();
         }
@@ -41,24 +39,27 @@ public class AuthorizationAspect {
         final List<String> permissions = Arrays.asList( securedPermissions.value() );
         logger.trace( "Permissions: [{}]", permissions );
 
-        final List<String> roles = retrieveRoles();
-        logger.trace( "Roles: [{}]", roles );
+        final List<String> userAccesList = AbstractSecurityInterceptor.getUserAccess();
+        logger.trace( "Roles: [{}]", userAccesList );
 
         final UserVO profile = ( UserVO ) details;
         logger.trace( "Profile: [{}]", profile.getEmail() );
 
+        // Support for resource access from permission/function names
         for ( String permission : permissions ) {
-            if ( roles.contains(permission ) ) {
+            if ( userAccesList.contains(permission ) ) {
                 logger.trace( "User has permission [{}]", permission );
                 return pjp.proceed();
             }
         }
-        throw new PermissionDeniedException( "Permission to resource is denied for roles [" + roles + "]" );
-    }
 
+        // Support for resource access from permission/function names
+        // @TODO add support for resource access from user's role if configured in SecuredPermission
 
-    private List<String> retrieveRoles() {
-        return AbstractUserProfileHandlerMethodArgumentResolver.getUserAccess();
+        // Support for resource access from permission/function names
+        // @TODO add support for resource access from user's group
+
+        throw new PermissionDeniedException( "Permission to resource is denied for roles [" + userAccesList + "]" );
     }
 
 }

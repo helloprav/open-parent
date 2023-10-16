@@ -1,15 +1,16 @@
 package org.openframework.commons.config.interceptor;
 
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-
 import org.openframework.commons.config.constants.ConfigAppConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 
-@Component
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+
+// stale: remove this
+@Deprecated
+//@Component
 public class AppConfigSecurityInterceptor implements HandlerInterceptor {
 
 	protected final Logger logger = LoggerFactory.getLogger(getClass());

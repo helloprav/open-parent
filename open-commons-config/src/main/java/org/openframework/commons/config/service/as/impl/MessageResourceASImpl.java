@@ -26,7 +26,7 @@ import org.openframework.commons.config.model.LanguageBean;
 import org.openframework.commons.config.model.MessageResourceLocale;
 import org.openframework.commons.config.service.I18nService;
 import org.openframework.commons.config.service.as.MessageResourceAS;
-import org.openframework.commons.rest.Constants;
+import org.openframework.commons.rest.CommonsRestConstants;
 import org.openframework.commons.spring.utils.ClasspathUtils;
 import org.openframework.commons.spring.utils.YamlUtils;
 import org.openframework.commons.utils.FileFolderUtils;
@@ -272,7 +272,7 @@ public class MessageResourceASImpl implements MessageResourceAS {
 	}
 
 	public MessageResourceLocale getErrorMessageResourceMap() {
-		return messageResourceMap.get(Constants.MESSAGE_TYPE_ERRORS);
+		return messageResourceMap.get(CommonsRestConstants.MESSAGE_TYPE_ERRORS);
 	}
 
 	public String getProperty(String messageType, String locale, String key) {
@@ -293,13 +293,13 @@ public class MessageResourceASImpl implements MessageResourceAS {
 	@Override
 	public String getErrorMessageValue(String locale, String key) {
 
-		return getProperty(Constants.MESSAGE_TYPE_ERRORS, locale, key);
+		return getProperty(CommonsRestConstants.MESSAGE_TYPE_ERRORS, locale, key);
 	}
 
 	@Override
 	public String getDashboardMessageValue(String locale, String key) {
 
-		return getProperty(Constants.MESSAGE_TYPE_DASHBOARD, locale, key);
+		return getProperty(CommonsRestConstants.MESSAGE_TYPE_DASHBOARD, locale, key);
 	}
 
 	/**

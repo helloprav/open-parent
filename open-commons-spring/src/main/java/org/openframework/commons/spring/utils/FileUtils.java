@@ -8,6 +8,8 @@ import java.nio.file.Paths;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 
+// Delete Me
+@Deprecated(since = "start", forRemoval = true)
 public class FileUtils {
 
 	public FileUtils() {

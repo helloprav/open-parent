@@ -12,10 +12,10 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
  */
 @Configuration
 @EnableAspectJAutoProxy(proxyTargetClass = true)
-public class SpringAopConfig {
+public class CommonsSpringConfig {
 
 	static {
-		System.out.println("SpringAopConfig.static{} ");
+		System.out.println("CommonsSpringConfig.static{} ");
 	}
 
 }

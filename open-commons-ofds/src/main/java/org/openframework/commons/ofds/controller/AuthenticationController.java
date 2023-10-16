@@ -6,9 +6,6 @@ package org.openframework.commons.ofds.controller;
 import java.util.List;
 import java.util.Map;
 
-import jakarta.servlet.http.Cookie;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.openframework.commons.ofds.constant.OfdsConstants;
@@ -29,6 +26,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 
 /**
@@ -47,6 +47,9 @@ public class AuthenticationController extends OfdsBaseController {
 	@Autowired
 	private AuthenticationService authenticationService;
 
+//	@Inject
+//	private HttpServletRequest request;
+
 	@InitBinder
 	public void dataBinding(WebDataBinder binder) {
 		// do nothing
@@ -63,6 +66,7 @@ public class AuthenticationController extends OfdsBaseController {
 		logger.debug(""+this.getEncryptionProps());
 		Map<String, Object> validUserDetailsMap = authenticationService.authenticateUser(userVO);
 		UserVO loggedInUser = (UserVO)validUserDetailsMap.get(OfdsConstants.USERVO);
+//		request.setAttribute("loggedInUser", loggedInUser);
 
 		@SuppressWarnings("unchecked")
 		List<Cookie> loginCookieList = (List<Cookie>)validUserDetailsMap.get(OfdsConstants.LOGIN_COOKIE_LIST);

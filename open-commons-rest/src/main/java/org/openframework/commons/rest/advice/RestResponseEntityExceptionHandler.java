@@ -21,7 +21,7 @@ import org.openframework.commons.domain.exceptions.EntityConflictsException;
 import org.openframework.commons.domain.exceptions.EntityNotFoundException;
 import org.openframework.commons.domain.exceptions.ErrorCode;
 import org.openframework.commons.domain.exceptions.PermissionDeniedException;
-import org.openframework.commons.rest.Constants;
+import org.openframework.commons.rest.CommonsRestConstants;
 import org.openframework.commons.rest.beans.ErrorBean;
 import org.openframework.commons.rest.beans.ResponseBean;
 import org.openframework.commons.rest.exception.KeywordNotFoundException;
@@ -250,7 +250,7 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
 
 		Properties localeErrorProperties = null;
 		if (messageResourceAS.isPresent()) {
-			localeErrorProperties = messageResourceAS.get().getMessageResourceMap().get(Constants.MESSAGE_TYPE_ERRORS)
+			localeErrorProperties = messageResourceAS.get().getMessageResourceMap().get(CommonsRestConstants.MESSAGE_TYPE_ERRORS)
 					.getPropertiesMap().get(currentLocale.getLanguage());
 
 			if(SIZE.equals(fieldError.getCode())) {

@@ -3,11 +3,11 @@
  */
 package org.openframework.commons.ofds.controller;
 
-import jakarta.inject.Inject;
 import javax.validation.Valid;
 
 import org.openframework.commons.ofds.service.bo.UserService;
 import org.openframework.commons.rest.annotations.GetMappingProduces;
+import org.openframework.commons.rest.auth.permission.SecuredPermissions;
 import org.openframework.commons.rest.beans.ResponseBean;
 import org.openframework.commons.rest.controller.BaseController;
 import org.openframework.commons.rest.vo.UserHistoryVO;
@@ -27,10 +27,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.Parameter;
 //import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.inject.Inject;
 
 
 /**
@@ -79,13 +79,14 @@ public class UserController extends BaseController {
 		return userService.findUserById(id);
 	}
 
+	@SecuredPermissions(role = "TEACHER_ADMIN")
 	@GetMapping(path = "/{id}/history")
 	public PageList<UserHistoryVO> findUserHistoryById(@PathVariable Long id, Pagination pagingDetails) {
 		return userService.findUserHistoryById(id, pagingDetails);
 	}
 
+	@SecuredPermissions(value = {"USERS_WRITE","USERS_DELETE"})
 	@PostMapping()
-	//@Operation(hidden = true)
 	public ResponseBean<Object> createUser(@Valid @RequestBody UserVO userVO, @Parameter(hidden = true) UserVO loggedInUser) {
 
 		if(null == userVO.getStatus()) {
@@ -100,6 +101,7 @@ public class UserController extends BaseController {
 		return new ResponseBean<>(HttpStatus.CREATED.value(), String.format("User %s created successfully", id), id);
 	}
 
+	@SecuredPermissions(value = {"USERS_WRITE","USERS_DELETE"})
 	@PutMapping(path = "/{id}")
 	public UserVO updateUser(@PathVariable Long id, @Valid @RequestBody UserVO userVO, @Parameter(hidden = true) UserVO loggedInUser) {
 		userVO.setId(id);
@@ -117,6 +119,7 @@ public class UserController extends BaseController {
 	}
 
 	@DeleteMapping(path = "/{id}")
+	@SecuredPermissions(group = "OFDS_ADMIN")
 	public ResponseBean<Object> deleteUser(@PathVariable Long id, @Parameter(hidden = true) UserVO loggedInUser) {
 
 		UserVO userVO = new UserVO();

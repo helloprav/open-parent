@@ -1,5 +1,6 @@
 package org.openframework.commons.ofds.constant;
 
+@Deprecated
 public class LoggingConstants {
 
 	private LoggingConstants() {

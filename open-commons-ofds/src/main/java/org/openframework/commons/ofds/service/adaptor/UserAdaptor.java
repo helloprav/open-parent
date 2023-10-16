@@ -13,6 +13,7 @@ import java.util.TreeSet;
 
 import org.openframework.commons.enums.Gender;
 import org.openframework.commons.enums.UserStatus;
+import org.openframework.commons.rest.interceptor.AbstractSecurityInterceptor;
 import org.openframework.commons.rest.vo.UserHistoryVO;
 import org.openframework.commons.rest.vo.UserVO;
 import org.openframework.commons.spring.PageList;
@@ -33,9 +34,6 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class UserAdaptor extends BaseAdaptor {
-
-	public static final String GROUP_LIST = "groupList";
-	public static final String FUNCTION_LIST = "functionList";
 
 	@Autowired
 	private GroupAdaptor groupAdaptor;
@@ -129,7 +127,7 @@ public class UserAdaptor extends BaseAdaptor {
 			}
 		}
 		Map map = new HashMap<>();
-		map.put(GROUP_LIST, groupList);
+		map.put(AbstractSecurityInterceptor.GROUP_LIST, groupList);
 		userVO.setOtherData(map);
 	}
 
@@ -153,7 +151,7 @@ public class UserAdaptor extends BaseAdaptor {
 		}
 		if(null != userVO.getOtherData()) {
 			@SuppressWarnings({ "unchecked" })
-			List<Integer> groupIdList = (List<Integer>) userVO.getOtherData().get(GROUP_LIST);
+			List<Integer> groupIdList = (List<Integer>) userVO.getOtherData().get(AbstractSecurityInterceptor.GROUP_LIST);
 			fromGroupVOList(groupIdList, user);
 		}
 		return user;
@@ -229,7 +227,7 @@ public class UserAdaptor extends BaseAdaptor {
 		 * { otherData = new HashMap<>(); } otherData.put(FUNCTION_LIST, functionList);
 		 * userVO.setOtherData(otherData);
 		 */
-		userVO.addOtherData(FUNCTION_LIST, functionList);
+		userVO.addOtherData(AbstractSecurityInterceptor.FUNCTION_LIST, functionList);
 	}
 
 	public void populateUserAccess(List<Function> functionList, UserVO userVO) {
@@ -238,7 +236,7 @@ public class UserAdaptor extends BaseAdaptor {
 		for(Function function: functionList) {
 			functionNameList.add(function.getName());
 		}
-		userVO.addOtherData(FUNCTION_LIST, functionNameList);
+		userVO.addOtherData(AbstractSecurityInterceptor.FUNCTION_LIST, functionNameList);
 	}
 
 }

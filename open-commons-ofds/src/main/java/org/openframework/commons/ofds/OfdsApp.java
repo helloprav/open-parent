@@ -6,7 +6,7 @@ import javax.annotation.PostConstruct;
 
 import org.openframework.commons.config.constants.ConfigAppConstants;
 import org.openframework.commons.ofds.controller.argumentresolver.UserProfileHandlerMethodArgumentResolver;
-import org.openframework.commons.ofds.controller.interceptor.OfdsSecurityInterceptor;
+import org.openframework.commons.ofds.controller.interceptor.OfdsApiSecurityInterceptor;
 import org.openframework.commons.ofds.props.MasterDataProps;
 import org.openframework.commons.ofds.props.OfdsSecurityProps;
 import org.openframework.commons.utils.FileFolderUtils;
@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.Ordered;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
@@ -26,6 +27,10 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @EnableConfigurationProperties({ OfdsSecurityProps.class, MasterDataProps.class })
 @EnableJpaRepositories(basePackages = "org.openframework.commons.ofds")
 @EntityScan(basePackageClasses = OfdsApp.class)
+
+//@EnableJpaRepositories("org.openframework.commons")
+//@EntityScan("org.openframework.commons")
+//@AutoConfigurationPackage(basePackages = {"org.openframework.commons"}) 
 public class OfdsApp implements WebMvcConfigurer {
 
 	private static final Logger logger = LoggerFactory.getLogger(OfdsApp.class);
@@ -44,7 +49,10 @@ public class OfdsApp implements WebMvcConfigurer {
 	private UserProfileHandlerMethodArgumentResolver userProfileHandlerMethodArgumentResolver;
 
 	@Autowired
-	private OfdsSecurityInterceptor securityInterceptor;
+	private OfdsApiSecurityInterceptor securityInterceptor;
+
+//	@Autowired
+//	private AuthorizationRequestInterceptor authorizationRequestInterceptor;
 
 	/**
 	 * More read on addPathPatterns()
@@ -54,7 +62,8 @@ public class OfdsApp implements WebMvcConfigurer {
 	public void addInterceptors(InterceptorRegistry registry) {
 
 		WebMvcConfigurer.super.addInterceptors(registry);
-		registry.addInterceptor(securityInterceptor).addPathPatterns("/ofds/api/**");
+		registry.addInterceptor(securityInterceptor).addPathPatterns("/ofds/api/**").order(Ordered.HIGHEST_PRECEDENCE);
+		//registry.addInterceptor(authorizationRequestInterceptor).addPathPatterns("/*/api/**");
 	}
 
 	@Override

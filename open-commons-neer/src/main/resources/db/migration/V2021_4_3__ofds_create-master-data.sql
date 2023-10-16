@@ -25,8 +25,12 @@ LOCK TABLES `ofds_function` WRITE;
 INSERT INTO `ofds_function` 
 	(`id`, `function_name`, `is_valid`, `created_by`, `created_date`, `modified_by`, `modified_date`) 
 VALUES 
-	(1,'FIND USERS',1,1,now(),NULL,NULL),
-	(2,'CREATE USERS',1,1,now(),NULL,NULL);
+	(1,'USERS_READ',1,1,now(),NULL,NULL),
+	(2,'USERS_WRITE',1,1,now(),NULL,NULL),
+	(3,'USERS_DELETE',1,1,now(),NULL,NULL),
+	(4,'GROUPS_READ',1,1,now(),NULL,NULL),
+	(5,'GROUPS_WRITE',1,1,now(),NULL,NULL),
+	(6,'GROUPS_DELETE',1,1,now(),NULL,NULL);
 /*!40000 ALTER TABLE `ofds_function` ENABLE KEYS */;
 UNLOCK TABLES;
 

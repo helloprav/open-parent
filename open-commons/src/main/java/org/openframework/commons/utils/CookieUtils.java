@@ -106,7 +106,7 @@ public class CookieUtils {
 				}
 			}
 		}
-		logger.info("Cookie Value: {}", cookieValue);
+		logger.info("Cookie Value for the cookie: {} is {}", cookieName, cookieValue);
 		return cookieValue;
 	}
 

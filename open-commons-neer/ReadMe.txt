@@ -172,8 +172,8 @@ Caching and versioning of static resources
 2023-09-xx
 ------------------------------------------------------------
 Gurukul Framework
--Upgrade to Spring Boot 3
--Correct support for swagger/open-api (https://springdoc.org/#migrating-from-springdoc-v1)
+-Dockerise the application
+-Timezone handling in app while saving/fetching date.
 -Add actuator Url (sub-menu) in actuator main menu: http://localhost/neer/actuator/env
 -Check & Enable email feature
 -Remove AbstractTransactionManagementConfig.java
@@ -199,6 +199,18 @@ Gurukul Framework
 	-Gurukul Administration
 		-Manage Grades
 		-Manage Subjects
+=====================================================================
+2023-10-16
+------------------------------------------------------------
+-Upgrade to Spring Boot 3.1.4
+-Revision: 23.4.2
+-Authorization implemented using: @SecuredPermissions and AuthorizationAspect
+=====================================================================
+2023-09-19
+------------------------------------------------------------
+Gurukul Framework
+-Upgrade to Spring Boot 3
+-Correct support for swagger/open-api (https://springdoc.org/#migrating-from-springdoc-v1)
 ----------------------------------------------------------------------------------------------------------------------------------
 =====================================================================
 2023-08-28
