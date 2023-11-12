@@ -69,6 +69,7 @@
 			data: $('#startEvaluationForm').serialize(), 
 			success: function(response) {
 
+				console.log("response: ", response);
 				var resultDiv = '<i class="fa fa-thumbs-up ml-2"></i>';
 				if(response !== 'true') {
 					resultDiv = '<i class="fa fa-thumbs-down ml-2"></i>';
@@ -101,7 +102,7 @@
 				<tbody>
 					<tr height="80%">
 						<td><span th:id="qText">
-							Q [[${nextQuestionSeq}]]. [[${question.questionText}]]</span>
+							Q [[${nextQuestionSeq}]]. [[${question.questionText}]]</span> <span id="okPlace"></span>
 							<div th:switch="${question.imageName}">
 								<span th:case="null"></span>
 								<span th:case="*">
@@ -114,13 +115,13 @@
 								<div th:case="MULTI_CORRECT">
 									<div th:each="answer,iterStat : ${question.answers}">
 										<input type="checkbox" th:itemtype="checkbox" th:value="${answer.id}" th:field="*{userAnswerList}"
-											name="answers" />&nbsp;&nbsp;<span
+											name="answers" th:data-option-val='${answer.answerText}' />&nbsp;&nbsp;<span
 											th:text="${answer.answerText}"></span>&nbsp;<br /><br />
 									</div>
 								</div>
 								<div th:case="SINGLE_CORRECT">
 									<div th:each="answer : ${answers}">
-										<input type="radio" th:itemtype="radio" th:value="${answer.id}" th:field="*{userAnswerList}" /> [[${answer.answerText}]] <br><br>
+										<input type="radio" th:itemtype="radio" th:value="${answer.id}" th:field="*{userAnswerList}" th:data-option-val='${answer.answerText}' /> [[${answer.answerText}]] <br><br>
 									</div>
 								</div>
 								<div th:case="FILL_WORD">

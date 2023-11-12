@@ -4,27 +4,25 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import jakarta.inject.Inject;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-
 import org.openframework.commons.rest.vo.UserVO;
 import org.openframework.commons.utils.CookieUtils;
-import org.openframework.gurukul.pariksha.entity.EvalStats;
+import org.openframework.commons.utils.JsonUtils;
+import org.openframework.gurukul.pariksha.ParikshaConstants;
 import org.openframework.gurukul.pariksha.entity.Evaluation;
 import org.openframework.gurukul.pariksha.service.EvaluationService;
 import org.openframework.gurukul.pariksha.service.ExamService;
 import org.openframework.gurukul.pariksha.utils.CourseUtils;
+import org.openframework.gurukul.pariksha.utils.EvaluationUtils;
+import org.openframework.gurukul.pariksha.utils.QuestionVOUtils;
 import org.openframework.gurukul.pariksha.vo.EvaluationVO;
+import org.openframework.gurukul.pariksha.vo.ExamState;
 import org.openframework.gurukul.pariksha.vo.QuestionVO;
-import org.openframework.gurukul.pariksha.vo.UserEvaluation;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -40,9 +38,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.inject.Inject;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 @Controller
 @RequestMapping("/pariksha/exams")
@@ -60,6 +58,9 @@ public class ExamController {
 	@Autowired
 	private ExamService examService;
 
+	/** Logger that is available to subclasses */
+	protected final Logger logger = LoggerFactory.getLogger(getClass());
+
 	@GetMapping()
 	public String init() {
 		return "redirect:/pariksha/exams/list";
@@ -72,60 +73,44 @@ public class ExamController {
 		return "pariksha/exams/exam-list";
 	}
 
-	@SuppressWarnings("unchecked")
 	@GetMapping("/start-eval")
-	public String evaluationStart(Model model, @RequestParam Long evalId, @RequestParam (required = false) Boolean testRun) {
+	public String evaluationStart(Model model, @RequestParam Long evalId, @RequestParam (required = false) boolean testRun) {
 
-		Map<String, Object> evalContainer = examService.findEvaluationByIdWithQuestions(evalId);
+		EvaluationVO evaluationVO = evaluationService.findEvaluationVOById(evalId);
 
-		EvaluationVO evaluationForReference = (EvaluationVO) evalContainer.get("evaluationForReference");
-		createUserEvalCookie(evalId, (List<Long>) evalContainer.get("questionIds"));
+		createExamStateCookie(evalId, EvaluationUtils.getQIdsFromEvaluation(evaluationVO), testRun);
 
-		model.addAttribute("eval", evaluationForReference);
+		model.addAttribute("eval", evaluationVO);
 		model.addAttribute("evalId", evalId);
 		model.addAttribute("testRun", testRun);
 
 		return "/pariksha/exams/exam-start";
 	}
 
-	private void createUserEvalCookie(Long evalId, List<Long> list) {
+	private void createExamStateCookie(Long evalId, List<Long> qIdList, boolean testRun) {
 
-		System.out.println("List of qId for this test: " + list);
-		UserEvaluation userEvaluation = new UserEvaluation();
-		userEvaluation.setEvaluationID(evalId);
-		userEvaluation.setAttemptedQuestions(list.size());
-		userEvaluation.setEvalStartDate(new Date());
-		userEvaluation.setQuestionIds(list);
+		logger.debug("Entered createUserEvalCookie(eval:{})", evalId);
+		logger.debug("List of qId for this test: {}", qIdList);
+		ExamState examState = new ExamState();
+		examState.setId(evalId);
+		examState.setTestRun(testRun);
+		examState.setStartDate(new Date());
+		examState.setqSize(qIdList.size());
+		examState.setqIds(qIdList);
 
-		String jsonString = convertObjectToJsonString(userEvaluation);
-		response.addCookie(CookieUtils.createCookieEncoded("userEval", jsonString));
-	}
-
-	private String convertObjectToJsonString(UserEvaluation userEvaluation) {
-
-		String jsonString = null;
-		ObjectMapper obj = new ObjectMapper();
-		obj.setSerializationInclusion(Include.NON_NULL);
-		try {
-			// Converting the Java object into a JSON string
-			jsonString = obj.writeValueAsString(userEvaluation);
-			System.out.println(jsonString);
-		} catch (JsonProcessingException e) {
-			e.printStackTrace();
-		}
-
-		return jsonString;
+		String jsonString = JsonUtils.convertObjectToJsonString(examState);
+		response.addCookie(CookieUtils.createCookieEncoded(ParikshaConstants.COOKIE_EXAM_STATE, jsonString));
 	}
 
 	@PostMapping("/question/{nextQuestionSeq}")
-	public String evaluateQuestion(@PathVariable int nextQuestionSeq, @ModelAttribute("question") QuestionVO questionVO,
-			Model model, @CookieValue(name = "userEval", defaultValue = "") String userEvalCookie,
+	public String evaluateQuestion(@PathVariable int nextQuestionSeq, @ModelAttribute("question") QuestionVO questionVOFromUserResponse,
+			Model model, @CookieValue(name = ParikshaConstants.COOKIE_EXAM_STATE, defaultValue = "") String examStateCookie,
 			@RequestParam(required = false) Long evalId, @RequestParam(required = false) Integer questionID,
 			@RequestParam(required = false) String skipQuestion,
-			@RequestParam(required = false) String[] userAnswerList, 
-			@RequestParam (required = false) Boolean testRun) {
+			@RequestParam(required = false) String[] userAnswerList) {
 
-		UserEvaluation userEvaluation = saveUserResponseInSession(questionVO, userEvalCookie, skipQuestion);
+		logger.debug("Entered evaluateQuestion(nextQuestionSeq:{})", nextQuestionSeq);
+		ExamState examState = convert2ExamState(questionVOFromUserResponse, examStateCookie, skipQuestion);
 
 		int questionSize = 0;
 		List<QuestionVO> questionsVOList = null;
@@ -137,138 +122,78 @@ public class ExamController {
 		model.addAttribute("evalId", evalId);
 		model.addAttribute("nextQuestionSeq", nextQuestionSeq);
 		model.addAttribute("questionSize", questionSize);
-		model.addAttribute("testRun", testRun);
+		model.addAttribute("testRun", examState.isTestRun());
 
 		if (nextQuestionSeq > questionSize) {
-			System.out.println("Completed. Show Complete Page.");
-			// nextQuestionSeq = 1;
 			model.addAttribute("evalCompleted", "evalCompleted");
 		} else {
-			Long questionId = userEvaluation.getQuestionIds().get(nextQuestionSeq - 1);
-			QuestionVO question = getQuestionsVOFromList(questionsVOList, questionId);
+			Long questionId = examState.getqIds().get(nextQuestionSeq - 1);
+			QuestionVO question = QuestionVOUtils.getQuestionsVOFromList(questionsVOList, questionId);
 
 			// Populate User submitted answer if any, & set in userQuestion
-			QuestionVO userSubmittedQuestion = userEvaluation.getUserQuestionMap().get(questionId);
-			model.addAttribute("userQuestion", userSubmittedQuestion);
+			 List<String> userSubmittedAnswers = examState.getUserQuestionMap().get(questionId);
+			model.addAttribute("userQuestion", userSubmittedAnswers);
 
-			if (null != userSubmittedQuestion && null != userSubmittedQuestion.getUserAnswerList()) {
-				question.setUserAnswerList(userSubmittedQuestion.getUserAnswerList());
+			if (null != userSubmittedAnswers && !userSubmittedAnswers.isEmpty()) {
+				question.setUserAnswerList(userSubmittedAnswers);
 			}
 			model.addAttribute("question", question);
 			model.addAttribute("answers", question.getAnswers());
 		}
-		model.addAttribute("userQuestion", questionVO);
+		model.addAttribute("userQuestion", questionVOFromUserResponse);
 
-		// return "evaluationStartAjaxTiles";
 		return "/pariksha/exams/evaluateQuestionAjax";
 	}
 
-	@PostMapping("/checkAnswer/{questionSeq}")
-	public ResponseEntity<String> checkAnswer(@PathVariable int questionSeq, @ModelAttribute("question") QuestionVO questionVO,
-			Model model, 
-			@RequestParam(required = false) Integer questionID,
-			@RequestParam (required = false) Boolean testRun) throws IOException {
+	private ExamState convert2ExamState(QuestionVO questionVOFromUserResponse, String examStateCookie, String skipQuestion) {
 
-		boolean result = false;
-		if(true == testRun) {
-			result = examService.checkAnswer(questionVO);
-		}
-		System.out.println("Result: "+result);
-
-		return new ResponseEntity<>(String.valueOf(result), HttpStatus.OK);
-	}
-
-	private QuestionVO getQuestionsVOFromList(List<QuestionVO> questionsVOList, long questionId) {
-
-		QuestionVO questionVOToReturn = null;
-		Iterator<QuestionVO> iterator = questionsVOList.iterator();
-		while (iterator.hasNext()) {
-			QuestionVO questionVO = (QuestionVO) iterator.next();
-			if (questionVO.getId() == questionId) {
-				questionVOToReturn = questionVO;
-				break;
-			}
-		}
-		return questionVOToReturn;
-	}
-
-	private UserEvaluation saveUserResponseInSession(QuestionVO questionVO, String userEvalCookie,
-			String skipQuestion) {
-
-		List<String> userAnswerList = questionVO.getUserAnswerList();
-		Iterator<String> iterator = userAnswerList.iterator();
-		while (iterator.hasNext()) {
-			String userAnswer = iterator.next();
-			System.out.println("userAnswer: " + userAnswer);
-		}
-
-		Long questionID = questionVO.getId();
+		Long questionID = questionVOFromUserResponse.getId();
 
 		// Step 1: Read UerEvaluatio from request cookie
-		UserEvaluation userEvaluation = readObjectFromCookie(userEvalCookie);
+		ExamState examState = CookieUtils.readObjectFromCookie(examStateCookie, ExamState.class);
 
 		if (null == skipQuestion) {
 			// Step 2: Update userEvaluation with user's answer/response to the question
 			if (questionID != null) {
-				userEvaluation.getUserQuestionMap().put(questionID, questionVO);
+				examState.getUserQuestionMap().put(questionID, questionVOFromUserResponse.getUserAnswerList());
 			}
 
-			// Step 3: TODO: Save UserEvaluation into Cookie
-			// WebUtils.saveUserEvaluationInSession(session, userEvaluation);
-			String jsonString = convertObjectToJsonString(userEvaluation);
-			response.addCookie(CookieUtils.createCookieEncoded("userEval", jsonString));
+			// Step 3: Save UserEvaluation into Cookie
+			String jsonString = JsonUtils.convertObjectToJsonString(examState);
+			response.addCookie(CookieUtils.createCookieEncoded(ParikshaConstants.COOKIE_EXAM_STATE, jsonString));
 		}
-		return userEvaluation;
+		return examState;
 	}
 
-	private UserEvaluation readObjectFromCookie(String cookieStr) {
+	@PostMapping("/checkAnswer/{questionSeq}")
+	public ResponseEntity<String> checkAnswer(@PathVariable int questionSeq, @ModelAttribute("question") QuestionVO questionVOFromUserResponse,
+			Model model, 
+			@RequestParam(required = false) Integer questionID,
+			@RequestParam (required = false) boolean testRun) {
 
-		UserEvaluation userEvaluation;
-		try {
-			cookieStr = URLDecoder.decode(cookieStr, "UTF-8");
-		} catch (UnsupportedEncodingException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-			throw new RuntimeException(e1);
+		boolean result = false;
+		if(testRun) {
+			result = examService.checkAnswer(questionVOFromUserResponse);
 		}
 
-		ObjectMapper Obj = new ObjectMapper();
-		try {
-			// Converting the Java object into a JSON string
-			userEvaluation = Obj.readValue(cookieStr, UserEvaluation.class);
-			// Displaying Java object into a JSON string
-			System.out.println(userEvaluation);
-		} catch (JsonProcessingException e) {
-			e.printStackTrace();
-			throw new RuntimeException(e);
-		}
-		return userEvaluation;
+		return new ResponseEntity<>(String.valueOf(result), HttpStatus.OK);
 	}
 
-	@SuppressWarnings("unchecked")
 	@PostMapping(value = "/evaluationCompleted")
 	public String evaluationCompleted(Model model,
-			@CookieValue(name = "userEval", defaultValue = "") String userEvalCookie, UserVO loggedInUser,
-			@RequestParam (required = false) Boolean testRun) {
+			@CookieValue(name = ParikshaConstants.COOKIE_EXAM_STATE, defaultValue = "") String examStateCookie, 
+			UserVO loggedInUser) {
 
-		System.out.println("Evaluation Completed Invoked");
+		logger.debug("Entered evaluationCompleted");
 
-		UserEvaluation userEvaluation = readObjectFromCookie(userEvalCookie);
-		Map<String, Object> result = examService.evaluationCompleted(userEvaluation, loggedInUser);
-		EvalStats evalStats = (EvalStats)result.get("evalStats");
-		List<QuestionVO> report = (List<QuestionVO>) result.get("report");
+		Map<String, Object> result = examService.evaluationCompleted(examStateCookie, loggedInUser);
 
-		System.out.println(userEvaluation.getCorrectAttempts());
-		if(null == testRun || true != testRun) {
-			// the the evaluation stats in db
+		CookieUtils.deleteCookiesByName(request, response, List.of(ParikshaConstants.COOKIE_EXAM_STATE));
 
-			examService.saveEvalStats(evalStats);
-			CookieUtils.deleteCookiesByName(request, response, List.of("userEval", "questionSet"));
-		}
-		model.addAttribute("evalPassed", evalStats.getEvaluationStatPassed());
-		model.addAttribute("passMarks", result.get("passMarks"));
-		model.addAttribute("userEvaluation", userEvaluation);
-		model.addAttribute("report", report);
+		model.addAttribute("questionSet", result.get("questionSet"));
+		model.addAttribute("evalResult", result.get("evalResult"));
+
+		logger.debug("Exiting evaluationCompleted");
 		return "/pariksha/exams/exam-completed";
 	}
 
@@ -279,8 +204,9 @@ public class ExamController {
 		String mediaDirName = CourseUtils.getParikshaMediaDir();
 		String imageFileName = mediaDirName.concat(evalId).concat(File.separator).concat(imageName);
 		File imageFile = new File(imageFileName);
-		InputStream inputStream = new FileInputStream(imageFile);
-		response.setContentType(MediaType.IMAGE_JPEG_VALUE);
-		StreamUtils.copy(inputStream, response.getOutputStream());
+		try (InputStream inputStream = new FileInputStream(imageFile)) {
+			response.setContentType(MediaType.IMAGE_JPEG_VALUE);
+			StreamUtils.copy(inputStream, response.getOutputStream());
+		}
 	}
 }

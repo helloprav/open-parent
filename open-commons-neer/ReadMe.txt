@@ -199,6 +199,26 @@ Gurukul Framework
 	-Gurukul Administration
 		-Manage Grades
 		-Manage Subjects
+
+=====================================================================
+2023-10-XX
+------------------------------------------------------------
+-Redis distributed cache: for storing session data (ExamState)
+-RabbitMQ Message Queue: Email sending
+-MongoDB: Spring Boot web app to save - entity history data
+-WebSockets: live quiz game
+-Speech Processing: add voice based questions to exam
+-Log Management
+	-Json format logging
+	-Test with spring cloud sleuth and zipkin if the Json log format is ok?
+	-log data persisted in mongo-db (if possible to visualize from mongo-db)?
+=====================================================================
+2023-11-11
+------------------------------------------------------------
+-Revision: 23.4.3
+-ExamService: 
+	-refactored code & moved code from controller to service
+	-Removed QuestionsToAttempt property
 =====================================================================
 2023-10-16
 ------------------------------------------------------------

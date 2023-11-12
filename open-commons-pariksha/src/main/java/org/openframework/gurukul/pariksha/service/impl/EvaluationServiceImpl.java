@@ -21,10 +21,12 @@ import org.openframework.gurukul.pariksha.entity.Answer;
 import org.openframework.gurukul.pariksha.entity.Evaluation;
 import org.openframework.gurukul.pariksha.entity.Question;
 import org.openframework.gurukul.pariksha.service.EvaluationService;
+import org.openframework.gurukul.pariksha.service.adapter.EvaluationAdapter;
 import org.openframework.gurukul.pariksha.service.repository.AnswerRepository;
 import org.openframework.gurukul.pariksha.service.repository.EvaluationRepository;
 import org.openframework.gurukul.pariksha.service.repository.QuestionRepository;
 import org.openframework.gurukul.pariksha.utils.CourseUtils;
+import org.openframework.gurukul.pariksha.vo.EvaluationVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
@@ -63,10 +65,29 @@ public class EvaluationServiceImpl implements EvaluationService {
 	}
 
 	@Override
+	public EvaluationVO findEvaluationVOById(Long evalId) {
+
+		Evaluation evaluation = null;
+		Optional<Evaluation> eval = evaluationRepository.findById(evalId);
+		if(eval.isPresent()) {
+			evaluation = eval.get();
+			return EvaluationAdapter.toVO(evaluation);
+		} else {
+			throw new EntityNotFoundException("Eval id not found");
+		}
+	}
+
+	@Override
 	public Evaluation findEvaluationById(Long evalId) {
 
+		Evaluation evaluation = null;
 		Optional<Evaluation> eval = evaluationRepository.findById(evalId);
-		return eval.get();
+		if(eval.isPresent()) {
+			evaluation = eval.get();
+		} else {
+			throw new EntityNotFoundException("Eval id not found");
+		}
+		return evaluation;
 	}
 
 	@Override

@@ -18,4 +18,5 @@ public class ParikshaConstants {
 
 	public static final String FUNC_JUMBLE = "JUMBLE";
 
+	public static final String COOKIE_EXAM_STATE = "examState";
 }

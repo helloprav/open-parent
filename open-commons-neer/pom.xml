@@ -24,7 +24,6 @@
 		<dependency>
 			<groupId>org.aspectj</groupId>
 			<artifactId>aspectjrt</artifactId>
-			<!-- <version>1.9.5</version> -->
 		</dependency>
 		<!-- Spring Boot Started Dependencies -->
 		<dependency>

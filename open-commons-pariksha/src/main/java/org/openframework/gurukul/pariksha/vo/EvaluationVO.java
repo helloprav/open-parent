@@ -16,8 +16,6 @@ public class EvaluationVO {
 
 	private Integer questionsInEval;
 
-	private Integer questionsToAttempt;
-
 	private Integer questionsToPass;
 
 	private Boolean showReport;
@@ -62,14 +60,6 @@ public class EvaluationVO {
 
 	public void setQuestionsInEval(Integer questionsInEval) {
 		this.questionsInEval = questionsInEval;
-	}
-
-	public Integer getQuestionsToAttempt() {
-		return questionsToAttempt;
-	}
-
-	public void setQuestionsToAttempt(Integer questionsToAttempt) {
-		this.questionsToAttempt = questionsToAttempt;
 	}
 
 	public Integer getQuestionsToPass() {

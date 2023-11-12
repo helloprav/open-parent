@@ -7,13 +7,10 @@ import org.openframework.commons.rest.vo.UserVO;
 import org.openframework.gurukul.pariksha.entity.EvalStats;
 import org.openframework.gurukul.pariksha.vo.EvalStatsVO;
 import org.openframework.gurukul.pariksha.vo.QuestionVO;
-import org.openframework.gurukul.pariksha.vo.UserEvaluation;
 
 public interface ExamService {
 
-	Map<String, Object> findEvaluationByIdWithQuestions(Long evalId);
-
-	Map<String, Object> evaluationCompleted(UserEvaluation userEvaluation, UserVO loggedInUser);
+	Map<String, Object> evaluationCompleted(String examStateCookie, UserVO loggedInUser);
 
 	List<QuestionVO> findQuestionsByEvalId(Long evalId);
 

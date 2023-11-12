@@ -17,9 +17,9 @@ public class QuestionVO {
 
 	private Boolean isOk;
 
-	private List<AnswerVO> answers = new ArrayList<AnswerVO>(0);
+	private List<AnswerVO> answers = new ArrayList<>(0);
 
-	private List<String> userAnswerList = new ArrayList<String>(0);
+	private List<String> userAnswerList = new ArrayList<>(0);
 
 	public Long getId() {
 		return id;

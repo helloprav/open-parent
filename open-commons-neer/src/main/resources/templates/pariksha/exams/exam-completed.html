@@ -17,31 +17,31 @@
 	</script>
     <section>
         <div class="container my-5" th:switch="${evalPassed}">
-            <h2 th:if="${evalPassed}">Congratulations! you have passed the exam.</h2>
-            <h2 th:if="${!evalPassed}">Sorry! you failed this time.</h2>
+            <h2 th:if="${evalResult.evalPassed}">Congratulations! you have passed the exam.</h2>
+            <h2 th:if="${!evalResult.evalPassed}">Sorry! you failed this time.</h2>
             <div class="col-md-10">
-				You have scored [[${userEvaluation.correctAttempts}]] out of [[${userEvaluation.attemptedQuestions}]].<br/>
-				Total Questions: [[${userEvaluation.attemptedQuestions}]]<br/>
-				<i class="fa fa-check-circle" aria-hidden="true"></i>Passing Marks: [[${passMarks}]]<br/>
-				<i class="fa fa-check-circle" aria-hidden="true"></i>Correct Answers: [[${userEvaluation.correctAttempts}]]<br/>
-				<i class="fa fa-times-circle" aria-hidden="true"></i>Wrong/Missed Answers: [[${userEvaluation.attemptedQuestions - userEvaluation.correctAttempts}]]<br/>
+				You have scored [[${evalResult.correctQuestions}]] out of [[${evalResult.totalQuestions}]].<br/>
+				Total Questions: [[${evalResult.totalQuestions}]]<br/>
+				<i class="fa fa-check-circle" aria-hidden="true"></i>Passing Marks: [[${evalResult.passMarks}]]<br/>
+				<i class="fa fa-check-circle" aria-hidden="true"></i>Correct Answers: [[${evalResult.correctQuestions}]]<br/>
+				<i class="fa fa-times-circle" aria-hidden="true"></i>Wrong/Missed Answers: [[${evalResult.totalQuestions - evalResult.correctQuestions}]]<br/>
             </div><br/><br/>
         </div>
         <div><input type="button" id="closeExamPopup" onclick="closePopup();" value="Close"></div>
-        <div id="report" th:if="${report}">
+        <div id="report" th:if="${questionSet}">
 			Report
 			<table border="1">
 				<thead>
 					<tr>
-						<td>#</td>
-						<td>Question Text</td>
-						<td>Answers</td>
-						<td>Your answers</td>
-						<td>Result</td>
+						<th>#</th>
+						<th>Question Text</th>
+						<th>Answers</th>
+						<th>Your answers</th>
+						<th>Result</th>
 					</tr>
 				</thead>
 				<tbody>
-					<tr th:each="quest, iStat : ${report}">
+					<tr th:each="quest, iStat : ${questionSet}">
 						<td th:text="${iStat.index+1}" />
 						<td th:text="${quest.questionText}" />
 						<td><ul>

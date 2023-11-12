@@ -20,7 +20,7 @@ public class UserEvaluation {
 
 	private Long evaluationID;
 	private Integer trainingStatID;
-	private Map<Long, QuestionVO> userQuestionMap = new HashMap<Long, QuestionVO>(0);
+	private Map<Long, QuestionVO> userQuestionMap = new HashMap<>(0);
 	private Date evalStartDate;
 	private Integer attemptedQuestions;
 	private Integer correctAttempts;

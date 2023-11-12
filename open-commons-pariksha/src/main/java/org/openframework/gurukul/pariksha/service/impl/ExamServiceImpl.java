@@ -1,6 +1,5 @@
 package org.openframework.gurukul.pariksha.service.impl;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -12,10 +11,12 @@ import java.util.Optional;
 import org.openframework.commons.domain.exceptions.EntityNotFoundException;
 import org.openframework.commons.jpa.entity.User;
 import org.openframework.commons.rest.vo.UserVO;
+import org.openframework.commons.utils.CookieUtils;
 import org.openframework.gurukul.pariksha.ParikshaConstants;
 import org.openframework.gurukul.pariksha.entity.EvalStats;
 import org.openframework.gurukul.pariksha.entity.Evaluation;
 import org.openframework.gurukul.pariksha.entity.Question;
+import org.openframework.gurukul.pariksha.service.EvaluationService;
 import org.openframework.gurukul.pariksha.service.ExamService;
 import org.openframework.gurukul.pariksha.service.adapter.EvalStatsAdapter;
 import org.openframework.gurukul.pariksha.service.adapter.EvaluationAdapter;
@@ -24,10 +25,13 @@ import org.openframework.gurukul.pariksha.service.repository.EvalStatsRepository
 import org.openframework.gurukul.pariksha.service.repository.EvaluationRepository;
 import org.openframework.gurukul.pariksha.service.repository.QuestionRepository;
 import org.openframework.gurukul.pariksha.vo.AnswerVO;
+import org.openframework.gurukul.pariksha.vo.EvalResult;
 import org.openframework.gurukul.pariksha.vo.EvalStatsVO;
 import org.openframework.gurukul.pariksha.vo.EvaluationVO;
+import org.openframework.gurukul.pariksha.vo.ExamState;
 import org.openframework.gurukul.pariksha.vo.QuestionVO;
-import org.openframework.gurukul.pariksha.vo.UserEvaluation;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -35,6 +39,9 @@ import org.springframework.stereotype.Service;
 public class ExamServiceImpl implements ExamService {
 
 	protected static final String EXAM_CACHE = "group-cache";
+
+	@Autowired
+	private EvaluationService evaluationService;
 
 	@Autowired
 	private EvaluationRepository evaluationRepository;
@@ -45,42 +52,8 @@ public class ExamServiceImpl implements ExamService {
 	@Autowired
 	private QuestionRepository questionRepository;
 
-	@Override
-	public Map<String, Object> findEvaluationByIdWithQuestions(Long evalId) {
-
-		EvaluationVO evaluationVO;
-		Map<String, Object> evalContainer = new HashMap<>();
-		Optional<Evaluation> eval = evaluationRepository.findById(evalId);
-		if (eval.isPresent()) {
-			evaluationVO = EvaluationAdapter.toVO(eval.get());
-			System.out.println(evaluationVO.getQuestions().size());
-		} else {
-			throw new EntityNotFoundException("Eval id not found");
-		}
-
-		// 1. prepare quesionMap
-		int i = 0;
-		int totalNoOfQuestions = evaluationVO.getQuestionsInEval();
-		List<QuestionVO> questionSet = evaluationVO.getQuestions();
-		List<Long> questionIds = new ArrayList<>();
-		Iterator<QuestionVO> iterator = questionSet.iterator();
-		while (iterator.hasNext()) {
-
-			QuestionVO quest = iterator.next();
-			System.out.println("Question ID: " + quest.getId());
-			if (i < totalNoOfQuestions) {
-				questionIds.add(quest.getId());
-			}
-		}
-		evalContainer.put("questionSet", questionSet);
-
-		// 2. prepare evaluationForReference
-		EvaluationVO evaluationForReference = copyEvaluationVO(evaluationVO);
-		evalContainer.put("questionIds", questionIds);
-		evalContainer.put("evaluationForReference", evaluationForReference);
-
-		return evalContainer;
-	}
+	/** Logger that is available to subclasses */
+	protected final Logger logger = LoggerFactory.getLogger(getClass());
 
 	@Override
 	public List<QuestionVO> findQuestionsByEvalId(Long evalId) {
@@ -89,7 +62,7 @@ public class ExamServiceImpl implements ExamService {
 		Optional<Evaluation> eval = evaluationRepository.findById(evalId);
 		if (eval.isPresent()) {
 			evaluationVO = EvaluationAdapter.toVO(eval.get());
-			System.out.println(evaluationVO.getQuestions().size());
+			logger.debug("question size in eval: {}", evaluationVO.getQuestions().size());
 		} else {
 			throw new EntityNotFoundException("Eval id not found");
 		}
@@ -97,94 +70,139 @@ public class ExamServiceImpl implements ExamService {
 		return evaluationVO.getQuestions();
 	}
 
-	private EvaluationVO copyEvaluationVO(EvaluationVO evaluationVO) {
-
-		EvaluationVO sessionEvaluationVO = new EvaluationVO();
-		sessionEvaluationVO.setDescription(evaluationVO.getDescription());
-		sessionEvaluationVO.setEvalGroup(evaluationVO.getEvalGroup());
-		sessionEvaluationVO.setId(evaluationVO.getId());
-		sessionEvaluationVO.setName(evaluationVO.getName());
-		sessionEvaluationVO.setQuestionsInEval(evaluationVO.getQuestionsInEval());
-		sessionEvaluationVO.setQuestionsToAttempt(evaluationVO.getQuestionsToAttempt());
-		sessionEvaluationVO.setQuestionsToPass(evaluationVO.getQuestionsToPass());
-		return sessionEvaluationVO;
-	}
-
-	@SuppressWarnings("unchecked")
 	@Override
-	public Map<String, Object> evaluationCompleted(UserEvaluation userEvaluation, UserVO loggedInUser) {
+	public Map<String, Object> evaluationCompleted(String examStateCookie, UserVO loggedInUser) {
 
-		Map<String, Object> result = new HashMap<>();
 		int marks = 0;
-		int questAttemptCount = 0;
+		Integer questAttemptCount = 0;
 		Date evalCompetedDate = new Date();
-		Map<String, Object> evalContainer = findEvaluationByIdWithQuestions(userEvaluation.getEvaluationID());
-		List<QuestionVO> questionSet = (List<QuestionVO>) evalContainer.get("questionSet");
+		Map<String, Object> result = new HashMap<>();
 
-		Iterator<Entry<Long, QuestionVO>> iterator = userEvaluation.getUserQuestionMap().entrySet().iterator();
-		while (iterator.hasNext()) {
-			Entry<Long, QuestionVO> userEntry = iterator.next();
-			Long qId = userEntry.getKey();
-			QuestionVO userQuestionVO = userEntry.getValue();
-			if(null!=userQuestionVO) {
-				
-			}
-			Iterator<QuestionVO> questionVOIterator = questionSet.iterator();
-			while (questionVOIterator.hasNext()) {
-				QuestionVO questionVO2 = questionVOIterator.next();
-				if (!questionVO2.getId().equals(userQuestionVO.getId())) {
-					continue;
-				}
-				questionVO2.setUserAnswerList(userQuestionVO.getUserAnswerList());
-				if(!userQuestionVO.getUserAnswerList().isEmpty()) {
-					++questAttemptCount;
-				}
-				if(questionVO2.getQuestionType().equalsIgnoreCase(ParikshaConstants.Q_TYPE_FILL_WORD)) {
-					if (isCorrectFillGapsAnswer(userQuestionVO, questionVO2)) {
-						marks++;
-						questionVO2.setIsOk(true);
-						System.out.printf("Q %d. correctAnswer: TRUE, %s %n", qId, userQuestionVO.getUserAnswerList());
-					} else {
-						questionVO2.setIsOk(false);
-						System.out.printf("Q %d. wrongAnswer: TRUE, %s %n", qId, userQuestionVO.getUserAnswerList());
-					}
-				} else {
-					if (isCorrectAnswer(userQuestionVO, questionVO2)) {
-						marks++;
-						questionVO2.setIsOk(true);
-						System.out.printf("Q %d. correctAnswer: TRUE, %s %n", qId, userQuestionVO.getUserAnswerList());
-					} else {
-						questionVO2.setIsOk(false);
-						System.out.printf("Q %d. wrongAnswer: TRUE, %s %n", qId, userQuestionVO.getUserAnswerList());
-					}
-				}
-				break;
-			}
-		}
+		// prepare required objects i.e. examState, evaluationVO, questionSet
+		ExamState examState = CookieUtils.readObjectFromCookie(examStateCookie, ExamState.class);
+		EvaluationVO evaluationVO = evaluationService.findEvaluationVOById(examState.getId());
+		List<QuestionVO> questionSet = evaluationVO.getQuestions();
 
-		EvaluationVO evaluationForReference = (EvaluationVO) evalContainer.get("evaluationForReference");
-		String resultStr = "You received " + marks + "/" + evaluationForReference.getQuestionsToAttempt();
-		System.out.println("Result: " + resultStr);
-		userEvaluation.setCorrectAttempts(marks);
+		// check answers and calculate marks
+		marks = checkAnswers(examState, questionSet, questAttemptCount);
 
+		String resultStr = "You received " + marks + "/" + evaluationVO.getQuestionsInEval();
+		logger.debug("Result: {}", resultStr);
+
+		// Prepare and save evalStats in database
 		EvalStats evalStats = new EvalStats();
 		evalStats.setUser(new User(loggedInUser.getId()));
-		evalStats.setEvaluation(new Evaluation(userEvaluation.getEvaluationID()));
-		evalStats.setEvalStartDateTime(userEvaluation.getEvalStartDate());
+		evalStats.setEvaluation(new Evaluation(examState.getId()));
+		evalStats.setEvalStartDateTime(examState.getStartDate());
 		evalStats.setEvalEndDateTime(evalCompetedDate);
-		evalStats.setEvaluationStatPassed(marks >= evaluationForReference.getQuestionsToPass());
+		evalStats.setEvaluationStatPassed(marks >= evaluationVO.getQuestionsToPass());
 		evalStats.setCorrectAnswerCount(marks);
 		evalStats.setQuestAttemptCount(questAttemptCount);
-		evalStats.setEvalQuestCount(evaluationForReference.getQuestionsInEval());
+		evalStats.setEvalQuestCount(evaluationVO.getQuestionsInEval());
+
+		// save stats if not a test run
+		if(!examState.isTestRun()) {
+			evalStatsRepository.save(evalStats);
+		}
+
+		// Prepare and save exam result for return to UI
+		EvalResult evalResult = new EvalResult();
+		evalResult.setEvalId(examState.getId());
+		evalResult.setStartDate(examState.getStartDate());
+		evalResult.setEndDate(evalCompetedDate);
+		evalResult.setEvalPassed(marks >= evaluationVO.getQuestionsToPass());
+		evalResult.setTotalQuestions(examState.getqSize());
+		evalResult.setPassMarks(evaluationVO.getQuestionsToPass());
+		evalResult.setAttemptedQuestions(questAttemptCount);
+		evalResult.setCorrectQuestions(marks);
 
 		result.put("evalStats", evalStats);
-		result.put("passMarks", evaluationForReference.getQuestionsToPass());
-		result.put("report", questionSet);
+		result.put("questionSet", questionSet);
+		result.put("evalResult", evalResult);
 		return result;
-		//return evaluationForReference.getQuestionsToPass() <= marks;
 	}
 
-	private boolean isCorrectFillGapsAnswer(QuestionVO userQuestionVO, QuestionVO questionVOInDB) {
+	/**
+	 * 
+	 * @param examState
+	 * @param questionSet
+	 * @return
+	 */
+	private int checkAnswers(ExamState examState, List<QuestionVO> questionSet, Integer questAttemptCount) {
+
+		int marks = 0;
+		// Outer loop: iterate over user's answer
+		Iterator<Entry<Long, List<String>>> iterator = examState.getUserQuestionMap().entrySet().iterator();
+		while (iterator.hasNext()) {
+			Entry<Long, List<String>> userEntry = iterator.next();
+			Long qId = userEntry.getKey();
+			List<String> userQuestionVO = userEntry.getValue();
+
+			// Inner loop: iterate over database question
+			Iterator<QuestionVO> questionVOIterator = questionSet.iterator();
+			while (questionVOIterator.hasNext()) {
+				QuestionVO questionVOInDB = questionVOIterator.next();
+				// db's question id matches with user's question id
+				if (questionVOInDB.getId().equals(qId)) {
+					questionVOInDB.setUserAnswerList(userQuestionVO);
+					if(!userQuestionVO.isEmpty()) {
+						++questAttemptCount;
+					}
+					if(isCorrectAnswer(userQuestionVO, questionVOInDB)) {
+						marks++;
+						// this property (isOk) is not saved in db here. It is used to display the result on UI
+						questionVOInDB.setIsOk(true);
+						logger.debug("Q %d. correctAnswer: TRUE,  {} {}", qId, userQuestionVO);
+					} else {
+						// this property (isOk) is not saved in db here. It is used to display the result on UI
+						questionVOInDB.setIsOk(false);
+						logger.debug("Q %d. wrongAnswer:  TRUE, {} {}", qId, userQuestionVO);
+					}
+					break;
+				}
+			}
+		}
+		return marks;
+	}
+
+	private boolean isCorrectAnswer(List<String> userQuestionVO, QuestionVO questionVOInDB) {
+
+		boolean isCorrect = false;
+		if(questionVOInDB.getQuestionType().equalsIgnoreCase(ParikshaConstants.Q_TYPE_FILL_WORD)) {
+			if (isCorrectAnswerForFillGaps(userQuestionVO, questionVOInDB)) {
+				isCorrect = true;
+			}
+		} else {
+			if (isCorrectAnswerForOthers(userQuestionVO, questionVOInDB)) {
+				isCorrect = true;
+			}
+		}
+		return isCorrect;
+	}
+
+	private boolean isCorrectAnswerForFillGaps(List<String> answers, QuestionVO questionVOInDB) {
+
+		boolean corretAnswer = false;
+		if(answers.isEmpty()) {
+			return false;
+		}
+		List<AnswerVO> answersInDB = questionVOInDB.getAnswers();
+		Iterator<AnswerVO> iterator = answersInDB.iterator();
+		while (iterator.hasNext()) {
+			AnswerVO answerVO = iterator.next();
+			if (Boolean.TRUE.equals(answerVO.getCorrectOption())) {
+				String userSubmittedAnswer = answers.get(0);
+				userSubmittedAnswer = userSubmittedAnswer.trim().replaceAll("\\s+"," ");
+				if (answerVO.getAnswerText().equalsIgnoreCase(userSubmittedAnswer)) {
+					corretAnswer = true;
+					break;
+				}
+			}
+		}
+		return corretAnswer;
+	}
+
+	private boolean isCorrectAnswerForFillGaps(QuestionVO userQuestionVO, QuestionVO questionVOInDB) {
 
 		boolean corretAnswer = false;
 		List<String> answers = userQuestionVO.getUserAnswerList();
@@ -195,7 +213,7 @@ public class ExamServiceImpl implements ExamService {
 		Iterator<AnswerVO> iterator = answersInDB.iterator();
 		while (iterator.hasNext()) {
 			AnswerVO answerVO = iterator.next();
-			if (answerVO.getCorrectOption()) {
+			if (Boolean.TRUE.equals(answerVO.getCorrectOption())) {
 				String userSubmittedAnswer = answers.get(0);
 				userSubmittedAnswer = userSubmittedAnswer.trim().replaceAll("\\s+"," ");
 				if (answerVO.getAnswerText().equalsIgnoreCase(userSubmittedAnswer)) {
@@ -208,7 +226,29 @@ public class ExamServiceImpl implements ExamService {
 	}
 
 
-	private boolean isCorrectAnswer(QuestionVO userQuestionVO, QuestionVO questionVOInDB) {
+	private boolean isCorrectAnswerForOthers(List<String> answers, QuestionVO questionVOInDB) {
+
+		boolean correctAnswer = true;
+		List<AnswerVO> answersInDB = questionVOInDB.getAnswers();
+		Iterator<AnswerVO> iterator = answersInDB.iterator();
+		while (iterator.hasNext()) {
+			AnswerVO answerVO = iterator.next();
+			if(Boolean.TRUE.equals(answerVO.getCorrectOption())) {
+				if(!answers.contains(Long.toString(answerVO.getId()))) {
+					correctAnswer = false;
+					break;
+				}
+			} else {
+				if(answers.contains(Long.toString(answerVO.getId()))) {
+					correctAnswer = false;
+					break;
+				}
+			}
+		}
+		return correctAnswer;
+	}
+
+	private boolean isCorrectAnswerForOthers(QuestionVO userQuestionVO, QuestionVO questionVOInDB) {
 
 		boolean correctAnswer = true;
 		List<String> answers = userQuestionVO.getUserAnswerList();
@@ -216,7 +256,7 @@ public class ExamServiceImpl implements ExamService {
 		Iterator<AnswerVO> iterator = answersInDB.iterator();
 		while (iterator.hasNext()) {
 			AnswerVO answerVO = iterator.next();
-			if(answerVO.getCorrectOption()) {
+			if(Boolean.TRUE.equals(answerVO.getCorrectOption())) {
 				if(!answers.contains(Long.toString(answerVO.getId()))) {
 					correctAnswer = false;
 					break;
@@ -241,31 +281,31 @@ public class ExamServiceImpl implements ExamService {
 	public List<EvalStatsVO> findEvaluationStatsByUserId(Long userId) {
 
 		List<EvalStats> evalStats = evalStatsRepository.getByUserId(userId);
-		List<EvalStatsVO> evalStatsVOList = EvalStatsAdapter.toVO(evalStats);
-		return evalStatsVOList;
+		return EvalStatsAdapter.toVO(evalStats);
 	}
 
 	@Override
-	public boolean checkAnswer(QuestionVO questionVO) {
+	public boolean checkAnswer(QuestionVO questionVOFromUserResponse) {
 
+		// TODO: ensure checkAnswer feature is allowed for this eval/question
 		boolean correctAnswer = false;
-		Optional<Question> questionOpt = questionRepository.findById(questionVO.getId());
+		Optional<Question> questionOpt = questionRepository.findById(questionVOFromUserResponse.getId());
 		if(questionOpt.isPresent()) {
 			Question question = questionOpt.get();
 			QuestionVO questionVOInDB = QuestionAdapter.toVO(question);
 			if(question.getQuestionType().equalsIgnoreCase(ParikshaConstants.Q_TYPE_FILL_WORD)) {
-				if (isCorrectFillGapsAnswer(questionVO, questionVOInDB)) {
+				if (isCorrectAnswerForFillGaps(questionVOFromUserResponse, questionVOInDB)) {
 					correctAnswer = true;
-					System.out.printf("Q %d. correctAnswer: TRUE, %s %n", questionVO.getId(), questionVO.getUserAnswerList());
+					logger.debug("Q %d. correctAnswer: TRUE, {} {}", questionVOFromUserResponse.getId(), questionVOFromUserResponse.getUserAnswerList());
 				} else {
-					System.out.printf("Q %d. wrongAnswer: TRUE, %s %n", questionVO.getId(), questionVO.getUserAnswerList());
+					logger.debug("Q %d. wrongAnswer: TRUE, {} {}", questionVOFromUserResponse.getId(), questionVOFromUserResponse.getUserAnswerList());
 				}
 			} else {
-				if (isCorrectAnswer(questionVO, questionVOInDB)) {
+				if (isCorrectAnswerForOthers(questionVOFromUserResponse, questionVOInDB)) {
 					correctAnswer = true;
-					System.out.printf("Q %d. correctAnswer: TRUE, %s %n", questionVO.getId(), questionVO.getUserAnswerList());
+					logger.debug("Q %d. correctAnswer: TRUE, {} {}", questionVOFromUserResponse.getId(), questionVOFromUserResponse.getUserAnswerList());
 				} else {
-					System.out.printf("Q %d. wrongAnswer: TRUE, %s %n", questionVO.getId(), questionVO.getUserAnswerList());
+					logger.debug("Q %d. wrongAnswer: TRUE, {} {}", questionVOFromUserResponse.getId(), questionVOFromUserResponse.getUserAnswerList());
 				}
 			}
 		}

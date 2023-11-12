@@ -5,6 +5,8 @@ import org.openframework.gurukul.pariksha.vo.EvaluationVO;
 
 public class EvaluationAdapter {
 
+	private EvaluationAdapter () {}
+
 	public static EvaluationVO toVO(Evaluation eval) {
 
 		EvaluationVO evalVO = new EvaluationVO();
@@ -14,7 +16,6 @@ public class EvaluationAdapter {
 		evalVO.setName(eval.getName());
 		evalVO.setDescription(eval.getDescription());
 		evalVO.setQuestionsInEval(eval.getQuestionsInEval());
-		evalVO.setQuestionsToAttempt(eval.getQuestionsToAttempt());
 		evalVO.setQuestionsToPass(eval.getQuestionsToPass());
 		evalVO.setShowReport(eval.getShowReport());
 		evalVO.setQuestions(QuestionAdapter.toVOs(eval.getQuestions()));

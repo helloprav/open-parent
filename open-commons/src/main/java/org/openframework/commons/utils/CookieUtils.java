@@ -1,6 +1,7 @@
 package org.openframework.commons.utils;
 
 import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.Collections;
 import java.util.List;
@@ -13,6 +14,9 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.openframework.commons.constants.CookieConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class CookieUtils {
 
@@ -108,6 +112,20 @@ public class CookieUtils {
 		}
 		logger.info("Cookie Value for the cookie: {} is {}", cookieName, cookieValue);
 		return cookieValue;
+	}
+
+	public static <T> T readObjectFromCookie(String cookieStr, Class<T> clazz) {
+
+		T obj;
+		try {
+			cookieStr = URLDecoder.decode(cookieStr, "UTF-8");
+			// Converting the JSON string into Java object
+			obj = new ObjectMapper().readValue(cookieStr, clazz);
+		} catch (UnsupportedEncodingException|JsonProcessingException e) {
+			e.printStackTrace();
+			throw new RuntimeException(e);
+		}
+		return obj;
 	}
 
 }

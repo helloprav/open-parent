@@ -6,6 +6,7 @@ import javax.validation.Valid;
 
 import org.openframework.commons.rest.vo.UserVO;
 import org.openframework.gurukul.pariksha.entity.Evaluation;
+import org.openframework.gurukul.pariksha.vo.EvaluationVO;
 import org.springframework.web.multipart.MultipartFile;
 
 public interface EvaluationService {
@@ -15,6 +16,8 @@ public interface EvaluationService {
 	public List<Evaluation> findEvaluationsByGroups(UserVO loggedInUser);
 
 	public Evaluation findEvaluationById(Long evalId);
+
+	public EvaluationVO findEvaluationVOById(Long evalId);
 
 	public Evaluation findEvaluationByIdWithQuestions(Long evalId);
 
