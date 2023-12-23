@@ -12,6 +12,7 @@ import org.openframework.commons.config.GlobalConfigApp;
 import org.openframework.commons.encrypt.EncryptionUtil;
 import org.openframework.commons.jpa.JpaConfig;
 import org.openframework.commons.ofds.OfdsApp;
+import org.openframework.commons.redis.EnableCommonsRedis;
 import org.openframework.commons.rest.advice.RestResponseBodyAdvice;
 import org.openframework.commons.rest.auth.permission.AuthorizationAspect;
 import org.openframework.commons.spring.utils.ApplicationContextProvider;
@@ -29,6 +30,7 @@ import org.springframework.context.ConfigurableApplicationContext;
  * Sending email is disabled by GMail: https://support.google.com/mail/thread/166547017/access-to-gmail-through-third-party-apps-or-devices?hl=en
  */
 @EnableCommonsCaching
+@EnableCommonsRedis
 @SpringBootApplication(scanBasePackageClasses = { NeerApplication.class, CommonsLoggingAspect.class,
 		GlobalConfigApp.class, EncryptionUtil.class, RestResponseBodyAdvice.class, AuthorizationAspect.class,
 		ApplicationContextProvider.class, OpenApiConfiguration.class, OfdsApp.class, ParikshaConfiguration.class, JpaConfig.class })

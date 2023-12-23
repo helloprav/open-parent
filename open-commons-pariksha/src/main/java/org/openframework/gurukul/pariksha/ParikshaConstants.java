@@ -2,6 +2,10 @@ package org.openframework.gurukul.pariksha;
 
 public class ParikshaConstants {
 
+	private ParikshaConstants() {
+		throw new IllegalStateException("Utility class");
+	}
+
 	public static final String STRING_VALUE_ANY = "ANY";
 	public static final String STRING_VALUE_YES = "Y";
 	public static final String STRING_VALUE_NO = "N";
@@ -19,4 +23,9 @@ public class ParikshaConstants {
 	public static final String FUNC_JUMBLE = "JUMBLE";
 
 	public static final String COOKIE_EXAM_STATE = "examState";
+	public static final String COOKIE_QUEST_MAP = "_uqm";			// user question map
+
+	public static final String STORAGE_TYPE_COOKIE = "cookie";
+	public static final String STORAGE_TYPE_DATABASE = "database";
+	public static final String STORAGE_TYPE_REDIS = "redis";
 }

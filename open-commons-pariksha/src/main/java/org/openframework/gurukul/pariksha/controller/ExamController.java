@@ -4,20 +4,16 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
 import org.openframework.commons.rest.vo.UserVO;
 import org.openframework.commons.utils.CookieUtils;
-import org.openframework.commons.utils.JsonUtils;
 import org.openframework.gurukul.pariksha.ParikshaConstants;
 import org.openframework.gurukul.pariksha.entity.Evaluation;
 import org.openframework.gurukul.pariksha.service.EvaluationService;
 import org.openframework.gurukul.pariksha.service.ExamService;
 import org.openframework.gurukul.pariksha.utils.CourseUtils;
-import org.openframework.gurukul.pariksha.utils.EvaluationUtils;
-import org.openframework.gurukul.pariksha.utils.QuestionVOUtils;
 import org.openframework.gurukul.pariksha.vo.EvaluationVO;
 import org.openframework.gurukul.pariksha.vo.ExamState;
 import org.openframework.gurukul.pariksha.vo.QuestionVO;
@@ -74,11 +70,10 @@ public class ExamController {
 	}
 
 	@GetMapping("/start-eval")
-	public String evaluationStart(Model model, @RequestParam Long evalId, @RequestParam (required = false) boolean testRun) {
+	public String evaluationStart(Model model, @RequestParam Long evalId, UserVO loggedInUser, @RequestParam (required = false) boolean testRun) {
 
-		EvaluationVO evaluationVO = evaluationService.findEvaluationVOById(evalId);
 
-		createExamStateCookie(evalId, EvaluationUtils.getQIdsFromEvaluation(evaluationVO), testRun);
+		EvaluationVO evaluationVO = examService.startExam(evalId, testRun, loggedInUser.getId(), response);
 
 		model.addAttribute("eval", evaluationVO);
 		model.addAttribute("evalId", evalId);
@@ -87,37 +82,21 @@ public class ExamController {
 		return "/pariksha/exams/exam-start";
 	}
 
-	private void createExamStateCookie(Long evalId, List<Long> qIdList, boolean testRun) {
-
-		logger.debug("Entered createUserEvalCookie(eval:{})", evalId);
-		logger.debug("List of qId for this test: {}", qIdList);
-		ExamState examState = new ExamState();
-		examState.setId(evalId);
-		examState.setTestRun(testRun);
-		examState.setStartDate(new Date());
-		examState.setqSize(qIdList.size());
-		examState.setqIds(qIdList);
-
-		String jsonString = JsonUtils.convertObjectToJsonString(examState);
-		response.addCookie(CookieUtils.createCookieEncoded(ParikshaConstants.COOKIE_EXAM_STATE, jsonString));
-	}
-
 	@PostMapping("/question/{nextQuestionSeq}")
 	public String evaluateQuestion(@PathVariable int nextQuestionSeq, @ModelAttribute("question") QuestionVO questionVOFromUserResponse,
-			Model model, @CookieValue(name = ParikshaConstants.COOKIE_EXAM_STATE, defaultValue = "") String examStateCookie,
+			UserVO loggedInUser, Model model, 
+			@CookieValue(name = ParikshaConstants.COOKIE_EXAM_STATE, defaultValue = "") String examStateCookie,
+			@CookieValue(name = ParikshaConstants.COOKIE_QUEST_MAP, defaultValue = "") String userQuestionMapCookie,
 			@RequestParam(required = false) Long evalId, @RequestParam(required = false) Integer questionID,
 			@RequestParam(required = false) String skipQuestion,
 			@RequestParam(required = false) String[] userAnswerList) {
 
 		logger.debug("Entered evaluateQuestion(nextQuestionSeq:{})", nextQuestionSeq);
-		ExamState examState = convert2ExamState(questionVOFromUserResponse, examStateCookie, skipQuestion);
 
-		int questionSize = 0;
-		List<QuestionVO> questionsVOList = null;
+		Map<String, Object> result = examService.evaluateQuestion(nextQuestionSeq, evalId, loggedInUser.getId(), questionVOFromUserResponse, examStateCookie, userQuestionMapCookie, skipQuestion, response);
 
-		questionsVOList = examService.findQuestionsByEvalId(evalId);
-
-		questionSize = questionsVOList.size();
+		Integer questionSize = (Integer)result.get("questionSize");
+		ExamState examState = (ExamState)result.get("examState");
 
 		model.addAttribute("evalId", evalId);
 		model.addAttribute("nextQuestionSeq", nextQuestionSeq);
@@ -127,42 +106,13 @@ public class ExamController {
 		if (nextQuestionSeq > questionSize) {
 			model.addAttribute("evalCompleted", "evalCompleted");
 		} else {
-			Long questionId = examState.getqIds().get(nextQuestionSeq - 1);
-			QuestionVO question = QuestionVOUtils.getQuestionsVOFromList(questionsVOList, questionId);
-
-			// Populate User submitted answer if any, & set in userQuestion
-			 List<String> userSubmittedAnswers = examState.getUserQuestionMap().get(questionId);
-			model.addAttribute("userQuestion", userSubmittedAnswers);
-
-			if (null != userSubmittedAnswers && !userSubmittedAnswers.isEmpty()) {
-				question.setUserAnswerList(userSubmittedAnswers);
-			}
+			QuestionVO question = (QuestionVO)result.get("question");
 			model.addAttribute("question", question);
 			model.addAttribute("answers", question.getAnswers());
 		}
 		model.addAttribute("userQuestion", questionVOFromUserResponse);
 
 		return "/pariksha/exams/evaluateQuestionAjax";
-	}
-
-	private ExamState convert2ExamState(QuestionVO questionVOFromUserResponse, String examStateCookie, String skipQuestion) {
-
-		Long questionID = questionVOFromUserResponse.getId();
-
-		// Step 1: Read UerEvaluatio from request cookie
-		ExamState examState = CookieUtils.readObjectFromCookie(examStateCookie, ExamState.class);
-
-		if (null == skipQuestion) {
-			// Step 2: Update userEvaluation with user's answer/response to the question
-			if (questionID != null) {
-				examState.getUserQuestionMap().put(questionID, questionVOFromUserResponse.getUserAnswerList());
-			}
-
-			// Step 3: Save UserEvaluation into Cookie
-			String jsonString = JsonUtils.convertObjectToJsonString(examState);
-			response.addCookie(CookieUtils.createCookieEncoded(ParikshaConstants.COOKIE_EXAM_STATE, jsonString));
-		}
-		return examState;
 	}
 
 	@PostMapping("/checkAnswer/{questionSeq}")
@@ -182,13 +132,14 @@ public class ExamController {
 	@PostMapping(value = "/evaluationCompleted")
 	public String evaluationCompleted(Model model,
 			@CookieValue(name = ParikshaConstants.COOKIE_EXAM_STATE, defaultValue = "") String examStateCookie, 
+			@CookieValue(name = ParikshaConstants.COOKIE_QUEST_MAP, defaultValue = "") String userQuestionMapCookie,
 			UserVO loggedInUser) {
 
 		logger.debug("Entered evaluationCompleted");
 
-		Map<String, Object> result = examService.evaluationCompleted(examStateCookie, loggedInUser);
+		Map<String, Object> result = examService.evaluationCompleted(examStateCookie, userQuestionMapCookie, loggedInUser);
 
-		CookieUtils.deleteCookiesByName(request, response, List.of(ParikshaConstants.COOKIE_EXAM_STATE));
+		CookieUtils.deleteCookiesByName(request, response, List.of(ParikshaConstants.COOKIE_EXAM_STATE, ParikshaConstants.COOKIE_QUEST_MAP));
 
 		model.addAttribute("questionSet", result.get("questionSet"));
 		model.addAttribute("evalResult", result.get("evalResult"));

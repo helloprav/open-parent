@@ -75,6 +75,11 @@
 			</dependency>
 			<dependency>
 				<groupId>org.openframework</groupId>
+				<artifactId>open-commons-redis</artifactId>
+				<version>${revision}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.openframework</groupId>
 				<artifactId>open-commons-config</artifactId>
 				<version>${revision}</version>
 			</dependency>
@@ -509,6 +514,19 @@
 				<version>${commons-beanutils.version}</version>
 			</dependency>
 
+			<!-- Redis distributed cache  -->
+			<dependency>
+				<groupId>org.springframework.data</groupId>
+				<artifactId>spring-data-redis</artifactId>
+				<version>${version.spring-data-jpa}</version>
+			</dependency>
+			<dependency>
+				<groupId>redis.clients</groupId>
+				<artifactId>jedis</artifactId>
+				<version>4.3.2</version>
+				<type>jar</type>
+			</dependency>
+
 		</dependencies>
 	</dependencyManagement>
 
@@ -529,5 +547,6 @@
 		<module>open-commons-cache</module>
 		<module>open-commons-pariksha</module>
 		<module>open-commons-neer</module>
+		<module>open-commons-redis</module>
 	</modules>
 </project>

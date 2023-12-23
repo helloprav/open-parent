@@ -35,6 +35,10 @@
 		</dependency>
 		<dependency>
 			<groupId>org.openframework</groupId>
+			<artifactId>open-commons-redis</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.openframework</groupId>
 			<artifactId>open-commons-ofds</artifactId>
 		</dependency>
 

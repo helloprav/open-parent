@@ -1,0 +1,14 @@
+https://www.youtube.com/watch?v=9HVos5MX3XM
+https://github.com/springframeworkguru/spring-boot-redis-example/blob/master/src/main/java/guru/springframework/services/ProductServiceImpl.java
+https://www.google.com/search?q=spring+boot+3+using+redis+pdf&sca_esv=590025935&rlz=1C1GCEU_en-gbIN1037IN1037&ei=Y-B3ZfTHCevv4-EP2Oe1UA&oq=spring+boot+3+using+redis++&gs_lp=Egxnd3Mtd2l6LXNlcnAiG3NwcmluZyBib290IDMgdXNpbmcgcmVkaXMgICoCCAAyBRAhGKABMgUQIRigATIFECEYoAEyBRAhGKABSJZ3UJsJWKVWcAB4ApABAJgBvwGgAbsQqgEEMC4xM7gBA8gBAPgBAcICBBAAGEfCAgsQABiABBiKBRiRAsICBRAAGIAEwgIGEAAYFhgewgIHEAAYgAQYDcICBhAAGAcYHsICBhAAGB4YDcICBBAhGArCAggQABiABBiiBOIDBBgAIEGIBgGQBgg&sclient=gws-wiz-serp
+https://docs.spring.io/spring-data/redis/docs/2.1.0.M1/reference/pdf/spring-data-redis-reference.pdf
+https://docs.spring.io/spring-boot/docs/current/reference/pdf/spring-boot-reference.pdf
+https://www.google.com/search?q=chhatishgarh+voting+percentage&rlz=1C1GCEU_en-gbIN1037IN1037&oq=chhatishgarh+voting+percentage&gs_lcrp=EgZjaHJvbWUyBggAEEUYOdIBCTEzMjc3ajBqMagCALACAA&sourceid=chrome&ie=UTF-8&ved=2ahUKEwiTzOzImYmDAxXgZmwGHZuSBYcQ0MwKegQIDRAE&dlnr=1
+https://www.youtube.com/watch?v=oRGqCz8OLcM
+https://www.youtube.com/watch?v=vpe4aDu5ixI
+https://www.youtube.com/results?search_query=spring+data+redis+repository+tutorial&sp=EgIIBQ%253D%253D
+https://www.youtube.com/watch?v=pCsNUDqamWk&list=PLpxcSt9FGVVF9B9l5l-63WCn4pKeyFotN&index=3
+http://xgovdbvw03alpha.eng-muc-test.otxlab.net/OTCS/cs.exe/app/myworkplace/folders/732990
+https://www.google.com/search?q=storing+map+of+list+in+redis&rlz=1C1GCEU_en-gbIN1037IN1037&oq=storing+map+of+list+in+redis&gs_lcrp=EgZjaHJvbWUyBggAEEUYOdIBCTEzNDU2ajBqNKgCALACAA&sourceid=chrome&ie=UTF-8
+https://stackoverflow.com/questions/29203717/redis-storing-list-inside-hash#:~:text=Redis'%20data%20structures%20cannot%20be,(e.g.%20server1%3Acpu%20).&text=1-,Redis'%20data%20structures%20cannot%20be%20nested%20inside%20other%20data%20structures,a%20Hash%20is%20not%20possible.
+https://redis.io/docs/data-types/hashes/

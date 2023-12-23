@@ -3,27 +3,35 @@
  */
 package org.openframework.gurukul.pariksha.vo;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.commons.beanutils.BeanUtils;
+import org.springframework.data.redis.core.RedisHash;
+import org.springframework.data.redis.core.index.Indexed;
 
 
 /**
  * @author emiprav
  *
  */
-public class ExamState {
+@RedisHash("ExamStateVal")
+public class ExamState implements Serializable {
 
-	private Long id;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	@Indexed
+	private String id;
+	private Long eid;
+	private Long uid;
 	private boolean testRun;
 	private Date startDate;
 	private int qSize;
 	private List<Long> qIds = new ArrayList<>();
-	private Map<Long, List<String>> userQuestionMap = new HashMap<>(0);
 
 	/**
 	 * Return string representation of the Bean Object
@@ -39,12 +47,28 @@ public class ExamState {
 		return message;
 	}
 
-	public Long getId() {
-		return id;
+	public String getId() {
+		return String.format("%s_%s", eid, uid);
 	}
 
-	public void setId(Long id) {
+	public void setId(String id) {
 		this.id = id;
+	}
+
+	public Long getEid() {
+		return eid;
+	}
+
+	public void setEid(Long eid) {
+		this.eid = eid;
+	}
+
+	public Long getUid() {
+		return uid;
+	}
+
+	public void setUid(Long uid) {
+		this.uid = uid;
 	}
 
 	public boolean isTestRun() {
@@ -77,14 +101,6 @@ public class ExamState {
 
 	public void setqIds(List<Long> qIds) {
 		this.qIds = qIds;
-	}
-
-	public Map<Long, List<String>> getUserQuestionMap() {
-		return userQuestionMap;
-	}
-
-	public void setUserQuestionMap(Map<Long, List<String>> userQuestionMap) {
-		this.userQuestionMap = userQuestionMap;
 	}
 
 }

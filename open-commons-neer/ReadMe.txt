@@ -203,7 +203,6 @@ Gurukul Framework
 =====================================================================
 2023-10-XX
 ------------------------------------------------------------
--Redis distributed cache: for storing session data (ExamState)
 -RabbitMQ Message Queue: Email sending
 -MongoDB: Spring Boot web app to save - entity history data
 -WebSockets: live quiz game
@@ -212,6 +211,11 @@ Gurukul Framework
 	-Json format logging
 	-Test with spring cloud sleuth and zipkin if the Json log format is ok?
 	-log data persisted in mongo-db (if possible to visualize from mongo-db)?
+=====================================================================
+2023-12-23
+------------------------------------------------------------
+-Revision: 23.4.4
+-Redis distributed cache: for storing session data (ExamState)
 =====================================================================
 2023-11-11
 ------------------------------------------------------------

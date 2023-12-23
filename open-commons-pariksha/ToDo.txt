@@ -1,22 +1,44 @@
 Module Evaluation:
 	-Move code from controller to service
-	-Grade, Subject, Topic, Sub-Topic masters. Evaluations to be mapped to above Grade and Subject during creation.
 	-questionsToAttempt: remove the property from db, entity class, pojo & html
-	-Print all questions of an evaluation in single pdf
 	-Export eval
 	-Update eval/question/answers
-	-Standard Features of evaluation/exam: (https://www.epravesh.com/blog/how-to-design-online-exam/)
-		-Instant answer view for each question
-		-Show instant result
-		-Exam life span (exam is available between the date-time)
+	-Standard Features of evaluation/exam. Configured during eval creation and visible during solving exam: (https://www.epravesh.com/blog/how-to-design-online-exam/)
+		-Grade, Subject, Topic, Sub-Topic masters to be created
+			-Evaluations to be mapped to above Grade and Subject during creation.
+			-Exams to be available to students who belong to assigned grade
+		-Life cycle of exam: from and to date-time can be configured. both dates optional.
+			-Exam life span (exam is available between the above configured from/to date-time)
 		-Marking & Negative Marking
 			-Negative Marking (boolean)
 			-Negative Marks (eg 0.25/wrong answer)
-		-Difficulty Level of Questions
-		-Duration of exam in minutes
-		-Timer for each question (boolean)
-		-Duration of question in seconds
-		-Allow question navigation
+		-Difficulty Level of Questions can be configured
+			-Hard
+			-Medium
+			-Easy
+		-Duration of exam 
+			-In minutes (60 mins) or a completion date time (e.g. 3:00PM)
+			-If configured, exam will auto submit when time completes
+		-How question to be displayed
+			-One Question per request (current implementation)
+				-Allow question navigation (On/Off)
+					- Q Navigation ON
+						-Timer for each question: OFF
+					- Q Navigation OFF
+						-Timer for each question (boolean)
+							-If timer is ON: Duration of question in seconds
+			-All Questions per question group: all questions in the current question group will be displayed
+				-Print all questions of the question group in single pdf
+			-All Questions per exam: all questions in the exam will be displayed on the single page
+				-Print all questions of an evaluation in single pdf
+		-Result
+			-Instant answer view for each question (boolean)
+				-If enabled, Show check button
+				-Show check button for exams in test mode (current implementation)
+			-Show instant result
+				-Don't show result
+				-Just show the result
+				-Also show the correct/wrong answers
 		-Enable remote proctoring (future)
 ----------------------------------------------------------------------------------------------------------------------------------
 Module Exam:
@@ -30,6 +52,7 @@ Module Exam:
 		-Row with false result to have light red background
 	-Standard Features of Online Exam: (https://www.epravesh.com/blog/how-to-design-online-exam/)
 		-Allow candidates to review exam
+	-Support database as session storage
 ----------------------------------------------------------------------------------------------------------------------------------
 Module Certificates:
 	-PDF Certificates for download

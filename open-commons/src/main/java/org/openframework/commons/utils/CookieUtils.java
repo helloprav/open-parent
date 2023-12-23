@@ -31,6 +31,7 @@ public class CookieUtils {
 		Cookie cookie = new Cookie(name, value);
 		cookie.setPath(CookieConstants.COOKIE_PATH);
 		cookie.setMaxAge(CookieConstants.COOKIE_EXPIRY_TIME * 60);
+		cookie.setHttpOnly(true);
 		return cookie;
 	}
 
@@ -46,6 +47,7 @@ public class CookieUtils {
 		}
 		cookie.setPath(CookieConstants.COOKIE_PATH);
 		cookie.setMaxAge(CookieConstants.COOKIE_EXPIRY_TIME * 60);
+		cookie.setHttpOnly(true);
 		return cookie;
 	}
 
