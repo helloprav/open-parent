@@ -1,8 +1,7 @@
 Module Evaluation:
-	-Move code from controller to service
-	-questionsToAttempt: remove the property from db, entity class, pojo & html
 	-Export eval
 	-Update eval/question/answers
+	-Evaluation: Passed/Failed message to be configured.
 	-Standard Features of evaluation/exam. Configured during eval creation and visible during solving exam: (https://www.epravesh.com/blog/how-to-design-online-exam/)
 		-Grade, Subject, Topic, Sub-Topic masters to be created
 			-Evaluations to be mapped to above Grade and Subject during creation.
@@ -12,6 +11,9 @@ Module Evaluation:
 		-Marking & Negative Marking
 			-Negative Marking (boolean)
 			-Negative Marks (eg 0.25/wrong answer)
+		-Question & Answer Order
+			-Question order: serial/random
+			-Answer order: serial/random
 		-Difficulty Level of Questions can be configured
 			-Hard
 			-Medium
@@ -19,7 +21,7 @@ Module Evaluation:
 		-Duration of exam 
 			-In minutes (60 mins) or a completion date time (e.g. 3:00PM)
 			-If configured, exam will auto submit when time completes
-		-How question to be displayed
+		-How question to be displayed (Questions per page)
 			-One Question per request (current implementation)
 				-Allow question navigation (On/Off)
 					- Q Navigation ON
@@ -30,6 +32,7 @@ Module Evaluation:
 			-All Questions per question group: all questions in the current question group will be displayed
 				-Print all questions of the question group in single pdf
 			-All Questions per exam: all questions in the exam will be displayed on the single page
+				-Order: by questions id (later it should be changed to order by order id)
 				-Print all questions of an evaluation in single pdf
 		-Result
 			-Instant answer view for each question (boolean)

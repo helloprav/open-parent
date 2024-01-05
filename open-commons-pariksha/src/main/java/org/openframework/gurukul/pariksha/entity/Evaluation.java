@@ -49,47 +49,38 @@ public class Evaluation extends MainEntity implements java.io.Serializable {
 	@Column(name = "questions_in_eval")
 	private Integer questionsInEval;
 
-	@Min(1)
-	@Column(name = "questions_to_attempt")
-	private Integer questionsToAttempt;
-
 	@Column(name = "questions_to_pass")
 	private Integer questionsToPass;
+
+	@Column(name = "questions_per_page", length = 20)
+	private String questionsPerPage;
 
 	@Column(name = "show_report", columnDefinition="bit default 0", nullable = false)
 	private Boolean showReport;
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "evaluation", cascade = CascadeType.REMOVE)
-	private Set<Question> questions = new HashSet<Question>(0);
-
-//	@OneToMany(fetch = FetchType.LAZY, mappedBy = "evaluation", cascade = CascadeType.REMOVE)
-//	private Set<EvalStats> evalStats = new HashSet<EvalStats>(0);
+	private Set<Question> questions = new HashSet<>(0);
 
 
 	public Evaluation() {
 	}
 
 	public Evaluation(Long id) {
-		//this.id = id;
 		super.setId(id);
 	}
 
 	public Evaluation(String name, String description,
-			Integer noofQuestions, Integer passingNoOfQuestions,
-			//Boolean activeInd, 
+			String questionsPerPage, Integer passingNoOfQuestions,
 			String grp,  
 			Set<Question> questions,
-//			Set<TrainingStats> trainingStatses, 
 			String evalEnv, Integer totalQuestions) {
 		this.name = name;
 		this.description = description;
 		this.questionsInEval = totalQuestions;
-		this.questionsToAttempt = noofQuestions;
+		this.questionsPerPage = questionsPerPage;
 		this.questionsToPass = passingNoOfQuestions;
-		//this.activeInd = activeInd;
 		this.evalGroup = grp;
 		this.questions = questions;
-//		this.trainingStatses = trainingStatses;
 		this.evalEnv = evalEnv;
 	}
 
@@ -125,20 +116,20 @@ public class Evaluation extends MainEntity implements java.io.Serializable {
 		this.questionsInEval = questionsInEval;
 	}
 
-	public Integer getQuestionsToAttempt() {
-		return questionsToAttempt;
-	}
-
-	public void setQuestionsToAttempt(Integer questionsToAttempt) {
-		this.questionsToAttempt = questionsToAttempt;
-	}
-
 	public Integer getQuestionsToPass() {
 		return questionsToPass;
 	}
 
 	public void setQuestionsToPass(Integer questionsToPass) {
 		this.questionsToPass = questionsToPass;
+	}
+
+	public String getQuestionsPerPage() {
+		return questionsPerPage;
+	}
+
+	public void setQuestionsPerPage(String questionsPerPage) {
+		this.questionsPerPage = questionsPerPage;
 	}
 
 	public Set<Question> getQuestions() {
@@ -148,20 +139,6 @@ public class Evaluation extends MainEntity implements java.io.Serializable {
 	public void setQuestions(Set<Question> questions) {
 		this.questions = questions;
 	}
-	/*
-	 * public Set<EvalStats> getEvalStats() { return evalStats; }
-	 * 
-	 * public void setEvalStats(Set<EvalStats> evalStats) { this.evalStats =
-	 * evalStats; }
-	 * 
-	 */
-	/*
-	 * @OneToMany(fetch = FetchType.LAZY, mappedBy = "evaluation") public
-	 * Set<TrainingStats> getTrainingStatses() { return this.trainingStatses; }
-	 * 
-	 * public void setTrainingStatses(Set<TrainingStats> trainingStatses) {
-	 * this.trainingStatses = trainingStatses; }
-	 */
 
 	public String getEvalEnv() {
 		return evalEnv;

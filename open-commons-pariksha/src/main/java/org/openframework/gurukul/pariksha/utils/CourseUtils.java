@@ -8,7 +8,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Set;
@@ -66,9 +66,11 @@ public class CourseUtils {
 		MEDIA_DIR = parikshaMediaDir.concat(File.separator);
 	}
 
+	private CourseUtils() {}
+
 	public static Set<Question> populateQuestions(List<List<String>> recordList, User loggedInUser) {
 
-		Set<Question> questionSet = new HashSet<Question>();
+		Set<Question> questionSet = new LinkedHashSet<>();
 		ListIterator<List<String>> iterator = recordList.listIterator();
 		while(iterator.hasNext()) {
 
@@ -123,10 +125,9 @@ public class CourseUtils {
 
 		// Save RecordInfo
 		RecordInfo recordInfo = WebUtils.populateCreateInfo(loggedInUser, null);
-		//question.setRecordInfo(recordInfo);
 
 		// Populate Answers
-		List<Answer> answerList = new ArrayList<Answer>();
+		List<Answer> answerList = new ArrayList<>();
 
 		// Populate Answers
 		populateAnswer(answerIndex, answerList, questionRecord, recordInfo);
@@ -154,13 +155,13 @@ public class CourseUtils {
 			throw new IllegalArgumentException("Correct Answers has not supported value of ["+correctAnswers+"]");
 		}
 		String[] correctAnswerArray = correctAnswers.split(CommonConstants.STR_COMMA);
-		logger.debug("Array :"+correctAnswerArray.length);
+		logger.debug("Array : {}", correctAnswerArray.length);
 		for(int i=0;i<correctAnswerArray.length;i++)
 		{
-			logger.debug("array"+i+"  :"+correctAnswerArray[i]);
+			logger.debug("array{}: {}", i, correctAnswerArray[i]);
 			int correctAnswerIndex = 0;
 			String correctAns = correctAnswerArray[i];
-			System.out.println(correctAns.length());
+			logger.debug("length of correctAns: {}", correctAns.length());
 			if(StringUtils.isBlank(correctAns)) {
 				continue;
 			}
@@ -179,7 +180,7 @@ public class CourseUtils {
         }
 
 		// Save answerList
-		Set<Answer> answerSet = new HashSet<Answer>();
+		Set<Answer> answerSet = new LinkedHashSet<>();
 		answerSet.addAll(answerList);
 		return answerSet;
 	}
@@ -242,10 +243,7 @@ public class CourseUtils {
 
 		try {
 			mediaFile.transferTo( targetMediaFile );
-		} catch (IllegalStateException e) {
-			e.printStackTrace();
-			throw e;
-		} catch (IOException e) {
+		} catch (IllegalStateException|IOException e) {
 			e.printStackTrace();
 			throw e;
 		}
@@ -303,8 +301,7 @@ public class CourseUtils {
 	public static String getEvalNameFromFileName(String fileName) {
 		int underscoreIdx = fileName.indexOf("_");
 		underscoreIdx = fileName.indexOf("_", underscoreIdx+1);
-		String evalName = fileName.substring(underscoreIdx+1);
-		return evalName;
+		return fileName.substring(underscoreIdx+1);
 	}
 
 }

@@ -38,6 +38,7 @@ import org.springframework.web.multipart.MultipartFile;
 @Transactional(propagation = Propagation.REQUIRES_NEW, rollbackForClassName = "Exception", isolation = Isolation.READ_COMMITTED, rollbackFor = Exception.class)
 public class EvaluationServiceImpl implements EvaluationService {
 
+	private static final String EVAL_ID_NOT_FOUND = "Eval id not found";
 	@Autowired
 	private EvaluationRepository evaluationRepository;
 
@@ -73,7 +74,7 @@ public class EvaluationServiceImpl implements EvaluationService {
 			evaluation = eval.get();
 			return EvaluationAdapter.toVO(evaluation);
 		} else {
-			throw new EntityNotFoundException("Eval id not found");
+			throw new EntityNotFoundException(EVAL_ID_NOT_FOUND);
 		}
 	}
 
@@ -85,7 +86,7 @@ public class EvaluationServiceImpl implements EvaluationService {
 		if(eval.isPresent()) {
 			evaluation = eval.get();
 		} else {
-			throw new EntityNotFoundException("Eval id not found");
+			throw new EntityNotFoundException(EVAL_ID_NOT_FOUND);
 		}
 		return evaluation;
 	}
@@ -98,7 +99,7 @@ public class EvaluationServiceImpl implements EvaluationService {
 			int qSize = eval.get().getQuestions().size();
 			System.out.println(qSize);
 		} else {
-			throw new EntityNotFoundException("Eval id not found");
+			throw new EntityNotFoundException(EVAL_ID_NOT_FOUND);
 		}
 		return eval.get();
 	}
@@ -155,7 +156,6 @@ public class EvaluationServiceImpl implements EvaluationService {
 			evaluation.setCreatedBy(loggedInUser);
 			evaluation.setCreatedDate(new Date());
 			Evaluation savedEval = evaluationRepository.save(evaluation);
-			//savedEval.getQuestions().forEach(pl -> pl.setEvaluation(savedEval));
 			createQuestions(savedEval, isEvalUpdate);
 			renameEvalMediaDir(timeInMillis, savedEval.getId());
 		}

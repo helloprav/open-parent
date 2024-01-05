@@ -17,7 +17,7 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
  */
 @Configuration
 @EnableRedisRepositories
-@ConditionalOnProperty(name = "org.openframework.commons.redis.enabled", havingValue = "true", matchIfMissing = true)
+@ConditionalOnProperty(name = "org.openframework.commons.redis.enabled", havingValue = "true", matchIfMissing = false)
 public class RedisConfiguration {
 
 	private static boolean redisServerEnabled = false;
@@ -63,11 +63,12 @@ public class RedisConfiguration {
 
 	private boolean testConnection(RedisTemplate<String, Object> template) {
 		if (null != template && null != template.getConnectionFactory()) {
-			String pingResult = template.getConnectionFactory().getConnection().ping();
-			System.out.println("INFO: redis server test connection is ok. ping result: " + pingResult);
-			return "PONG".equalsIgnoreCase(pingResult);
-		} else {
-			return false;
+			if(null != template.getConnectionFactory()) {
+				String pingResult = template.getConnectionFactory().getConnection().ping();
+				System.out.println("INFO: redis server test connection is ok. ping result: " + pingResult);
+				return "PONG".equalsIgnoreCase(pingResult);
+			}
 		}
+		return false;
 	}
 }

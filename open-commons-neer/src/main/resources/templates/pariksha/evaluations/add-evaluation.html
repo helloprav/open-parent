@@ -37,9 +37,12 @@
 							</select>
 							<span th:if="${#fields.hasErrors('evalEnv')}" th:errors="*{evalEnv}"></span></td></tr>
 						<tr><td>
-							<label for="questionsToAttempt">Questions to Attempts</label></td><td>
-							<input type="text" th:field="*{questionsToAttempt}" id="questionsToAttempt" placeholder="Questions to be displayed during evaluation">
-							<span th:if="${#fields.hasErrors('questionsToAttempt')}" th:errors="*{questionsToAttempt}"></span></td></tr>
+							<label for="questionsPerPage">Display Questions Per Page</label></td><td>
+							<select th:field="*{questionsPerPage}" class="form-control" id="questionsPerPage">
+								<option th:value="'Single'" th:text="Single"></option>
+								<option th:value="'All'" th:text="All"></option>
+							</select>
+							<span th:if="${#fields.hasErrors('evalEnv')}" th:errors="*{evalEnv}"></span></td></tr>
 						<tr><td>
 							<label for="questionsToPass">Questions to Pass</label></td><td>
 							<input type="text" th:field="*{questionsToPass}" id="questionsToPass" placeholder="Questions To Pass">

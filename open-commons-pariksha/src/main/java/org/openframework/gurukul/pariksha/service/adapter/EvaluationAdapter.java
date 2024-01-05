@@ -17,6 +17,7 @@ public class EvaluationAdapter {
 		evalVO.setDescription(eval.getDescription());
 		evalVO.setQuestionsInEval(eval.getQuestionsInEval());
 		evalVO.setQuestionsToPass(eval.getQuestionsToPass());
+		evalVO.setQuestionsPerPage(eval.getQuestionsPerPage());
 		evalVO.setShowReport(eval.getShowReport());
 		evalVO.setQuestions(QuestionAdapter.toVOs(eval.getQuestions()));
 		return evalVO;

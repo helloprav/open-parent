@@ -8,7 +8,7 @@
     <title>Pariksha: Evaluations</title>
 </head>
 <body>
-<div layout:fragment="contentPopup">
+<div  style="margin-top: -40px;" layout:fragment="contentPopup">
 
 	<script type="text/javascript">
 	<!--
@@ -31,8 +31,14 @@
 	function loadQuestions() {
 
 		var evalId =[[${evalId}]];
-		// By default 1st question is loaded 
-		var url="./question/1?evalId="+evalId;
+		var url="./question/";
+		var questPerPage = '[[${evaluationVO.questionsPerPage}]]';
+		if(questPerPage === 'All') {
+			url=url+"all?evalId="+evalId;
+		} else {
+			// By default 1st question is loaded 
+			url=url+"1?evalId="+evalId;
+		}
 		//url =formatURL(url);
 		$.post(url, {testRun: '[[${testRun}]]'}, function(data) {
 			  $('#question').html(data);
@@ -76,9 +82,9 @@
 
     <section>
         <div class="container my-5">
-            <p class="my-5"><h3> <b>[[${eval.evalGroup}]]</b> | <b>[[${eval.name}]]</b></h3>
+            <p class="my-5"><h3> <b>[[${evaluationVO.evalGroup}]]</b> | <b>[[${evaluationVO.name}]]</b></h3>
             </p>
-            <div class="col-md-10">
+            <div class="col-lg-12">
 				<div id="question"></div>
             </div>
         </div>

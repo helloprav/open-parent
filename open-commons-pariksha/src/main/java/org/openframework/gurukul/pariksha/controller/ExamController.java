@@ -9,11 +9,13 @@ import java.util.Map;
 
 import org.openframework.commons.rest.vo.UserVO;
 import org.openframework.commons.utils.CookieUtils;
+import org.openframework.commons.utils.RequestUtils;
 import org.openframework.gurukul.pariksha.ParikshaConstants;
 import org.openframework.gurukul.pariksha.entity.Evaluation;
 import org.openframework.gurukul.pariksha.service.EvaluationService;
 import org.openframework.gurukul.pariksha.service.ExamService;
 import org.openframework.gurukul.pariksha.utils.CourseUtils;
+import org.openframework.gurukul.pariksha.utils.EvaluationUtils;
 import org.openframework.gurukul.pariksha.vo.EvaluationVO;
 import org.openframework.gurukul.pariksha.vo.ExamState;
 import org.openframework.gurukul.pariksha.vo.QuestionVO;
@@ -70,16 +72,43 @@ public class ExamController {
 	}
 
 	@GetMapping("/start-eval")
-	public String evaluationStart(Model model, @RequestParam Long evalId, UserVO loggedInUser, @RequestParam (required = false) boolean testRun) {
-
+	public String evaluationStart(Model model, @RequestParam Long evalId, UserVO loggedInUser,
+			@RequestParam(required = false) boolean testRun) {
 
 		EvaluationVO evaluationVO = examService.startExam(evalId, testRun, loggedInUser.getId(), response);
 
-		model.addAttribute("eval", evaluationVO);
+		model.addAttribute("evaluationVO", evaluationVO);
 		model.addAttribute("evalId", evalId);
 		model.addAttribute("testRun", testRun);
 
 		return "/pariksha/exams/exam-start";
+	}
+
+	@PostMapping("/question/all")
+	public String evaluateAllQuestions(UserVO loggedInUser, Model model,
+			@CookieValue(name = ParikshaConstants.COOKIE_EXAM_STATE, defaultValue = "") String examStateCookie,
+			@CookieValue(name = ParikshaConstants.COOKIE_QUEST_MAP, defaultValue = "") String userQuestionMapCookie,
+			@RequestParam(required = false) Long evalId, @RequestParam(required = false) Integer questionID,
+			@RequestParam(required = false) String skipQuestion,
+			@RequestParam(required = false) String[] userAnswerList, @RequestParam(required = false) boolean testRun,
+			@ModelAttribute("evaluationVO") EvaluationVO evaluationVO) {
+
+		logger.debug("Entered evaluateAllQuestions(evalId: {})", evalId);
+
+		List<QuestionVO> questionVOs = examService.evaluateAllQuestions(evalId, loggedInUser.getId(), skipQuestion);
+		evaluationVO.setQuestions(questionVOs);
+
+		// Step 1: Read UerEvaluation from request cookie
+		ExamState examState = CookieUtils.readObjectFromCookie(examStateCookie, ExamState.class);
+		EvaluationUtils.createExamStateCookie(examState, response);
+
+		model.addAttribute("evalId", evalId);
+		model.addAttribute("questionVOs", questionVOs);
+		model.addAttribute("testRun", examState.isTestRun());
+		model.addAttribute("questionSize", examState.getqIds().size());
+		model.addAttribute("eval", evaluationVO);
+
+		return "/pariksha/exams/evaluateAllQuestionsAjax";
 	}
 
 	@PostMapping("/question/{nextQuestionSeq}")
@@ -137,7 +166,28 @@ public class ExamController {
 
 		logger.debug("Entered evaluationCompleted");
 
-		Map<String, Object> result = examService.evaluationCompleted(examStateCookie, userQuestionMapCookie, loggedInUser);
+		RequestUtils.getRequestParamsInMap(request);
+		Map<String, Object> result = examService.evaluationCompleted(examStateCookie, loggedInUser, userQuestionMapCookie);
+
+		CookieUtils.deleteCookiesByName(request, response, List.of(ParikshaConstants.COOKIE_EXAM_STATE, ParikshaConstants.COOKIE_QUEST_MAP));
+
+		model.addAttribute("questionSet", result.get("questionSet"));
+		model.addAttribute("evalResult", result.get("evalResult"));
+
+		logger.debug("Exiting evaluationCompleted");
+		return "/pariksha/exams/exam-completed";
+	}
+
+	@PostMapping(value = "/evaluationAllCompleted")
+	public String evaluationAllCompleted(Model model,
+			@CookieValue(name = ParikshaConstants.COOKIE_EXAM_STATE, defaultValue = "") String examStateCookie, 
+			@CookieValue(name = ParikshaConstants.COOKIE_QUEST_MAP, defaultValue = "") String userQuestionMapCookie,
+			UserVO loggedInUser, EvaluationVO evaluationVO) {
+
+		logger.debug("Entered evaluationCompleted");
+
+		RequestUtils.getRequestParamsInMap(request);
+		Map<String, Object> result = examService.evaluationAllCompleted(examStateCookie, evaluationVO, loggedInUser);
 
 		CookieUtils.deleteCookiesByName(request, response, List.of(ParikshaConstants.COOKIE_EXAM_STATE, ParikshaConstants.COOKIE_QUEST_MAP));
 

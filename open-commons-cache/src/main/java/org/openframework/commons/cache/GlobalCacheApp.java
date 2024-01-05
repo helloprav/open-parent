@@ -41,8 +41,8 @@ public class GlobalCacheApp {
 	private static final int expireAfterAccess = 60;
 	public static final String simpleCacheManager = "simpleCacheManager";
 	public static final String caffeineCacheManager = "caffeineCacheManager";
-	private static Set<String> cacheManagerNameList = new TreeSet<String>();
-	private static Map<String, Set<String>> cacheManagerNameMap = new HashMap<String, Set<String>>();
+	private static Set<String> cacheManagerNameList = new TreeSet<>();
+	private static Map<String, Set<String>> cacheManagerNameMap = new HashMap<>();
 	private static boolean caffeineReady = false;
 
 	@Autowired
@@ -64,7 +64,7 @@ public class GlobalCacheApp {
 		}
 		Set<String> cacheNames = cacheManagerNameMap.get(cacheManagerName);
 		if (null == cacheNames) {
-			cacheNames = new TreeSet<String>();
+			cacheNames = new TreeSet<>();
 		}
 		cacheNames.add(cacheName);
 		cacheManagerNameMap.put(cacheManagerName, cacheNames);
@@ -77,7 +77,7 @@ public class GlobalCacheApp {
 
 		Set<String> simpleCacheNames = getSimpleCacheNames();
 		SimpleCacheManager cacheManager = new SimpleCacheManager();
-		List<Cache> caches = new ArrayList<Cache>();
+		List<Cache> caches = new ArrayList<>();
 		for (String simpleCacheName : simpleCacheNames) {
 			caches.add(new ConcurrentMapCache(simpleCacheName));
 		}
@@ -95,7 +95,7 @@ public class GlobalCacheApp {
 	private Set<String> getSimpleCacheNamesFromCode() {
 		Set<String> simpleCacheNames = cacheManagerNameMap.get(simpleCacheManager);
 		if (null == simpleCacheNames) {
-			simpleCacheNames = new TreeSet<String>();
+			simpleCacheNames = new TreeSet<>();
 		}
 		return simpleCacheNames;
 	}
@@ -103,7 +103,7 @@ public class GlobalCacheApp {
 	private Set<String> getSimpleCacheNamesFromProperties() {
 		Set<String> simpleCacheNames = commonsCacheProperties.getCacheNames(simpleCacheManager);
 		if (null == simpleCacheNames) {
-			simpleCacheNames = new TreeSet<String>();
+			simpleCacheNames = new TreeSet<>();
 		}
 		return simpleCacheNames;
 	}
@@ -129,8 +129,7 @@ public class GlobalCacheApp {
 	private Set<String> getCaffeineCacheNamesFromCode() {
 		Set<String> caffeineCacheNames = cacheManagerNameMap.get(caffeineCacheManager);
 		if (null == caffeineCacheNames) {
-			//throw new IllegalArgumentException("caffeineCacheNames are not initialized for caffeineCacheManager");
-			caffeineCacheNames = new TreeSet<String>();
+			caffeineCacheNames = new TreeSet<>();
 		}
 		return caffeineCacheNames;
 	}
@@ -138,8 +137,7 @@ public class GlobalCacheApp {
 	private Set<String> getCaffeineCacheNamesFromProperties() {
 		Set<String> caffeineCacheNames = commonsCacheProperties.getCacheNames(caffeineCacheManager);
 		if (null == caffeineCacheNames && caffeineReady) {
-			//throw new IllegalArgumentException("caffeineCacheNames are not initialized for CommonsCacheProperties");
-			caffeineCacheNames = new TreeSet<String>();
+			caffeineCacheNames = new TreeSet<>();
 		} else {
 			caffeineReady = true;
 		}

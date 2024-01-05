@@ -9,6 +9,7 @@ import java.util.ListIterator;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Optional;
+import java.util.Set;
 
 import org.apache.commons.lang3.StringUtils;
 import org.openframework.commons.domain.exceptions.EntityNotFoundException;
@@ -72,7 +73,7 @@ public class ExamServiceImpl implements ExamService {
 	@Autowired
 	private QuestionRepository questionRepository;
 
-	@Autowired
+	@Autowired(required = false)
 	private RedisTemplate<String, Object> redisTemplate;
 
 	/** Logger that is available to subclasses */
@@ -136,8 +137,15 @@ public class ExamServiceImpl implements ExamService {
 		EvaluationVO evaluationVO = evaluationService.findEvaluationVOById(evalId);
 
 		ExamState examState = prepareExamState(evalId, userId, EvaluationUtils.getQIdsFromEvaluation(evaluationVO), testRun);
-		createExamStateCookie(examState, response);
+		EvaluationUtils.createExamStateCookie(examState, response);
 		return evaluationVO;
+	}
+
+	@Override
+	public List<QuestionVO> evaluateAllQuestions(Long evalId, Long userId, String skipQuestion) {
+
+		Set<Question> questions = questionRepository.findByEvalIdAndFetchAnswersEagerly(evalId);
+		return QuestionAdapter.toVOs(questions);
 	}
 
 	@Override
@@ -157,20 +165,13 @@ public class ExamServiceImpl implements ExamService {
 
 	@SuppressWarnings({ "unchecked" })
 	@Override
-	public Map<String, Object> evaluationCompleted(String examStateCookie, String userQuestionMapCookie, UserVO loggedInUser) {
-
-		int marks = 0;
-		Integer questAttemptCount = 0;
-		Date evalCompetedDate = new Date();
-		Map<String, Object> result = new HashMap<>();
+	public Map<String, Object> evaluationCompleted(String examStateCookie, UserVO loggedInUser,
+			String userQuestionMapCookie) {
 
 		// prepare required objects i.e. examState, evaluationVO, questionSet
 		ExamState examState = CookieUtils.readObjectFromCookie(examStateCookie, ExamState.class);
-		EvaluationVO evaluationVO = evaluationService.findEvaluationVOById(examState.getEid());
-		List<QuestionVO> questionSet = evaluationVO.getQuestions();
 
 		Map<String, List<String>> userQuestionMap = null;
-
 		if(cookieStorageEnabled && StringUtils.isNotBlank(userQuestionMapCookie)) {
 			userQuestionMap = CookieUtils.readObjectFromCookie(userQuestionMapCookie, Map.class);
 		}
@@ -183,6 +184,35 @@ public class ExamServiceImpl implements ExamService {
 		if(null == userQuestionMap) {
 			userQuestionMap = new HashMap<>();
 		}
+
+		return evaluationCompleted(examStateCookie, loggedInUser, userQuestionMap);
+	}
+
+	@Override
+	public Map<String, Object> evaluationAllCompleted(String examStateCookie, EvaluationVO evaluationVO,
+			UserVO loggedInUser) {
+
+		Map<String, List<String>> userQuestionMap = new HashMap<>();
+		Iterator<QuestionVO> questIter = evaluationVO.getQuestions().iterator();
+		while (questIter.hasNext()) {
+			QuestionVO questionVO = questIter.next();
+			userQuestionMap.put(questionVO.getId().toString(), questionVO.getUserAnswerList());
+		}
+		return evaluationCompleted(examStateCookie, loggedInUser, userQuestionMap);
+	}
+
+	public Map<String, Object> evaluationCompleted(String examStateCookie, UserVO loggedInUser,
+			Map<String, List<String>> userQuestionMap) {
+
+		int marks = 0;
+		Integer questAttemptCount = 0;
+		Date evalCompetedDate = new Date();
+		Map<String, Object> result = new HashMap<>();
+
+		// prepare required objects i.e. examState, evaluationVO, questionSet
+		ExamState examState = CookieUtils.readObjectFromCookie(examStateCookie, ExamState.class);
+		EvaluationVO evaluationVO = evaluationService.findEvaluationVOById(examState.getEid());
+		List<QuestionVO> questionSet = evaluationVO.getQuestions();
 
 		// check answers and calculate marks
 		marks = checkAnswers(userQuestionMap, questionSet, questAttemptCount);
@@ -206,7 +236,9 @@ public class ExamServiceImpl implements ExamService {
 			evalStatsRepository.save(evalStats);
 		}
 
-		deleteUserQuestionMapFromRedis(examState.getId());
+		if(isRedisSessionStorageEnabled()) {
+			deleteUserQuestionMapFromRedis(examState.getId());
+		}
 
 		// Prepare and save exam result for return to UI
 		EvalResult evalResult = new EvalResult();
@@ -416,7 +448,8 @@ public class ExamServiceImpl implements ExamService {
 		return correctAnswer;
 	}
 
-	private ExamState prepareExamState(Long evalId, Long userId, List<Long> qIdList, boolean testRun) {
+	@Override
+	public ExamState prepareExamState(Long evalId, Long userId, List<Long> qIdList, boolean testRun) {
 		logger.debug("Entered createUserEvalCookie(eval:{})", evalId);
 		logger.debug("List of qId for this test: {}", qIdList);
 		ExamState examState = new ExamState();
@@ -427,11 +460,6 @@ public class ExamServiceImpl implements ExamService {
 		examState.setqSize(qIdList.size());
 		examState.setqIds(qIdList);
 		return examState;
-	}
-
-	private void createExamStateCookie(ExamState examState, HttpServletResponse response) {
-		String jsonString = JsonUtils.convertObjectToJsonString(examState);
-		response.addCookie(CookieUtils.createCookieEncoded(ParikshaConstants.COOKIE_EXAM_STATE, jsonString));
 	}
 
 	@Override

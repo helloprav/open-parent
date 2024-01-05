@@ -18,6 +18,8 @@ public class EvaluationVO {
 
 	private Integer questionsToPass;
 
+	private String questionsPerPage;
+
 	private Boolean showReport;
 
 	private List<QuestionVO> questions = null;
@@ -84,6 +86,14 @@ public class EvaluationVO {
 
 	public void setEvalEnv(String evalEnv) {
 		this.evalEnv = evalEnv;
+	}
+
+	public String getQuestionsPerPage() {
+		return questionsPerPage;
+	}
+
+	public void setQuestionsPerPage(String questionsPerPage) {
+		this.questionsPerPage = questionsPerPage;
 	}
 
 	public Boolean getShowReport() {

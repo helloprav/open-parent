@@ -1,0 +1,128 @@
+<script>
+
+	<!--
+
+	function submitEvaluation(evaluationID) {
+
+		var str = $("startEvaluationForm").serialize();
+		console.log('submitEvaluation: '+str);
+		var url="./evaluationAllCompleted";
+		//url =formatURL(url);
+		$.ajax({
+			type: 'POST', 
+			url: url, 
+			//processData: false,
+			//contentType: false,
+			data: $('#startEvaluationForm').serialize(), 
+			success: function(response) {
+				$('#question').html('');
+				$('#question').html(response);
+				$('#question').find( "nav" ).remove();
+				$('#question').find( "footer" ).remove();
+	    	},
+			error : function(e) {
+				console.log("ERROR: ", e);
+			},
+			done : function(e) {
+				console.log("DONE");
+	    	}
+	    });
+	    return false;
+	}
+
+	function checkAnswer(questionID) {
+
+		var str = $("startEvaluationForm").serialize();
+		console.log('submitEvaluation: '+str);
+		var url="./checkAnswer/"+questionID;
+		//url =formatURL(url);
+		$.ajax({
+			type: 'POST', 
+			url: url, 
+			//processData: false,
+			//contentType: false,
+			data: $('#startEvaluationForm').serialize(), 
+			success: function(response) {
+
+				console.log("response: ", response);
+				var resultDiv = '<i class="fa fa-thumbs-up ml-2"></i>';
+				if(response !== 'true') {
+					resultDiv = '<i class="fa fa-thumbs-down ml-2"></i>';
+				}
+				$('#okPlace').html('');
+				$('#okPlace').html(resultDiv);
+	    	},
+			error : function(e) {
+				console.log("ERROR: ", e);
+			},
+			done : function(e) {
+				console.log("DONE");
+	    	}
+	    });
+	    return false;
+	}
+	//-->
+</script>
+<form method="post" action="#" th:action="@{/pariksha/exam/evaluationAllCompleted}" th:object="${evaluationVO}" name="startEvaluationForm" id="startEvaluationForm">
+	<div th:switch="${evalCompleted}" class="container my-5">
+		<div th:case="null">
+			<table border="1" width="100%" height="300px" cellspacing="5px" cellpadding="5px">
+				<tbody>
+					<tr height="80%" th:each="question, qIdx : ${evaluationVO.questions}" th:style="${qIdx.odd}? 'background-color: aliceblue;':'background-color: snow;'" >
+						<td><span th:id="qText"><input type="hidden" th:field="*{questions[__${qIdx.index}__].id}" th:value="${question.id}" >
+							Q [[${qIdx.count}]]. [[${question.questionText}]]</span> <span id="okPlace"></span>
+							<div th:switch="${question.imageName}">
+								<span th:case="null"></span>
+								<span th:case="*">
+									<img th:src="@{image/{evalId}/{image}(evalId=${evalId},image=${question.imageName})}" th:alt="${question.imageName}">
+								</span>
+							</div>
+						</td>
+						<td valine="top">
+							<div th:switch="${question.questionType}">
+								<div th:case="MULTI_CORRECT">
+									<div th:each="answer,iterStat : ${question.answers}">
+										<input type="checkbox" th:itemtype="checkbox" th:field="*{questions[__${qIdx.index}__].userAnswerList}" th:value="${answer.id}" />&nbsp;&nbsp;
+										<span th:text="${answer.answerText}"></span>&nbsp;<br /><br />
+									</div>
+								</div>
+								<div th:case="SINGLE_CORRECT">
+									<div th:each="answer : ${question.answers}">
+										<input type="radio" th:itemtype="radio" th:field="*{questions[__${qIdx.index}__].userAnswerList}" th:value="${answer.id}" /> [[${answer.answerText}]] <br><br>
+									</div>
+								</div>
+								<div th:case="FILL_WORD">
+									<input type="text" th:itemtype="text" th:field="*{questions[__${qIdx.index}__].userAnswerList}" size="60" style="height12:20px;font-size:14pt;">&nbsp; <br><br>
+									<script>
+										$(function () {
+											$("#userAnswerList").focus();
+										});
+									</script>
+								</div>
+							</div>
+						</td>
+					</tr>
+					<tr  height="10%"><td colspan="2">
+						<div align="center"><br>
+							<span id="checkAnswerResult"></span>
+							<input type="hidden" name="evalId" th:value="${evalId}">
+							<input type="hidden" name="testRun" th:value="${testRun}">
+							<input type="hidden" name="questionSize" th:value="${questionSize}">
+							<span th:if="true == ${testRun}">
+								<input type="button" th:id="check" value="Check" th:attr="onclick=|checkAnswer('${nextQuestionSeq}')|">
+							</span>
+						</div>
+					</td></tr>
+				</tbody>
+			</table>
+		</div><br>
+		<div >
+			Evaluation Completed. Click the <b>Finish</b> button to save the evaluation or click the <b>Previous</b> button to re-visit questions.<br><br>
+			<input type="button" value="Finish" th:id="finish" th:attr="onclick=|submitEvaluation('${evalId}')|">
+			<input type="hidden" name="evalId" th:value="${evalId}">
+			<input type="hidden" name="testRun" th:value="${testRun}">
+			<input type="hidden" name="skipQuestion" value="skip">
+			<input type="hidden" name="questionSize" th:value="${questionSize}">
+		</div>
+	</div>
+</form>

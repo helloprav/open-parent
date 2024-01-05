@@ -212,6 +212,12 @@ Gurukul Framework
 	-Test with spring cloud sleuth and zipkin if the Json log format is ok?
 	-log data persisted in mongo-db (if possible to visualize from mongo-db)?
 =====================================================================
+2024-01-05
+------------------------------------------------------------
+-Revision: 24.1.0
+-Pariksha
+	-Support for all questions in single page in exam
+=====================================================================
 2023-12-23
 ------------------------------------------------------------
 -Revision: 23.4.4
